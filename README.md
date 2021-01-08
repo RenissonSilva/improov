@@ -9,7 +9,7 @@ Basicamente e em poucas palavras o “Makefile” instala o PHP, MYSQL e o COMPO
 
 ### Os passos para baixar o projeto:
 1. Acesse o “github” através do link “https://github.com/RenissonSilva/improov.git”, clique no botão esverdeado “Clone or Download”.
-2. Entre no “Terminal”, escolha uma pasta para abrigar o projeto, como por exemplo – Downloads –, introduza-se nela com o comado “cd” e efetive o comando “git clone” somado ao link que foi adquerido no botão com tom verde. Desta forma: “git clone https://github.com/RenissonSilva/improov.git”. Pronto! Você já tem o projeto na sua máquina.
+2. Entre no “Terminal”, escolha uma pasta para abrigar o projeto, como por exemplo – Downloads –, introduza-se nela com o comando “cd” e efetive o comando “git clone” somado ao link que foi adquirido no botão com tom verde. Desta forma: “git clone https://github.com/RenissonSilva/improov.git”. Pronto! Você já tem o projeto na sua máquina.
 3. Já dentro da pasta do projeto, execute o comando **make conf** (só funciona em sistemas linux), que irá fazer toda a configuração necessária para o projeto funcionar na sua máquina.
 4. No terminal na pasta execute o comando **php artisan serve**
 5. No navegador digite **localhost:8000**
@@ -21,7 +21,7 @@ Basicamente e em poucas palavras o “Makefile” instala o PHP, MYSQL e o COMPO
 ### Colaboradores
 
 Rennisson Silva
-E-mail: @hotmail.com
+E-mail: renissonx@gmail.com
 
 Pedro Marinho
 E-mail: phsm@discente.ifpe.edu.br
