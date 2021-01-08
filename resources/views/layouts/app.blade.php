@@ -35,13 +35,13 @@
                 <a class="navbar-brand" href="{{ url('/') }}">
                     <img src="{{ url('images/logo.png') }}" class="logo">
                 </a>
-                <h3>Improov</h3>
+                <h4>Improov</h4>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
                 </button>
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav ml-auto">
+                    <ul class="navbar-nav ml-auto" >
                         <li class="nav-item">
                             <a class="dropdown-item item-navbar" href="{{ route('logout') }}"
                                 onclick="event.preventDefault();
@@ -60,6 +60,22 @@
         <main class="py-4">
             @yield('content')
         </main>
+        <footer class="page-footer valign-wrapper">
+            <div class="container">
+                <div class="row">
+                    <div class="col-3 l2 s2 valign-wrapper">
+                        <img src="{{ url('images/logo.png') }}" class="logo-footer">
+                        <p class="white-text text-footer">Improov</p>
+                    </div>
+                    <div class="col l10 s6 hide-on-med-and-down link-footer">
+                        <a class="grey-text text-lighten-3 right" href="#!">Ajuda</a>
+                        <a class="grey-text text-lighten-3 right" href="#!">Termos de privacidade</a>
+                        <a class="grey-text text-lighten-3 right" href="#!">Fale conosco</a>
+                    </div>
+                </div>
+            </div>
+        </footer>
     </div>
+    
 </body>
 </html>
