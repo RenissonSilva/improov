@@ -28,10 +28,10 @@ class MissionsTableSeeder extends Seeder
                 "name" => "Realize 2 commits em um desafio",
                 "xp" => "50",
             ],
-    ];
+        ];
 
-    foreach ($items as $item) {
-        Mission::updateOrCreate(['id' => $item['id']], $item);
-    }
+        foreach ($items as $item) {
+            Mission::updateOrCreate(['id' => $item['id']], $item);
+        }
     }
 }
