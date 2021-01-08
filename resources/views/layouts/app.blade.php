@@ -15,17 +15,65 @@
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Saira&display=swap" rel="stylesheet"> 
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <style>
+        * {
+            font-family: 'Saira', sans-serif;
+        }
+        .main{
+            background-color: #5333A5;
+            height: 30vh;
+            position: relative;
+            z-index: 1;
+        }
+        .loggedNavbar {
+            position: absolute;
+            z-index: -1;
+            display: table;
+            width: 100%;
+            height: 30vh;
+            color: white;
+            background: url('images/bg-logged.png') no-repeat bottom center scroll;
+            opacity:0.7;
+            background-position: 30% 45%;
+            background-size: cover;
+            margin:0!important;
+        }
+        .logo {
+            width: 3.8em;
+        }
+        .navbar-transparent {
+            background-color:transparent!important;
+            box-shadow: none!important;
+            padding: 4vh 15vw 0 15vw;
+        }
+        .item-navbar {
+            color: #fff!important;
+            font-size: 1.5rem;
+        }
+        .item-navbar:hover {
+            background-color:transparent;
+        }
+    </style>
 </head>
 <body>
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
-            <div class="container">
+        <div class="main">
+            <div class="loggedNavbar"></div>
+            <nav class="navbar navbar-expand-md navbar-transparent">
                 <a class="navbar-brand" href="{{ url('/') }}">
-                    {{ config('app.name', 'Laravel') }}
+                    <img src="{{ url('images/logo.png') }}" class="logo">
                 </a>
+                <h3>Improov</h3>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -49,28 +97,24 @@
                                 </li>
                             @endif
                         @else
-                            <li class="nav-item dropdown">
-                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    {{ Auth::user()->name }}
+                            <li class="nav-item">
+                                <a class="dropdown-item item-navbar" href="{{ route('logout') }}"
+                                    onclick="event.preventDefault();
+                                                    document.getElementById('logout-form').submit();">
+                                        {{ __('Sair') }}
                                 </a>
-
-                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{{ route('logout') }}"
-                                       onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                        {{ __('Logout') }}
-                                    </a>
-
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                        @csrf
-                                    </form>
-                                </div>
                             </li>
                         @endguest
                     </ul>
                 </div>
-            </div>
-        </nav>
+            </nav>
+            <ul class="sidenav" id="mobile-demo">
+                <li><a href="sass.html">Sass</a></li>
+                <li><a href="badges.html">Components</a></li>
+                <li><a href="collapsible.html">Javascript</a></li>
+                <li><a href="mobile.html">Mobile</a></li>
+            </ul>
+        </div>
 
         <main class="py-4">
             @yield('content')
