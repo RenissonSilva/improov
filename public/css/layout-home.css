@@ -109,9 +109,15 @@ footer {
 }
 
 .progress {
-    height:12px!important;
+    height:13px!important;
     margin:0!important;
+    border:.5px solid white;
     border-radius: 10px!important;
+    background-color: #558148!important;
+}
+
+.progress .determinate {
+    background-color: #A3FFA1!important;
 }
 
 table.striped>tbody>tr:nth-child(odd) {
