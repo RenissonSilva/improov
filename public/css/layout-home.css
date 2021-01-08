@@ -95,3 +95,46 @@ footer {
     cursor: pointer;
     vertical-align: middle;
 }
+
+.icon-title {
+    font-size:1.6rem;
+    color: #8B64EC;
+    margin-right: 1vw;
+}
+
+.menu-title {
+    font-size:1.8rem;
+    color: #8B64EC;
+    font-weight: bold;
+}
+
+/* .progress .determinate {
+    background-color: #A3FFA1!important;
+} */
+
+.progress {
+    height:12px!important;
+    margin:0!important;
+}
+
+table.striped>tbody>tr:nth-child(odd) {
+    background-color: #8C63F2!important;
+}
+
+table.striped>tbody>tr:nth-child(even) {
+    background-color: #271359!important;
+}
+
+tr.row {
+    margin:0;
+}
+
+.mission-text {
+    color: #fff;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+td, th {
+    padding: 10px 30px!important;
+}
