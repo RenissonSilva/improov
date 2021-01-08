@@ -7,7 +7,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>Improov</title>
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
@@ -19,75 +19,13 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/layout-app.css') }}" rel="stylesheet">
 
     <!-- Compiled and minified CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
 
     <!-- Compiled and minified JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-    <style>
-        * {
-            font-family: 'Saira', sans-serif;
-        }
-        .main{
-            background-color: #5333A5;
-            height: 27vh;
-            position: relative;
-            z-index: 1;
-        }
-        .loggedNavbar {
-            position: absolute;
-            z-index: -1;
-            display: table;
-            width: 100%;
-            height: 27vh;
-            color: white;
-            background: url('images/bg-logged.png') no-repeat bottom center scroll;
-            opacity:0.7;
-            background-position: 30% 45%;
-            background-size: cover;
-            margin:0!important;
-        }
-        .logo {
-            width: 3.8em;
-        }
-        .navbar-transparent {
-            background-color:transparent!important;
-            box-shadow: none!important;
-            padding: 4vh 15vw 0 15vw;
-        }
-        .item-navbar {
-            color: #fff!important;
-            font-size: 1.5rem;
-        }
-        .item-navbar:hover {
-            background-color:transparent;
-        }
-        .avatar {
-            width: 150px;
-            
-        }
-        .avatar-div {
-            position: absolute;
-            margin-right: -75px;
-            right: 50vw;
-            bottom: -75px;
-            display: inline-block;
-            color: #fff;
-            overflow: hidden;
-            z-index: 1;
-            width: 150px;
-            height: 150px;
-            line-height: 150px;
-            padding: 0;
-            border-radius: 50%;
-            -webkit-transition: background-color .3s;
-            transition: background-color .3s;
-            cursor: pointer;
-            vertical-align: middle;
-        }
-
-    </style>
 </head>
 <body>
     <div id="app">
@@ -103,32 +41,14 @@
                 </button>
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <!-- Left Side Of Navbar -->
-                    <ul class="navbar-nav mr-auto">
-
-                    </ul>
-
-                    <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ml-auto">
-                        <!-- Authentication Links -->
-                        @guest
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
-                            </li>
-                            @if (Route::has('register'))
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
-                                </li>
-                            @endif
-                        @else
-                            <li class="nav-item">
-                                <a class="dropdown-item item-navbar" href="{{ route('logout') }}"
-                                    onclick="event.preventDefault();
-                                                    document.getElementById('logout-form').submit();">
-                                        {{ __('Sair') }}
-                                </a>
-                            </li>
-                        @endguest
+                        <li class="nav-item">
+                            <a class="dropdown-item item-navbar" href="{{ route('logout') }}"
+                                onclick="event.preventDefault();
+                                                document.getElementById('logout-form').submit();">
+                                    {{ __('Sair') }}
+                            </a>
+                        </li>
                     </ul>
                 </div>
             </nav>
