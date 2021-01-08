@@ -20,14 +20,10 @@ Basicamente e em poucas palavras o “Makefile” instala o PHP, MYSQL e o COMPO
 
 ### Colaboradores
 
-Rennisson Silva
-E-mail: renissonx@gmail.com
+Renisson Silva - renissonx@gmail.com
 
-Pedro Marinho
-E-mail: phsm@discente.ifpe.edu.br
+Pedro Marinho - phsm@discente.ifpe.edu.br
 
-José Henrique
-E-mail: henribeiro99@gmail.com
+José Henrique - henribeiro99@gmail.com
 
-Erickson Nascimento
-E-mail: erickson.ferreira@outlook.com.br
+Erickson Nascimento - erickson.ferreira@outlook.com.br
