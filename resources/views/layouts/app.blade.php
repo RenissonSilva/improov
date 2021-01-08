@@ -31,7 +31,7 @@
         }
         .main{
             background-color: #5333A5;
-            height: 30vh;
+            height: 27vh;
             position: relative;
             z-index: 1;
         }
@@ -40,7 +40,7 @@
             z-index: -1;
             display: table;
             width: 100%;
-            height: 30vh;
+            height: 27vh;
             color: white;
             background: url('images/bg-logged.png') no-repeat bottom center scroll;
             opacity:0.7;
@@ -63,6 +63,30 @@
         .item-navbar:hover {
             background-color:transparent;
         }
+        .avatar {
+            width: 150px;
+            
+        }
+        .avatar-div {
+            position: absolute;
+            margin-right: -75px;
+            right: 50vw;
+            bottom: -75px;
+            display: inline-block;
+            color: #fff;
+            overflow: hidden;
+            z-index: 1;
+            width: 150px;
+            height: 150px;
+            line-height: 150px;
+            padding: 0;
+            border-radius: 50%;
+            -webkit-transition: background-color .3s;
+            transition: background-color .3s;
+            cursor: pointer;
+            vertical-align: middle;
+        }
+
     </style>
 </head>
 <body>
@@ -108,14 +132,11 @@
                     </ul>
                 </div>
             </nav>
-            <ul class="sidenav" id="mobile-demo">
-                <li><a href="sass.html">Sass</a></li>
-                <li><a href="badges.html">Components</a></li>
-                <li><a href="collapsible.html">Javascript</a></li>
-                <li><a href="mobile.html">Mobile</a></li>
-            </ul>
+            <div class="avatar-div">
+                <img src="{{ url('images/avatar.png') }}" class="avatar">
+            </div>
+            
         </div>
-
         <main class="py-4">
             @yield('content')
         </main>
