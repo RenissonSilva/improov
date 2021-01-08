@@ -108,13 +108,10 @@ footer {
     font-weight: bold;
 }
 
-/* .progress .determinate {
-    background-color: #A3FFA1!important;
-} */
-
 .progress {
     height:12px!important;
     margin:0!important;
+    border-radius: 10px!important;
 }
 
 table.striped>tbody>tr:nth-child(odd) {
