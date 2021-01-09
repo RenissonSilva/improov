@@ -17,9 +17,12 @@
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Saira&display=swap" rel="stylesheet"> 
 
+    <!-- Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" rel="stylesheet">
+
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/layout-app.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/layout-home.css') }}" rel="stylesheet">
 
     <!-- Compiled and minified CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
@@ -29,7 +32,7 @@
 </head>
 <body>
     <div id="app">
-        <div class="main">
+        <div class="main mb-5">
             <div class="loggedNavbar"></div>
             <nav class="navbar navbar-expand-md navbar-transparent">
                 <a class="navbar-brand" href="{{ url('/') }}">
@@ -59,7 +62,6 @@
             <div class="avatar-div">
                 <img src="{{ url('images/avatar.png') }}" class="avatar">
             </div>
-            
         </div>
         <main class="py-4">
             @yield('content')
