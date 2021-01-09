@@ -8,6 +8,10 @@
     </div>
     <table class="striped">
         <tbody>
+        <p>LEVEL - {{$level}}</p>
+        <p>XP - {{$xp}} / {{$next_level}}</p>
+        
+        
             @foreach($my_missions as $mission)
             <tr class="row">
                 <td class="col-8 mission-text">{{$mission}}</td>

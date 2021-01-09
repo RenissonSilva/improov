@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Auth;
 use App\User;
+use App\Level;
 use App\Mission;
 use App\Mission_user;
 use Carbon\Carbon;
@@ -61,6 +62,18 @@ class HomeController extends Controller
             array_push($my_missions, $query->name);
         }
 
-        return view('home', compact('my_missions'));
+        $level = Level::all();
+
+        $xp = $user->xp;
+        $i = 0;
+
+        for($i=0; $xp - $level[$i]->required_xp >= 0; $i++){
+            $xp -= $level[$i]->required_xp;
+        }
+
+        $next_level = $level[$i]->required_xp;
+        $level = $level[$i-1]->name;
+
+        return view('home', compact('my_missions', 'level', 'xp', 'next_level'));
     }
 }
