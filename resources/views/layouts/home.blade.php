@@ -19,6 +19,7 @@
 
     <!-- Icons -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
@@ -59,6 +60,20 @@
                     </ul>
                 </div>
             </nav>
+            <div class="navbar navbar-expand-md default-padding">
+                <div class="btn-floating waves-effect waves-light btn-home"><i class="fas fa-crown"></i></div><h4 class="white-text stats-user">{{$level}}</h4>
+                <div class="btn-floating waves-effect waves-light btn-home"><h4 class="btn-xp">XP</h4></div><h4 class="white-text stats-user">{{$xp}} / {{$next_level}}</h4>
+
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav ml-auto" >
+                        <li class="nav-item">
+                            <div class="btn-floating waves-effect waves-light btn-home"><i class="fas fa-fire"></i></div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+
             <div class="avatar-div">
                 <img src="{{ url('images/avatar.png') }}" class="avatar">
             </div>

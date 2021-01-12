@@ -2,6 +2,10 @@
     font-family: 'Saira', sans-serif;
 }
 
+.default-padding{
+    padding: 0 15vw;
+}
+
 footer {
     position:fixed;
     bottom:0;
@@ -60,7 +64,7 @@ footer {
 .navbar-transparent {
     background-color:transparent!important;
     box-shadow: none!important;
-    padding: 4vh 15vw 0 15vw;
+    padding: 4vh 15vw 15vh 15vw;
 }
 
 .item-navbar {
@@ -106,6 +110,7 @@ footer {
     font-size:1.8rem;
     color: #8B64EC;
     font-weight: bold;
+    padding-left:0;
 }
 
 .progress {
@@ -140,4 +145,34 @@ tr.row {
 
 td, th {
     padding: 10px 30px!important;
+}
+
+.btn-home{
+    background-color:#8C63F2!important;
+    border: 3px solid white!important;
+    font-size: 16px!important;
+    text-align: center!important;
+    font-weight: bold;
+}
+
+.fa-crown, .fa-fire {
+    margin:-3px; /* Esse valor precisa ser o mesmo que tem na border de btn-home, porém negativo*/
+    font-size:20px!important;
+}
+
+.container{
+    padding:0!important;
+}
+
+.stats-user{
+    font-size:25px;
+    font-weight:bold;
+    margin:0 30px 0 10px;
+}
+
+.btn-xp{
+    font-size: 18px;
+    margin:0;
+    padding-top:8px;
+    font-weight: bold;
 }
