@@ -55,6 +55,7 @@ class LoginController extends Controller
         $name = $user_github->getName() ?? $user_github->getNickname();
         $email = $user_github->getEmail();
         $github_id = $user_github->getId();
+        $image = $user_github->getAvatar();
 
         $search_user = User::where('email', $email)->first();
 
@@ -67,6 +68,7 @@ class LoginController extends Controller
                 'email' => $email ,
                 'github_id' => $github_id,
                 'xp' => 0,
+                'image' => $image,
             ];
     
             $user = User::create($data);

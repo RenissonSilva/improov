@@ -75,7 +75,7 @@
 
 
             <div class="avatar-div">
-                <img src="{{ url('images/avatar.png') }}" class="avatar">
+                <img src="{{ Auth::user()->image }}" class="avatar">
             </div>
         </div>
         <main>

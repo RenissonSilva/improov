@@ -16,7 +16,9 @@ class UsersTableSeeder extends Seeder
             [
                 "name" => "Usuário padrão",
                 "email" => "user@gmail.com",
+                "github_id" => "12345",
                 "xp" => 90,
+                "image" => "https://image.flaticon.com/icons/png/512/147/147144.png"
             ],
         ];
 
