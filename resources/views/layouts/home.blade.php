@@ -78,7 +78,7 @@
                 <img src="{{ url('images/avatar.png') }}" class="avatar">
             </div>
         </div>
-        <main class="py-4">
+        <main>
             @yield('content')
         </main>
         <footer class="page-footer valign-wrapper">

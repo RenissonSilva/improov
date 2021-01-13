@@ -1,7 +1,7 @@
 @extends('layouts.home')
 
 @section('content')
-<div class="container">
+<div class="container-default">
     <div class="row">
         <h3 class="col-9 menu-title"><i class="fas fa-check-double icon-title"></i>Missões diárias</h3>
         <h3 class="col menu-title grey-text text-darken-1 right-align">0/2</h3>

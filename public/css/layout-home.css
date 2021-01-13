@@ -6,13 +6,21 @@
     padding: 0 15vw;
 }
 
+.container-default {
+    display: block;
+    padding:0 15vw;
+}
+
 footer {
-    position:fixed;
     bottom:0;
     left:0;
     width:100%;
     height: 120px;
     background-color: #5333A5!important;
+}
+
+main {
+    min-height: 70vh;
 }
 
 .main{
@@ -158,10 +166,6 @@ td, th {
 .fa-crown, .fa-fire {
     margin:-3px; /* Esse valor precisa ser o mesmo que tem na border de btn-home, porém negativo*/
     font-size:20px!important;
-}
-
-.container{
-    padding:0!important;
 }
 
 .stats-user{
