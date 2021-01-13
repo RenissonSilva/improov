@@ -12,9 +12,6 @@
                     <!-- Compiled and minified CSS -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
 
-                    <!-- Compiled and minified JavaScript -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-
 </head>
 <body>
     <nav class="transparent z-depth-0 nave" role="navigation">
@@ -24,18 +21,18 @@
         
             <!-- COLOCAR O IMPRROV DO LADO-->
             <i class="right text-log">Improov</i>
-            <ul class="right hide-on-med-and-down bt">
-                <li><a href="{{ url('login/github/') }}" class="waves-effect btn" >
-                    Entre com o Github
-                </a></li>
-            </ul>
+            <!-- Modal Trigger -->
+            
             <ul class="right hide-on-med-and-down">
-                <li><a href="#" class="waves-effect btn ">
-                    Comece a Programar</a></li>
+                <li>
+                    <a class="waves-effect waves-light btn modal-trigger" href="#modal-login">Comece a programar</a>
+                    @include('layouts.modal-login')
+                </li>
                 </ul>
             </div>
         </nav>
   <div class="section no-pad-bot" id="index-banner">
+
       <!--ver se tirar isso e alinha o texto a esquerda-->
   <div class="section">
     <h5></h5>
@@ -49,6 +46,7 @@
     <br><br>
   </div>
 <br>
+
 <div class="container">
     <div class="row">
     <div class="grid-example col s12"> 
@@ -130,7 +128,6 @@
 </div>
 <br><br>
 
-
       <!--Footer-->
 <footer class="page-footer valign-wrapper">
    <div class="container">
@@ -148,8 +145,36 @@
   </footer>
   <!--  Scripts-->
   <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-  <script src="js/materialize.js"></script>
-  <script src="js/init.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+  <script>
+  $(document).ready(function(){
+    $('.modal-trigger').leanModal({
+      dismissible: true, // Modal can be dismissed by clicking outside of the modal
+      opacity: .5, // Opacity of modal background
+      in_duration: 300, // Transition in duration
+      out_duration: 200, // Transition out duration
+      ready: function() { alert('Ready'); }, // Callback for Modal open
+      complete: function() { alert('Closed'); } // Callback for Modal close
+    }
+  );
+  });
+    (function($){
+    $.fn.leanModal = function(options) {
+        if( $('.modal').length > 0 ){
+            $('.modal').modal(options);
+        }
+    };
+
+    $.fn.openModal = function(options) {
+        $(this).modal(options);
+        $(this).modal('open');
+    };
+
+    $.fn.closeModal = function() {
+        $(this).modal('close');
+    };
+    })(jQuery);
+  </script>
 
   </body>
 </html>
