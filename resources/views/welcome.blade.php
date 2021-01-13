@@ -25,7 +25,7 @@
             <!-- COLOCAR O IMPRROV DO LADO-->
             <i class="right text-log">Improov</i>
             <ul class="right hide-on-med-and-down bt">
-                <li><a href="#" class="waves-effect btn">
+                <li><a href="{{ url('login/github/') }}" class="waves-effect btn" >
                     Entre com o Github
                 </a></li>
             </ul>

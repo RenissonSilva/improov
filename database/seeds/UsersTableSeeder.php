@@ -16,7 +16,6 @@ class UsersTableSeeder extends Seeder
             [
                 "name" => "Usuário padrão",
                 "email" => "user@gmail.com",
-                "password" => bcrypt('123123'),
                 "xp" => 90,
             ],
         ];
