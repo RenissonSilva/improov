@@ -1,9 +1,16 @@
 <div id="modal-login" class="modal modal-login">
   <div class="modal-content">
-    <h4>Modal Header</h4>
-    <p>A bunch of text</p>
-  </div>
-  <div class="modal-footer">
-    <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Agree</a>
+    <div class="row reset-margin">
+      <span class="modal-title">Entrar com github</span>
+      <i class="fas fa-info-circle right"></i>
+    </div>
+    <div class="center-align">
+      <i class="fab fa-github"></i>
+    </div>
+
+    <div class="row center-align">
+      <a class="waves-effect waves-light btn-large btn-without-account btn-default" href="https://github.com/join?source=login" target="_blank"><i class="material-icons left">close</i>Não tenho conta</a>
+      <a class="waves-effect waves-light btn-large btn-account btn-default" href="{{ url('login/github') }}"><i class="material-icons left">done</i>Já tenho conta</a>
+    </div>
   </div>
 </div>

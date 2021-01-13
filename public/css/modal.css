@@ -1,0 +1,42 @@
+.modal-login{
+    width:45vw!important;
+    color:#8B64EC;
+    border-top: 6px solid #8B64EC;
+    border-radius: 10px!important;
+}
+
+.modal-title{
+    font-size: 35px;
+    font-weight: 900;
+}
+
+.modal .modal-content {
+    padding: 40px!important;
+}
+
+.fa-info-circle{
+    color:#9C9C9C;
+    font-size:26px;
+}
+
+.btn-default {
+    font-size:18px!important;
+    font-weight: bold;
+}
+
+.btn-account {
+    background-color:#8B64EC!important;
+}
+
+.btn-without-account {
+    background-color:#9C9C9C!important;
+}
+
+.fa-github{
+    font-size:100px;
+    margin: 8vh 0;
+}
+
+.reset-margin {
+    margin:0!important;
+}
