@@ -60,19 +60,47 @@
     <div class="container-default"><div class="line-advantage"></div></div>
 
     <div class="container-default row container-advantages">
-        <div class="col s1 m4 l4 center-align">
-            <p class="text-advantage last-3-advantages">Alcance seus objetivos</p>
+        <p class="title-advantage center-align">Vantagens</p>
+        <div class="col s1 m1 l4 center-align">
+            <p class="text-advantage medium-text">Alcance seus objetivos</p>
             <img src="{{ url('images/goals.png') }}" class="icon-about">
         </div>
-        <div class="col s1 m4 l4 center-align">
-            <p class="text-advantage last-3-advantages">Aperfeiçoe seus conhecimentos</p>
+        <div class="col s1 m1 l4 center-align">
+            <p class="text-advantage medium-text">Aperfeiçoe seus conhecimentos</p>
             <img src="{{ url('images/knowledge.png') }}" class="icon-about">
         </div>
-        <div class="col s1 m4 l4 center-align">
-            <p class="text-advantage last-3-advantages">Promoção em cursos</p>
+        <div class="col s1 m1 l4 center-align">
+            <p class="text-advantage medium-text">Promoção em cursos</p>
             <img src="{{ url('images/discount.png') }}" class="icon-about">
         </div>
     </div>
+
+    <footer class="page-footer valign-wrapper">
+        <div class="container">
+            <div class="row">
+                <div class="col s6 m6 l6 px-4">
+                    <p class="center-align medium-text"><b>Quem somos</b></p>
+                    <p class="small-text">Uma equipe de desenvolvedores em busca de trazer ferramentas que auxiliem na sua vida</p>
+                </div>
+                <div class="col s6 m6 l6 px-4">
+                    <p class="center-align medium-text"><b>Nosso objetivo</b></p>
+                    <p class="small-text">Estimular desenvolvedores para que melhorem seus conhecimentos e não percam seu foco</p>
+                </div>
+            </div>
+            
+            <div class="row div-links-footer">
+                <div class="col s4 m4 l4 valign-wrapper">
+                    <img src="{{ url('images/logo.png') }}" class="logo-footer">
+                    <span class="center-align medium-text improov-footer"><b>Improov</b></span>
+                </div>
+                <div class="col s8 m8 l8 right-align links-footer">
+                    <a href="#" class="medium-text">Fale conosco</a>
+                    <a href="#" class="medium-text">Termos de privacidade</a>
+                    <a href="#" class="medium-text">Ajuda</a>
+                </div>
+            </div>
+        </div>
+    </footer>
     
   <!--  Scripts-->
   <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>

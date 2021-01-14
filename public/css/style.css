@@ -2,6 +2,12 @@ body{
     font-family: 'Saira', sans-serif !important;
 }
 
+footer {
+  bottom:0;
+  left:0;
+  background-color: #5333A5!important;
+}
+
 .back{
     display: table;
     width: 100%;
@@ -105,10 +111,31 @@ body{
   margin:0;
 }
 
-.container-advantages {
-  margin:5vh 0;
+.medium-text{
+  font-size:24px;
 }
 
-.last-3-advantages{
-  font-size:24px;
+.small-text{
+  font-size:22px;
+}
+
+.px-4{
+  padding:0 40px!important;
+}
+
+.logo-footer{
+  width:50px;
+}
+
+.improov-footer{
+  margin-left:10px;
+}
+
+.links-footer > a {
+  color:#fff;
+  margin-left:20px;
+}
+
+.div-links-footer {
+  margin-top:40px;
 }
