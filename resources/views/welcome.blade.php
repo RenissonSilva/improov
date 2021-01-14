@@ -17,56 +17,32 @@
 </head>
 
 <body>
-    <nav class="transparent z-depth-0 nave" role="navigation">
-        <div class="back">
-        <div class="nav-wrapper container">
-            <a id="logo-container" href="#" class="brand-logo"> <img  src="{{ url('images/logo.png') }}" class="logo"> 
-        
-            <!-- COLOCAR O IMPRROV DO LADO-->
-            <i class="right text-log">Improov</i>
-            <!-- Modal Trigger -->
-        
-            <ul class="right hide-on-med-and-down">
-                <li>
-                    <a class="waves-effect waves-light btn modal-trigger" href="#modal-login">Comece a programar</a>
-                    @include('layouts.modal-login')
-                </li>
+    <div class="back container-default" style="height:100vh;">
+        <nav class="transparent row">
+            <div class="nav-wrapper valign-wrapper col">
+                <img src="{{ url('images/logo.png') }}" class="logo">
+                <span class="title">Improov</span>
+            </div>
+
+            <ul class="right h-100">
+                <a class="waves-effect waves-light btn-large modal-trigger btn-default btn-login" href="#modal-login"><i class="material-icons left icon-code">code</i>Comece a programar</a>
+                @include('layouts.modal-login')
             </ul>
+        </nav>
+
+        <div class="div-descricao valign-wrapper">
+            <span class="descricao">Viemos para te ajudar a focar em seus objetivos e a aperfeiçoar seus conhecimentos para que você esteja mais perto da força!</span>
         </div>
-    </nav>
+    </div>
     
   <!--  Scripts-->
   <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
   <script>
-  $(document).ready(function(){
-    $('.modal-trigger').leanModal({
-      dismissible: true, // Modal can be dismissed by clicking outside of the modal
-      opacity: .5, // Opacity of modal background
-      in_duration: 300, // Transition in duration
-      out_duration: 200, // Transition out duration
-      ready: function() { alert('Ready'); }, // Callback for Modal open
-      complete: function() { alert('Closed'); } // Callback for Modal close
+    $(document).ready(function(){
+        $('.modal').modal();
+        $('.tooltipped').tooltip();
     });
-
-    $('.tooltipped').tooltip();
-  });
-    (function($){
-    $.fn.leanModal = function(options) {
-        if( $('.modal').length > 0 ){
-            $('.modal').modal(options);
-        }
-    };
-
-    $.fn.openModal = function(options) {
-        $(this).modal(options);
-        $(this).modal('open');
-    };
-
-    $.fn.closeModal = function() {
-        $(this).modal('close');
-    };
-    })(jQuery);
   </script>
 
   </body>
