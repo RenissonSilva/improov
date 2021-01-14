@@ -79,4 +79,36 @@ body{
 
 .descricao {
   font-size: 50px;
+  text-shadow: 5px 5px 5px black; 
+}
+
+.icon-about {
+  height:200px;
+}
+
+.title-advantage{
+  font-size: 30px;
+  font-weight: bold;
+}
+
+.text-advantage{
+  font-size: 26px;
+  color:#575757;
+}
+
+.line-advantage {
+  height:3px;
+  background-color: #5333A5;
+}
+
+.row {
+  margin:0;
+}
+
+.container-advantages {
+  margin:5vh 0;
+}
+
+.last-3-advantages{
+  font-size:24px;
 }
