@@ -47,8 +47,9 @@
       out_duration: 200, // Transition out duration
       ready: function() { alert('Ready'); }, // Callback for Modal open
       complete: function() { alert('Closed'); } // Callback for Modal close
-    }
-  );
+    });
+
+    $('.tooltipped').tooltip();
   });
     (function($){
     $.fn.leanModal = function(options) {

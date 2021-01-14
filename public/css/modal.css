@@ -1,5 +1,5 @@
 .modal-login{
-    width:45vw!important;
+    width:38vw!important;
     color:#8B64EC;
     border-top: 6px solid #8B64EC;
     border-radius: 10px!important;
@@ -10,13 +10,19 @@
     font-weight: 900;
 }
 
+.line{
+    width:3.5vw;
+    height:5px;
+    background-color: #8B64EC;
+}
+
 .modal .modal-content {
     padding: 40px!important;
 }
 
 .fa-info-circle{
     color:#9C9C9C;
-    font-size:26px;
+    font-size:30px;
 }
 
 .btn-default {

@@ -2,8 +2,9 @@
   <div class="modal-content">
     <div class="row reset-margin">
       <span class="modal-title">Entrar com github</span>
-      <i class="fas fa-info-circle right"></i>
+      <i class="fas fa-info-circle right tooltipped" data-position="bottom" data-tooltip="É necessário ter conta no github para usar o Improov"></i>
     </div>
+    <div class="line"></div>
     <div class="center-align">
       <i class="fab fa-github"></i>
     </div>
