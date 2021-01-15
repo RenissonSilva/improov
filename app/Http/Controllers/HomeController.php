@@ -54,14 +54,20 @@ class HomeController extends Controller
             }
         }
         $my_missions = [];
+        $progress_of_missions = [];
         
         $missions_id = Mission_user::where('user_id', $user->id)->latest()->limit(2)->get();
         $missions_id = $missions_id->sortBy('mission_id');
-        foreach($missions_id as $mission){
-            $query = Mission::where('id', $mission->mission_id)->first();
-            array_push($my_missions, $query->name);
-        }
 
+        $loop = 0;
+
+        foreach($missions_id as $mission){
+            $m = Mission::where('id', $mission->mission_id)->first();
+            $percentage = $missions_id[$loop]->mission_user_points / $m->points * 100;
+            array_push($progress_of_missions, $percentage);
+            array_push($my_missions, $m->name);
+            $loop++;
+        }
         $level = Level::all();
 
         $xp = $user->xp;
@@ -74,6 +80,8 @@ class HomeController extends Controller
         $next_level = $level[$i]->required_xp;
         $level = $level[$i-1]->name;
 
-        return view('home', compact('my_missions', 'level', 'xp', 'next_level'));
+        $completed_missions = count(array_filter($progress_of_missions,function($value){return $value >= 100;}));
+
+        return view('home', compact('my_missions', 'level', 'xp', 'next_level', 'progress_of_missions', 'completed_missions'));
     }
 }
