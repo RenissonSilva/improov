@@ -17,6 +17,7 @@ class CreateMissionsTable extends Migration
             $table->id();
             $table->string('name');
             $table->integer('xp');
+            $table->integer('points');
             $table->timestamps();
         });
     }

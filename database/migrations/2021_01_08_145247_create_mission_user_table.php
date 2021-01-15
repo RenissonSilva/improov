@@ -15,10 +15,12 @@ class CreateMissionUserTable extends Migration
     {
         Schema::create('mission_user', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id')->nullable();
-            $table->unsignedBigInteger('mission_id')->nullable();
-            $table->foreign('user_id')->references('id')->on('users')->onCascade('none');
-            $table->foreign('mission_id')->references('id')->on('missions')->onCascade('none');
+            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('mission_id');
+            $table->integer('mission_user_points')->nullable();
+
+            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('mission_id')->references('id')->on('missions');
             $table->timestamps();
         });
     }
