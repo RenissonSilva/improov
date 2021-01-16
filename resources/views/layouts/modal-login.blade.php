@@ -5,7 +5,7 @@
       <i class="fas fa-info-circle right tooltipped" data-position="bottom" data-tooltip="É necessário ter conta no github para usar o Improov"></i>
     </div>
     <div class="line"></div>
-    <div class="center-align">
+    <div class="center-align modal-github">
       <i class="fab fa-github"></i>
     </div>
 

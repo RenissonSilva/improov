@@ -45,7 +45,7 @@
         </div>
     </div>
 
-    <div class="container-default"><div class="line-advantage"></div></div>
+    <div class="line-advantage"></div>
 
     <div class="container-default row container-advantages">
         <div class="col s9 m8 l9">
@@ -57,7 +57,7 @@
         </div>
     </div>
 
-    <div class="container-default"><div class="line-advantage"></div></div>
+    <div class="line-advantage"></div>
 
     <div class="container-default row container-advantages">
         <p class="title-advantage center-align">Vantagens</p>
@@ -89,11 +89,12 @@
             </div>
             
             <div class="row div-links-footer">
-                <div class="col s4 m4 l4 valign-wrapper">
+                <div class="col s4 m4 l4 valign-wrapper h-52">
                     <img src="{{ url('images/logo.png') }}" class="logo-footer">
                     <span class="center-align medium-text improov-footer"><b>Improov</b></span>
                 </div>
-                <div class="col s8 m8 l8 right-align links-footer">
+                
+                <div class="col s8 m8 l8 links-footer valign-wrapper h-52 right-align">
                     <a href="#" class="medium-text">Fale conosco</a>
                     <a href="#" class="medium-text">Termos de privacidade</a>
                     <a href="#" class="medium-text">Ajuda</a>
