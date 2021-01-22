@@ -42,11 +42,6 @@ class HomeController extends Controller
             }
         }
 
-        foreach($missions_id as $m){
-            $m->mission_user_points = $counter;
-            $m->save();
-        }
-
         $mission_user = $user->mission()->get();
         
         if($mission_user->isEmpty()) {
@@ -74,6 +69,12 @@ class HomeController extends Controller
         $progress_of_missions = [];
         
         $missions_id = Mission_user::where('user_id', $user->id)->latest()->limit(2)->get();
+
+        foreach($missions_id as $m){
+            $m->mission_user_points = $counter;
+            $m->save();
+        }
+        
         $missions_id = $missions_id->sortBy('mission_id');
 
         $loop = 0;
