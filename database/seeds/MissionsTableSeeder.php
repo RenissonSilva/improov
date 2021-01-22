@@ -25,12 +25,6 @@ class MissionsTableSeeder extends Seeder
                 "xp" => 100,
                 "points" => 4,
             ],
-            [
-                "id" => 3,
-                "name" => "Realize 2 commits em um desafio",
-                "xp" => 50,
-                "points" => 2,
-            ],
         ];
 
         foreach ($items as $item) {
