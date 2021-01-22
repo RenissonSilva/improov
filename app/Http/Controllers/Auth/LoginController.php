@@ -31,7 +31,7 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = RouteServiceProvider::HOME;
+    protected $redirectTo = '/user/home';
 
     /**
      * Create a new controller instance.
@@ -61,7 +61,7 @@ class LoginController extends Controller
 
         if($search_user){
             Auth::loginUsingId($search_user->id);
-            return redirect('/home');
+            return redirect('/user/home');
         }else{
             $data = [
                 'name' => $name,
@@ -81,7 +81,7 @@ class LoginController extends Controller
             ]);
     
             Auth::loginUsingId($user->id);
-            return redirect('/home');
+            return redirect('/user/home');
         }
     }
 

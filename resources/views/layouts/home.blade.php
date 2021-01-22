@@ -36,16 +36,21 @@
         <div class="main mb-5">
             <div class="loggedNavbar"></div>
             <nav class="navbar navbar-expand-md navbar-transparent">
-                <a class="navbar-brand" href="{{ url('/') }}">
+                <a class="navbar-brand" href="{{ route ('home') }}">
                     <img src="{{ url('images/logo.png') }}" class="logo">
                 </a>
-                <h4>Improov</h4>
+                <a class="simple_link" href="{{ route ('home') }}"><h4>Improov</h4></a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
                 </button>
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav ml-auto" >
+                        <li class="nav-item">
+                            <a class="item-navbar" href="{{ route('repos') }}">
+                                Repositórios
+                            </a>
+                        </li>
                         <li class="nav-item">
                             <a class="dropdown-item item-navbar" href="{{ route('logout') }}"
                                 onclick="event.preventDefault();
