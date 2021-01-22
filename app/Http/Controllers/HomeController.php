@@ -37,7 +37,7 @@ class HomeController extends Controller
         $counter = 0;
 
         foreach($github_info as $github_commit){
-            if($github_commit['type'] == 'PushEvent' && Carbon::parse($github_commit['created_at'])->isToday()){
+            if($github_commit['type'] == 'PushEvent' && Carbon::parse($github_commit['created_at'])->sub('3 hours')->isToday()){
                 $counter++;
             }
         }
@@ -74,7 +74,7 @@ class HomeController extends Controller
             $m->mission_user_points = $counter;
             $m->save();
         }
-        
+
         $missions_id = $missions_id->sortBy('mission_id');
 
         $loop = 0;
@@ -110,4 +110,5 @@ class HomeController extends Controller
 
         return view('home', compact('my_missions', 'level', 'xp', 'next_level', 'progress_of_missions', 'completed_missions'));
     }
+
 }
