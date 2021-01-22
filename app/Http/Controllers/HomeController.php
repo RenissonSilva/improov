@@ -31,6 +31,22 @@ class HomeController extends Controller
     public function index()
     {
         $user = User::where('id', Auth::id())->first();
+
+        $github_info = Http::get('https://api.github.com/users/'.$user->name.'/events/public');
+        $github_info = $github_info->json();
+        $counter = 0;
+
+        foreach($github_info as $github_commit){
+            if($github_commit['type'] == 'PushEvent' && Carbon::parse($github_commit['created_at'])->isToday()){
+                $counter++;
+            }
+        }
+
+        foreach($missions_id as $m){
+            $m->mission_user_points = $counter;
+            $m->save();
+        }
+
         $mission_user = $user->mission()->get();
         
         if($mission_user->isEmpty()) {
@@ -90,21 +106,6 @@ class HomeController extends Controller
         $level = $level[$i-1]->name;
 
         $completed_missions = count(array_filter($progress_of_missions,function($value){return $value >= 100;}));
-
-        $response = Http::get('https://api.github.com/users/'.$user->name.'/events/public');
-        $response = $response->json();
-        $counter = 0;
-
-        foreach($response as $res){
-            if($res['type'] == 'PushEvent' && Carbon::parse($res['created_at'])->isToday()){
-                $counter++;
-            }
-        }
-
-        foreach($missions_id as $m){
-            $m->mission_user_points = $counter;
-            $m->save();
-        }
 
         return view('home', compact('my_missions', 'level', 'xp', 'next_level', 'progress_of_missions', 'completed_missions'));
     }
