@@ -1,9 +1,11 @@
 @extends('layouts.home')
 
 @section('content')
-
+    <table>
     @foreach($github_repo as $repo)
-        <p class="text-center"><a href="{{$repo->html_url}}" target="_blank">{{$repo->name}}</a></p>
+    <tr>
+        <td><a href="{{$repo->html_url}}" target="_blank">{{$repo->name}}</a></td>
+    </tr>
     @endforeach
-
+    </table>
 @endsection
