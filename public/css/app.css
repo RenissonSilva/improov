@@ -10903,3 +10903,23 @@ a.text-dark:focus {
   }
 }
 
+.repo-title{
+  font-size:20px;
+  color:#5D5D5D;
+  font-weight: bold;
+  text-transform: capitalize;
+  margin-left: 20px;
+}
+
+.star{
+  color: #ccc;
+}
+
+.nm-row{
+  margin:0!important;
+}
+
+.repo-language{
+  width:60px!important;
+  height: 60px!important;
+}

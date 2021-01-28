@@ -109,13 +109,13 @@ main {
 }
 
 .icon-title {
-    font-size:1.6rem;
+    font-size:2rem;
     color: #8B64EC;
     margin-right: 1vw;
 }
 
 .menu-title {
-    font-size:1.8rem;
+    font-size:30px;
     color: #8B64EC;
     font-weight: bold;
     padding-left:0;
@@ -179,4 +179,10 @@ td, th {
     margin:0;
     padding-top:8px;
     font-weight: bold;
+}
+
+.sub-title {
+    font-size:18px;
+    font-weight: bold;
+    color: #5D5D5D;
 }
