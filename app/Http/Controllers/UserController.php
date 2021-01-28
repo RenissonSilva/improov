@@ -12,7 +12,7 @@ class UserController extends Controller
     public function listRepositories() {
         $user = User::where('id', Auth::id())->first();
         $github_repo = Http::get('https://api.github.com/users/'.$user->name.'/repos',[
-            'per_page' => 100,
+            'per_page' => 10,
             'sort' => 'updated',
         ]);
         $level = 0;
