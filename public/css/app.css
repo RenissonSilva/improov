@@ -10920,14 +10920,15 @@ a.text-dark:focus {
 }
 
 .repo-language{
-  width:60px!important;
-  height: 60px!important;
+  width:80px!important;
+  height: 80px!important;
+  border: 5px solid white;
+  box-shadow: -5px 5px 10px rgb(179, 179, 179);
 }
 
 .card-repo {
   height:140px;
 }
-
 
 .card-margin-default{
   border-left: 6px solid #ccc;
