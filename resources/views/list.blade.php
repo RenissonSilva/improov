@@ -10,7 +10,7 @@
         <div class="row">
             @foreach($github_repo as $repo)
             <div class="col-md-6">
-                <div class="card-panel grey lighten-5 z-depth-1">
+                <div class="card-panel grey lighten-5 z-depth-1 card-margin-default card-margin-{{$repo->language}} card-repo">
                     <div class="row nm-row">
                         <div>
                             <img src="{{ url('images/languages/js.png') }}" class="circle responsive-img repo-language">

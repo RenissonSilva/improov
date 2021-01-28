@@ -10904,9 +10904,9 @@ a.text-dark:focus {
 }
 
 .repo-title{
-  font-size:20px;
+  font-size:22px;
   color:#5D5D5D;
-  font-weight: bold;
+  font-weight: 700;
   text-transform: capitalize;
   margin-left: 20px;
 }
@@ -10922,4 +10922,29 @@ a.text-dark:focus {
 .repo-language{
   width:60px!important;
   height: 60px!important;
+}
+
+.card-repo {
+  height:140px;
+}
+
+
+.card-margin-default{
+  border-left: 6px solid #ccc;
+}
+
+.card-margin-JavaScript{
+  border-left: 6px solid #F7DF1E;
+}
+
+.card-margin-PHP{
+  border-left: 6px solid #8993C1;
+}
+
+.card-margin-HTML{
+  border-left: 6px solid #E85823;
+}
+
+.card-margin-Vue{
+  border-left: 6px solid #3FB27F;
 }
