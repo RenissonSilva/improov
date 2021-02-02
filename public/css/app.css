@@ -10904,9 +10904,9 @@ a.text-dark:focus {
 }
 
 .repo-title{
-  font-size:22px;
+  font-size:20px;
   color:#5D5D5D;
-  font-weight: 700;
+  font-weight: 600;
   text-transform: capitalize;
   margin-left: 20px;
 }
@@ -10948,4 +10948,51 @@ a.text-dark:focus {
 
 .card-margin-Vue{
   border-left: 6px solid #3FB27F;
+}
+
+.btn-github {
+  background-color:#E7975A!important;
+  border-radius: 5px!important;
+  text-transform: none!important;
+  font-weight: bold;
+  font-size:15px!important;
+  padding:0 20px!important;
+}
+
+.btn-github:hover {
+  background-color:#eba671!important;
+  box-shadow: 0 0 .6em #eba671!important;
+  color:#fff;
+}
+
+.fr{
+  float:right;
+}
+
+.div-btn-github{
+  width:100%;
+  position:absolute;
+  bottom:0;
+  right:0;
+}
+
+.repo-favorite{
+  font-size:25px;
+}
+
+.name-star{
+  height:100%;
+  padding-right:0!important;
+}
+
+.h-100{
+  height:100%;
+}
+
+.h-160{
+  height:160px;
+}
+
+.mb-0{
+  margin-bottom:0;
 }
