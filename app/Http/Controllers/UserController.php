@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Auth;
 use App\User;
+use App\Level;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 
@@ -15,11 +16,20 @@ class UserController extends Controller
             'per_page' => 10,
             'sort' => 'updated',
         ]);
-        $level = 0;
-        $xp = 0;
-        $next_level = 0;
         
         $github_repo = json_decode($github_repo);
+
+        $level = Level::all();
+
+        $xp = $user->xp;
+        $i = 0;
+
+        for($i=0; $xp - $level[$i]->required_xp >= 0; $i++){
+            $xp -= $level[$i]->required_xp;
+        }
+
+        $next_level = $level[$i]->required_xp;
+        $level = $level[$i-1]->name;
 
         return view('list', compact('github_repo', 'level', 'xp', 'next_level'));
     }

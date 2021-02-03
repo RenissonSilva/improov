@@ -108,6 +108,10 @@ class HomeController extends Controller
 
         $completed_missions = count(array_filter($progress_of_missions,function($value){return $value >= 100;}));
 
+        $following = Http::get('https://api.github.com/users/'.$user->name.'/following');
+        $following = $following->json();
+        // dd($following);
+
         return view('home', compact('my_missions', 'level', 'xp', 'next_level', 'progress_of_missions', 'completed_missions'));
     }
 
