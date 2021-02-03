@@ -16,7 +16,7 @@ class CreateRepositoriesTable extends Migration
         Schema::create('repositories', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('main_language');
+            $table->string('main_language')->nullable();
             $table->string('link');
             $table->unsignedBigInteger('user_id');
 

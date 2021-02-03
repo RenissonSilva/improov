@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Auth;
 use App\User;
 use App\Level;
+use App\Repository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 
@@ -13,11 +14,24 @@ class UserController extends Controller
     public function listRepositories() {
         $user = User::where('id', Auth::id())->first();
         $github_repo = Http::get('https://api.github.com/users/'.$user->name.'/repos',[
-            'per_page' => 10,
+            'per_page' => 100,
             'sort' => 'updated',
         ]);
         
         $github_repo = json_decode($github_repo);
+        $items = [];
+        foreach ($github_repo as $repo) {
+            array_push($items, [
+                'name' => $repo->name,
+                'main_language' => $repo->language,
+                'link' => $repo->html_url,
+                'user_id' => Auth::id(),
+            ]);
+        }
+
+        foreach ($items as $repo) {
+            Repository::updateOrCreate(['link' => $repo['link']], $repo);
+        }
 
         $level = Level::all();
 
