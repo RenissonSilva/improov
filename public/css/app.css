@@ -10996,3 +10996,7 @@ a.text-dark:focus {
 .mb-0{
   margin-bottom:0;
 }
+
+.last_update{
+  font-size:15px;
+}
