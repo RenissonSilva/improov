@@ -3,8 +3,7 @@
 @section('content')
     <div class="container-default">
         <div class="row mb-0">
-            <h3 class="col-12 menu-title"><i class="icon-title far fa-folder"></i>Meus projetos</h3>
-            <p>Última atualização feita em {{ $last_update->format('d/m/Y - H:m') }}</p>
+            <h3 class="col-12 menu-title"><i class="icon-title far fa-folder"></i>Meus projetos <i class="fas fa-sync-alt tooltipped update-icon" data-position="bottom" data-html="true" data-tooltip="Atualização é feita a cada 24h<br><br>Última realizada em {{ $last_update->format('d/m/Y - H:m') }}"></i></h3> 
         </div>
         <p class="sub-title">Clique na estrela para escolher seus projetos favoritos (máximo 3)</p>
         <div class="row">
