@@ -197,3 +197,35 @@ td, th {
     margin-left: 10px;
     color:#aaaaaa
 }
+
+.dropdown-home-layout{
+    background-color:transparent!important;
+    box-shadow:none!important;
+    border: 2px solid white!important;
+    border-radius: 10px!important;
+    font-weight:600;
+    background-color: rgba(255,255,255,0.2)!important;
+}
+
+.dropdown-home-layout:hover{
+    text-decoration: none;
+    color: #fff;
+    background-color: rgba(255,255,255,0.4)!important;
+}
+
+.dropdown-content li>a, .dropdown-content li>span {
+    font-size: 20px;
+    color: #5B83F7!important;
+    display: block;
+    line-height: 22px;
+    padding: 14px 16px;
+    font-weight: 500;
+}
+#dropdown-logged{
+    border-radius: 10px!important;
+}
+
+nav ul a:hover {
+    background-color: rgba(174, 87, 255, 0.1);
+    text-decoration: none;
+}
