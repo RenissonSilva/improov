@@ -10950,6 +10950,50 @@ a.text-dark:focus {
   border-left: 6px solid #3FB27F;
 }
 
+.card-margin-C{
+  border-left: 6px solid #A6A1F5;
+}
+
+.card-margin-C#{
+  border-left: 6px solid #6F4DD5;
+}
+
+.card-margin-Pug{
+  border-left: 6px solid #56332B;
+}
+
+.card-margin-Stylus{
+  border-left: 6px solid #333333;
+}
+
+.card-margin-Ruby{
+  border-left: 6px solid #AB1401;
+}
+
+.card-margin-R{
+  border-left: 6px solid #B6B7BC;
+}
+
+.card-margin-Sass{
+  border-left: 6px solid #CD669A;
+}
+
+.card-margin-SCSS{
+  border-left: 6px solid #CD669A;
+}
+
+.card-margin-Swift{
+  border-left: 6px solid #FE542D;
+}
+
+.card-margin-Python{
+  border-left: 6px solid #FFD947;
+}
+
+.card-margin-TypeScript{
+  border-left: 6px solid #00042A;
+}
+
 .btn-github {
   background-color:#E7975A!important;
   border-radius: 5px!important;
