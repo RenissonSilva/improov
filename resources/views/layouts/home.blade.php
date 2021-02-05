@@ -48,7 +48,7 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav ml-auto" >
                         <li class="nav-item">
-                            <a class="item-navbar" href="{{ route('repos') }}">
+                            <a class="item-navbar simple_link" href="{{ route('repos') }}">
                                 Repositórios
                             </a>
                         </li>

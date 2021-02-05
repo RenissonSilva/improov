@@ -186,3 +186,8 @@ td, th {
     font-weight: bold;
     color: #5D5D5D;
 }
+
+.simple_link:hover{
+    color:#fff;
+    text-decoration: none;
+}

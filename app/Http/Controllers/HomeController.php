@@ -37,7 +37,7 @@ class HomeController extends Controller
         $counter = 0;
 
         foreach($github_info as $github_commit){
-            if($github_commit['type'] == 'PushEvent' && Carbon::parse($github_commit['created_at'])->sub('3 hours')->isToday()){
+            if($github_commit['type'] == 'PushEvent' && Carbon::parse($github_commit['created_at'])->isToday()){
                 $counter++;
             }
         }
