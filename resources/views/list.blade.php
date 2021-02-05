@@ -3,7 +3,7 @@
 @section('content')
     <div class="container-default">
         <div class="row mb-0">
-            <h3 class="col-9 menu-title"><i class="icon-title far fa-folder"></i>Meus projetos</h3>
+            <h3 class="col-12 menu-title"><i class="icon-title far fa-folder"></i>Meus projetos</h3>
             <p>Última atualização feita em {{ $last_update->format('d/m/Y - H:m') }}</p>
         </div>
         <p class="sub-title">Clique na estrela para escolher seus projetos favoritos (máximo 3)</p>
