@@ -10930,48 +10930,80 @@ a.text-dark:focus {
   height:140px;
 }
 
+.card-margin-C{
+  border-left: 6px solid #A6A1F5;
+}
+
+.card-margin-CSS{
+  border-left: 6px solid #379AD6;
+}
+
 .card-margin-default{
   border-left: 6px solid #ccc;
 }
 
-.card-margin-JavaScript{
-  border-left: 6px solid #F7DF1E;
+.card-margin-Docker{
+  border-left: 6px solid #2496ED;
 }
 
-.card-margin-PHP{
-  border-left: 6px solid #8993C1;
+.card-margin-Go{
+  border-left: 6px solid #6AD8E6;
+}
+
+.card-margin-GraphQL{
+  border-left: 6px solid #E30098;
 }
 
 .card-margin-HTML{
   border-left: 6px solid #E85823;
 }
 
-.card-margin-Vue{
-  border-left: 6px solid #3FB27F;
+.card-margin-Java{
+  border-left: 6px solid #0D8AC7;
 }
 
-.card-margin-C{
-  border-left: 6px solid #A6A1F5;
+.card-margin-JavaScript{
+  border-left: 6px solid #F7DF1E;
 }
 
-.card-margin-C#{
-  border-left: 6px solid #6F4DD5;
+.card-margin-JSON{
+  border-left: 6px solid #232323;
+}
+
+.card-margin-Kotlin{
+  border-left: 6px solid #F88A02;
+}
+
+.card-margin-Lua{
+  border-left: 6px solid #000081;
+}
+
+.card-margin-Nginx{
+  border-left: 6px solid #009639;
+}
+
+.card-margin-Perl{
+  border-left: 6px solid #004065;
+}
+
+.card-margin-PHP{
+  border-left: 6px solid #8993C1;
 }
 
 .card-margin-Pug{
   border-left: 6px solid #56332B;
 }
 
-.card-margin-Stylus{
-  border-left: 6px solid #333333;
-}
-
-.card-margin-Ruby{
-  border-left: 6px solid #AB1401;
+.card-margin-Python{
+  border-left: 6px solid #FFD947;
 }
 
 .card-margin-R{
   border-left: 6px solid #B6B7BC;
+}
+
+.card-margin-Ruby{
+  border-left: 6px solid #AB1401;
 }
 
 .card-margin-Sass{
@@ -10982,16 +11014,20 @@ a.text-dark:focus {
   border-left: 6px solid #CD669A;
 }
 
+.card-margin-Stylus{
+  border-left: 6px solid #333333;
+}
+
 .card-margin-Swift{
   border-left: 6px solid #FE542D;
 }
 
-.card-margin-Python{
-  border-left: 6px solid #FFD947;
-}
-
 .card-margin-TypeScript{
   border-left: 6px solid #00042A;
+}
+
+.card-margin-Vue{
+  border-left: 6px solid #3FB27F;
 }
 
 .btn-github {
