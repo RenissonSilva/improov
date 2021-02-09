@@ -27,48 +27,22 @@
             @endforeach
         </tbody>
     </table>
-    <div class="row justify-content-around mt-5">
+    <div class="row justify-content-around mt-5" style="height:904px;border:1px solid black">
         <div class="col-6" style="border:1px solid black;">
         </div>
-        <div class="col-6 ranking" style="border:1px solid black">
-            <div class="row justify-content-md-center">
-                <h5>Ranking Semanal</h5>
-            </div>
-            <div class="row justify-content-md-center">
-                <a href="#" class="col-2">Amigos</a>
-                <a href="#" class="col-2">Geral</a>
-            </div>
-            <div class="row justify-content-md-center">
-                <div class="col col-lg-5">
-                    <!-- <h4>1</h4> -->
-                    <img src="{{ Auth::user()->image }}" class="imagem imagem1" alt="primeiro colocado">
-                    <p class="texto-ranking">Exterminador do Futuro</p>
-                </div>
-            </div>
-            <div class="row justify-content-md-center">
-                <div class="col col-lg-5">
-                    <!-- <h4>2</h4> -->
-                    <img src="{{ Auth::user()->image }}" class="imagem imagem2" alt="segundo colocado">
-                    <p class="texto-ranking">Lili</p>
-                </div>
-                <div class="col col-lg-5">
-                    <!-- <h4>3</h4> -->
-                    <img src="{{ Auth::user()->image }}" class="imagem imagem2" alt="terceiro colocado">
-                    <p class="texto-ranking">Allan</p>
-                </div>
-            </div>
-            <!-- <div class="row"> -->
-            <div class="person3 row">
-                <h4>4</h4>
-                <img src="{{ Auth::user()->image }}" class="imagem imagem3" alt="quarto colocado">
-                <p class="texto-ranking-3">EltonZera</p>
-            </div>
-            <!-- </div> -->
-            <hr>
-            <div class="person3 row align-middle">
-                <h4>5</h4>
-                <img src="{{ Auth::user()->image }}" class="imagem imagem3" alt="quinto colocado">
-                <p class="texto-ranking-3">Nem programo mizera</p>
+        <div class="col-6 backgroundRankingSemanal">
+            <h3 class="tituloRankingSemanal">Ranking Semanal <img class="imgTituloRankingSemanal"src="{{ url('images/premio.png') }}"></span></h3>
+            <div class="backSelect">
+                <button class="buttonSelectedRankingSemanal buttonsRankingSemanal">Amigos</button>
+                <button class="buttonsRankingSemanal" style="background:#5333A5;border-radius:5px;">Geral</button>
+                <img src="{{ Auth::user()->image }}" class="imagem imagem1">
+                <img src="{{ url('images/coroa.png') }}" class="coroa">
+                <div class="backPremiacao premiacaoFirst">1</div>
+                <h4 class="textoRankingPremiacao textoFirst">Erickson Ferreira</h4>
+                {{-- <img src="{{ Auth::user()->image }}" class="imagem imagem2"></img>
+                <img src="{{ Auth::user()->image }}" class="imagem imagem2"></img>
+                <img src="{{ Auth::user()->image }}" class="imagem imagem3"></img>
+                <img src="{{ Auth::user()->image }}" class="imagem imagem4"></img> --}}
             </div>
         </div>
     </div>

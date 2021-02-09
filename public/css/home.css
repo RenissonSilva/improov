@@ -187,6 +187,7 @@ td, th {
     color: #5D5D5D;
 }
 
+<<<<<<< HEAD
 .simple_link:hover{
     color:#fff;
     text-decoration: none;
@@ -228,4 +229,106 @@ td, th {
 nav ul a:hover {
     background-color: rgba(174, 87, 255, 0.1);
     text-decoration: none;
+}
+
+.imagem{
+    border-radius: 100%;
+    border: 5px solid #FFFFFF;
+    box-sizing: border-box;
+    filter: drop-shadow(-5px 5px 5px rgba(0, 0, 0, 0.25));
+    border-radius: 86px;
+}
+.imagem1{
+    width: 167px;
+    height: 167px;
+    margin:auto;
+    margin-top: 50px;
+    display: block;
+}
+.imagem2{
+    width: 100px;
+}
+.imagem3{
+    width: 100px;
+}
+.backgroundRankingSemanal{
+    background: #8B64EC;
+    box-shadow: inset 0px 0px 100px 25px rgba(0, 0, 0, 0.25);
+    border-radius: 8px;
+}
+.tituloRankingSemanal{
+    text-align:center;
+    font-weight: bold;
+    font-size: 30px;
+    line-height: 47px;
+    color: #FFFFFF;
+    text-shadow: 2px 4px 4px rgba(0, 0, 0, 0.25);
+}
+.imgTituloRankingSemanal{
+    width: 42px;
+    height: 42px;
+    margin-left: 15px;
+    margin-top: -5px;
+}
+.backSelect{
+    width: 410px;
+    height: 47px;
+    margin:auto;
+
+    background: #5333A5;
+    border-radius: 5px;
+}
+
+
+.buttonsRankingSemanal{
+    width: 49%;
+    height: 90%;
+    font-weight: bold;
+    font-size: 22px;
+    line-height: 35px;
+    color: #FFFFFF;
+}
+
+.buttonSelectedRankingSemanal{
+    background: #8B64EC;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 5px;
+}
+.coroa{
+    width: 60.39px;
+    height: 78px;
+    margin-left: 232px;
+    margin-top: -351px;
+    transform: rotate(35.31deg);
+}
+.backPremiacao{
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    border-radius: 100%;
+    text-align: center;
+    box-sizing: border-box;
+    box-shadow: inset 0px 0px 10px rgba(0, 0, 0, 0.25);
+}
+.premiacaoFirst{
+    margin-top: -61px;
+    margin-left: 126px;
+    font-weight: bold;
+    font-size: 28px;
+    line-height: 44px;
+    background: #D9FF3F;
+    border: 3px solid #F0FF43;
+    color:#A7B938;
+}
+.textoRankingPremiacao{
+    font-weight: 500;
+    font-size: 28px;
+    line-height: 44px;
+    color: #FFFFFF;
+    text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.textoFirst{
+    text-align: center;
+    margin-top:0px;
 }
