@@ -33,6 +33,11 @@
                 <img src="{{ url('images/vector.png') }}" class="vector">
                 <h3 class="textoProjetoFavorito">Projetos Favoritos</h3>
             </div>
+
+            @foreach($favorites_repositories as $fav_repo)
+            <h5>{{ $fav_repo->name }}</h5>
+            @endforeach
+
             <div class="boxProjetoFavorito">
                 <div class="retanguloCor"></div>
                 <div class="conteudoBoxProjetoFavorito">

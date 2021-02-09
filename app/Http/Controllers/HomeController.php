@@ -8,6 +8,7 @@ use App\User;
 use App\Level;
 use App\Mission;
 use App\Mission_user;
+use App\Repository;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Http;
 
@@ -108,11 +109,13 @@ class HomeController extends Controller
 
         $completed_missions = count(array_filter($progress_of_missions,function($value){return $value >= 100;}));
 
-        $following = Http::get('https://api.github.com/users/'.$user->name.'/following');
-        $following = $following->json();
+        // $following = Http::get('https://api.github.com/users/'.$user->name.'/following');
+        // $following = $following->json();
         // dd($following);
 
-        return view('home', compact('my_missions', 'level', 'xp', 'next_level', 'progress_of_missions', 'completed_missions'));
+        $favorites_repositories = Repository::where('user_id', Auth::id())->where('favorite', 1)->get();
+
+        return view('home', compact('my_missions', 'level', 'xp', 'next_level', 'progress_of_missions', 'completed_missions', 'favorites_repositories'));
     }
 
 }
