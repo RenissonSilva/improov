@@ -3,7 +3,7 @@ body {
 }
 
 .default-padding{
-    padding: 0 4vw;
+    padding: 0 15vw;
 }
 
 .container-default {
@@ -72,7 +72,7 @@ main {
 .navbar-transparent {
     background-color:transparent!important;
     box-shadow: none!important;
-    padding: 4vh 3vw 15vh 3vw;
+    padding: 4vh 15vw 15vh 15vw;
 }
 
 .item-navbar {
@@ -187,7 +187,6 @@ td, th {
     color: #5D5D5D;
 }
 
-<<<<<<< HEAD
 .simple_link:hover{
     color:#fff;
     text-decoration: none;
