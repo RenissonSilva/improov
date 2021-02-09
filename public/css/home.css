@@ -3,7 +3,7 @@ body {
 }
 
 .default-padding{
-    padding: 0 15vw;
+    padding: 0 4vw;
 }
 
 .container-default {
@@ -72,7 +72,7 @@ main {
 .navbar-transparent {
     background-color:transparent!important;
     box-shadow: none!important;
-    padding: 4vh 15vw 15vh 15vw;
+    padding: 4vh 3vw 15vh 3vw;
 }
 
 .item-navbar {
@@ -200,6 +200,7 @@ td, th {
 }
 
 .dropdown-home-layout{
+    margin-left: 0px;
     background-color:transparent!important;
     box-shadow:none!important;
     border: 2px solid white!important;
