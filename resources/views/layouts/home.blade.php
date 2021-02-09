@@ -44,7 +44,7 @@
 
                             <ul id='dropdown-logged' class='dropdown-content'>
                             <li><a href="{{ route('home') }}"> Início </a></li>
-                            <li><a href="{{ route('repos') }}">Meus Repositórios </a></li>
+                            <li><a href="{{ route('repos') }}">Meus Projetos </a></li>
                             <li>
                                 <a href="{{ route('logout') }}"
                                     onclick="event.preventDefault();document.getElementById('logout-form').submit();">
@@ -97,5 +97,6 @@
         </footer>
     </div>
     @include('layouts.scripts')
+    @yield('scripts')
 </body>
 </html>

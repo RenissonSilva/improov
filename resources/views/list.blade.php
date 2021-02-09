@@ -15,21 +15,57 @@
                         <div>
                             <img src="{{ url($url_image) }}" class="circle responsive-img repo-language">
                         </div>
-                        <div class="col-md-9 name-star">
+                        <div class="col-md-8 name-star">
                             <div>
                                 <span class="repo-title">
                                     {{ $repo->name }}
                                 </span>
-                                <a href="#" class="primary-content fr"><i class="material-icons star repo-favorite">grade</i></a>
                             </div>
                             <div class="right-align div-btn-github">
                                 <a class="waves-effect waves-light btn modal-trigger btn-default btn-github" href="{{ $repo->link }}" target="_blank">Ver no github</a>
                             </div>
                         </div>
+                        <!--
+                        star-bolder
+                        star
+                        -->
+                        <label class="right col-md-1">
+                            <input type="checkbox" name="fav-repositories"
+                            id="{{ $repo->id }}" {{ ($repo->favorite == 1) ? 'checked' : '' }}/>
+                            <span></span>
+                        </label>
                     </div>
                 </div>
             </div>
             @endforeach
         </div>
     </div>
+@endsection
+
+@section('scripts')
+<script>
+    $( document ).ready(function() {
+        $("input[name=fav-repositories]").click(function(e){
+            $.ajaxSetup({
+                headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') } });
+            $.ajax({
+                type: "post",
+                url: "addrepo",
+                dataType: 'json',
+                data: {'id': this.id},
+                success: function (res) {
+                    if(res.status === 'success') {
+                        console.log('Deu bom')
+                    } else {
+                        console.log('Deu bom no erro')
+                    }
+                },
+                error: function (res) {
+                    // toastr.error('Ooops, não foi possível seguir com a validação')
+                    console.log(res);
+                }
+            });
+        });
+    });
+</script>
 @endsection

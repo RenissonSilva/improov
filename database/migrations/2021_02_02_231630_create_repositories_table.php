@@ -19,6 +19,7 @@ class CreateRepositoriesTable extends Migration
             $table->string('main_language')->nullable();
             $table->string('link');
             $table->unsignedBigInteger('user_id');
+            $table->boolean('favorite')->default(0);
 
             $table->foreign('user_id')->references('id')->on('users');
             $table->timestamps();

@@ -63,4 +63,17 @@ class UserController extends Controller
 
         return view('list', compact('github_repo', 'level', 'xp', 'next_level', 'last_update'));
     }
+
+    public function addFavoriteRepository(Request $request) {
+        $user = User::where('id', Auth::id())->first();
+        $repository = Repository::where('id', $request->id)->first();
+        $counting_favorites = Repository::where('user_id', Auth::id())->where('favorite', 1)->count();
+        if($counting_favorites < 3){
+            $repository->favorite = ($repository->favorite == 1) ? 0 : 1;
+            $repository->save();
+            return response()->json(['status' => 'success', 'id' => $request->id]);
+        }else{
+            return response()->json(['status' => 'error', 'id' => $request->id, 'count_favorites' => $counting_favorites]);
+        }
+    } 
 }

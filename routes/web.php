@@ -22,6 +22,7 @@ Auth::routes();
 Route::prefix('user')->middleware('auth')->group(function () {
     Route::get('home', 'HomeController@index')->name('home');
     Route::get('repos', 'UserController@listRepositories')->name('repos');
+    Route::post('addrepo', 'UserController@addFavoriteRepository')->name('addRepo');
 });
 
 Route::get('login/github', 'Auth\LoginController@redirectToProvider');
