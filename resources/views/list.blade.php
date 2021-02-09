@@ -30,7 +30,7 @@
                         star
                         -->
                         <label class="right col-md-1">
-                            <input type="checkbox" name="fav-repositories"
+                            <input type="checkbox" name="fav_repositories"
                             id="{{ $repo->id }}" {{ ($repo->favorite == 1) ? 'checked' : '' }}/>
                             <span></span>
                         </label>
@@ -45,27 +45,40 @@
 @section('scripts')
 <script>
     $( document ).ready(function() {
-        $("input[name=fav-repositories]").click(function(e){
+
+        $("input[name=fav_repositories]").click(function(e){
+            id = this.id;
+            checked = this.checked;
+
+            if($('input[name="fav_repositories"]:checked').length >3){
+                e.preventDefault();
+            };
+
             $.ajaxSetup({
                 headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') } });
             $.ajax({
                 type: "post",
                 url: "addrepo",
                 dataType: 'json',
-                data: {'id': this.id},
+                data: {'id': id, 'checked': checked},
                 success: function (res) {
                     if(res.status === 'success') {
-                        console.log('Deu bom')
+                        if(res.checked == "true"){
+                            toastr.success('Adicionado aos favoritos com sucesso!')
+                        }else{
+                            toastr.success('Removido dos favoritos com sucesso!')
+                        }
                     } else {
-                        console.log('Deu bom no erro')
+                        toastr.error('Você já tem 3 repositórios favoritos')
                     }
                 },
                 error: function (res) {
-                    // toastr.error('Ooops, não foi possível seguir com a validação')
-                    console.log(res);
+                    toastr.error('Não foi possível adicionar/remover o repositório')
                 }
             });
         });
+
+        
     });
 </script>
 @endsection

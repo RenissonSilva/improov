@@ -492,3 +492,10 @@ border-radius: 112.5px;
     margin: auto;
 }
 
+.toast-success{
+    background-color: #3BA146!important;
+}
+
+.toast-error{
+    background-color: #D95E52!important;
+}

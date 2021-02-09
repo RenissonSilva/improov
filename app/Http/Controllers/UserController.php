@@ -68,12 +68,12 @@ class UserController extends Controller
         $user = User::where('id', Auth::id())->first();
         $repository = Repository::where('id', $request->id)->first();
         $counting_favorites = Repository::where('user_id', Auth::id())->where('favorite', 1)->count();
-        if($counting_favorites < 3){
+        if($counting_favorites < 3 || $request->checked == "false"){
             $repository->favorite = ($repository->favorite == 1) ? 0 : 1;
             $repository->save();
-            return response()->json(['status' => 'success', 'id' => $request->id]);
+            return response()->json(['status' => 'success', 'checked' => $request->checked]);
         }else{
-            return response()->json(['status' => 'error', 'id' => $request->id, 'count_favorites' => $counting_favorites]);
+            return response()->json(['status' => 'error']);
         }
     } 
 }
