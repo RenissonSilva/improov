@@ -27,8 +27,128 @@
             @endforeach
         </tbody>
     </table>
-    <div class="row justify-content-around mt-5" style="height:904px;border:1px solid black">
-        <div class="col-6" style="border:1px solid black;">
+    <div class="row justify-content-around mt-5" style="height:1004px;">
+        <div class="col-6">
+            <div class="tituloProjetoFavorito">
+                <img src="{{ url('images/vector.png') }}" class="vector">
+                <h3 class="textoProjetoFavorito">Projetos Favoritos</h3>
+            </div>
+            <div class="boxProjetoFavorito">
+                <div class="retanguloCor"></div>
+                <div class="conteudoBoxProjetoFavorito">
+                    <div class="headerBoxConteudo">
+                        <img class="imagemBoxHeader" src="{{ Auth::user()->image }}" alt="">
+                        <h4 class="textoBoxHeader">Calculadora em JavaScript</h4>
+                    </div>
+                    <div class="bodyBoxConteudo">
+                        <div class="commits">
+                            <div class="textoBodyBoxConteudo">
+                                Commits nos últimos dias
+                            </div>
+                            <div class="bolasCommitsBodyBox">
+                                <div class="bolaBodyBox bola1"></div>
+                                <div class="bolaBodyBox bola2"></div>
+                                <div class="bolaBodyBox bola3"></div>
+                                <div class="bolaBodyBox bola4"></div>
+                                <div class="bolaBodyBox bola5"></div>
+                                <div class="bolaBodyBox bola6"></div>
+                                <div class="bolaBodyBox bola7"></div>
+                                <div class="bolaBodyBox bola8"></div>
+                                <div class="bolaBodyBox bola9"></div>
+                                <div class="bolaBodyBox bola10"></div>
+                            </div>
+                        </div>
+                        <button class="btnBodyBoxConteudo">Ver mais</button>
+                    </div>
+                </div>
+            </div>
+            <div class="boxProjetoFavorito">
+                <div class="retanguloCor"></div>
+                <div class="conteudoBoxProjetoFavorito">
+                    <div class="headerBoxConteudo">
+                        <img class="imagemBoxHeader" src="{{ Auth::user()->image }}" alt="">
+                        <h4 class="textoBoxHeader">Calculadora em JavaScript</h4>
+                    </div>
+                    <div class="bodyBoxConteudo">
+                        <div class="commits">
+                            <div class="textoBodyBoxConteudo">
+                                Commits nos últimos dias
+                            </div>
+                            <div class="bolasCommitsBodyBox">
+                                <div class="bolaBodyBox bola1"></div>
+                                <div class="bolaBodyBox bola2"></div>
+                                <div class="bolaBodyBox bola3"></div>
+                                <div class="bolaBodyBox bola4"></div>
+                                <div class="bolaBodyBox bola5"></div>
+                                <div class="bolaBodyBox bola6"></div>
+                                <div class="bolaBodyBox bola7"></div>
+                                <div class="bolaBodyBox bola8"></div>
+                                <div class="bolaBodyBox bola9"></div>
+                                <div class="bolaBodyBox bola10"></div>
+                            </div>
+                        </div>
+                        <button class="btnBodyBoxConteudo">Ver mais</button>
+                    </div>
+                </div>
+            </div>
+            <div class="boxProjetoFavorito">
+                <div class="retanguloCor"></div>
+                <div class="conteudoBoxProjetoFavorito">
+                    <div class="headerBoxConteudo">
+                        <img class="imagemBoxHeader" src="{{ Auth::user()->image }}" alt="">
+                        <h4 class="textoBoxHeader">Calculadora em JavaScript</h4>
+                    </div>
+                    <div class="bodyBoxConteudo">
+                        <div class="commits">
+                            <div class="textoBodyBoxConteudo">
+                                Commits nos últimos dias
+                            </div>
+                            <div class="bolasCommitsBodyBox">
+                                <div class="bolaBodyBox bola1"></div>
+                                <div class="bolaBodyBox bola2"></div>
+                                <div class="bolaBodyBox bola3"></div>
+                                <div class="bolaBodyBox bola4"></div>
+                                <div class="bolaBodyBox bola5"></div>
+                                <div class="bolaBodyBox bola6"></div>
+                                <div class="bolaBodyBox bola7"></div>
+                                <div class="bolaBodyBox bola8"></div>
+                                <div class="bolaBodyBox bola9"></div>
+                                <div class="bolaBodyBox bola10"></div>
+                            </div>
+                        </div>
+                        <button class="btnBodyBoxConteudo">Ver mais</button>
+                    </div>
+                </div>
+            </div>
+            <div class="boxProjetoFavorito">
+                <div class="retanguloCor"></div>
+                <div class="conteudoBoxProjetoFavorito">
+                    <div class="headerBoxConteudo">
+                        <img class="imagemBoxHeader" src="{{ Auth::user()->image }}" alt="">
+                        <h4 class="textoBoxHeader">Calculadora em JavaScript</h4>
+                    </div>
+                    <div class="bodyBoxConteudo">
+                        <div class="commits">
+                            <div class="textoBodyBoxConteudo">
+                                Commits nos últimos dias
+                            </div>
+                            <div class="bolasCommitsBodyBox">
+                                <div class="bolaBodyBox bola1"></div>
+                                <div class="bolaBodyBox bola2"></div>
+                                <div class="bolaBodyBox bola3"></div>
+                                <div class="bolaBodyBox bola4"></div>
+                                <div class="bolaBodyBox bola5"></div>
+                                <div class="bolaBodyBox bola6"></div>
+                                <div class="bolaBodyBox bola7"></div>
+                                <div class="bolaBodyBox bola8"></div>
+                                <div class="bolaBodyBox bola9"></div>
+                                <div class="bolaBodyBox bola10"></div>
+                            </div>
+                        </div>
+                        <button class="btnBodyBoxConteudo">Ver mais</button>
+                    </div>
+                </div>
+            </div>
         </div>
         <div class="col-6 backgroundRankingSemanal">
             <h3 class="tituloRankingSemanal">Ranking Semanal <img class="imgTituloRankingSemanal"src="{{ url('images/premio.png') }}"></span></h3>
@@ -39,9 +159,30 @@
                 <img src="{{ url('images/coroa.png') }}" class="coroa">
                 <div class="backPremiacao premiacaoFirst">1</div>
                 <h4 class="textoRankingPremiacao textoFirst">Erickson Ferreira</h4>
-                {{-- <img src="{{ Auth::user()->image }}" class="imagem imagem2"></img>
-                <img src="{{ Auth::user()->image }}" class="imagem imagem2"></img>
-                <img src="{{ Auth::user()->image }}" class="imagem imagem3"></img>
+                <div class="section3">
+                    <div class="col">
+                        <img src="{{ Auth::user()->image }}" class="imagem imagem2"></img>
+                        <div class="backPremiacao premiacaoSecond">2</div>
+                        <h4 class="textoRankingPremiacao textoSecond">Erickson Ferreira</h4>
+                    </div>
+                    <div class="col">
+                        <img src="{{ Auth::user()->image }}" class="imagem imagem2"></img>
+                        <div class="backPremiacao premiacaoThird">3</div>
+                        <h4 class="textoRankingPremiacao textoThird">Erickson Ferreira</h4>
+                    </div>
+                </div>
+                <div class="section4" style="margin-top: 10px;">
+                    <div class="FinalPremiacao">4</div>
+                    <img src="{{ Auth::user()->image }}" class="imagem imagem3"></img>
+                    <h4 class="textoRanking">Erickson Ferreira</h4>
+                </div>
+                <hr style=" background: #A37EFF; height: 2px;">
+                <div class="section4">
+                    <div class="FinalPremiacao">5</div>
+                    <img src="{{ Auth::user()->image }}" class="imagem imagem3"></img>
+                    <h4 class="textoRanking">Erickson Ferreira</h4>
+                </div>
+                {{-- <img src="{{ Auth::user()->image }}" class="imagem imagem3"></img>
                 <img src="{{ Auth::user()->image }}" class="imagem imagem4"></img> --}}
             </div>
         </div>
