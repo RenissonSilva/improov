@@ -16,8 +16,8 @@ class CreateMissionsTable extends Migration
         Schema::create('missions', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->integer('level_mission');
-            $table->integer('points');
+            $table->integer('level_mission')->nullable();
+            $table->integer('points')->nullable();
             $table->timestamps();
         });
     }

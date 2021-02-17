@@ -45,23 +45,13 @@ class UserController extends Controller
             }
         }
 
-        $level = Level::all();
-
-        $xp = $user->xp;
-        $i = 0;
-
-        for($i=0; $xp - $level[$i]->required_xp >= 0; $i++){
-            $xp -= $level[$i]->required_xp;
-        }
-
-        $next_level = $level[$i]->required_xp;
-        $level = $level[$i-1]->name;
+        $level = $user->level;
 
         $github_repo = Repository::where('user_id', Auth::id())->get();
 
         $last_update = ($github_repo[0]) ? $github_repo[0]->updated_at : 'Ainda não teve atualização';
 
-        return view('list', compact('github_repo', 'level', 'xp', 'next_level', 'last_update'));
+        return view('list', compact('github_repo', 'level', 'last_update'));
     }
 
     public function addFavoriteRepository(Request $request) {

@@ -18,6 +18,7 @@ class CreateMissionUserTable extends Migration
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('mission_id');
             $table->integer('mission_user_points')->default(0);
+            $table->boolean('completed')->default(0);
 
             $table->foreign('user_id')->references('id')->on('users');
             $table->foreign('mission_id')->references('id')->on('missions');

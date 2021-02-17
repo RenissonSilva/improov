@@ -42,16 +42,23 @@ class HomeController extends Controller
                 $counter++;
             }
         }
-
-        $mission_user = $user->mission()->get();
-        
-        if($mission_user->isEmpty()) {
-            $taking_2_missions = Mission::inRandomOrder()->limit(2)->get();
-
-            foreach($taking_2_missions as $mission){
+        $mission_user = Mission::where('level_mission', $user->level+1)->get();
+        $get_missions = $user->mission()->get();
+        if($get_missions->isEmpty()){
+            foreach($mission_user as $mission){
                 $user->mission()->attach($mission);
             }
         }else{
+            $github_info = Http::get('https://api.github.com/users/'.$user->name.'/events/public');
+            $github_info = $github_info->json();
+            $counter = 0;
+
+            foreach($github_info as $github_commit){
+                if($github_commit['type'] == 'PushEvent' && Carbon::parse($github_commit['created_at'])->isToday()){
+                    $counter++;
+                }
+            }
+
             $getting_missions = Mission_user::where('user_id', $user->id)->latest()->limit(2)->get();
 
             $initial_date = Carbon::parse($getting_missions[0]->created_at->format('Y-m-d'));
@@ -85,9 +92,7 @@ class HomeController extends Controller
             $percentage = $missions_id[$loop]->mission_user_points / $m->points * 100;
             if($percentage >= 100){
                 if($missions_id[$loop]->added_xp == 0){
-                    $user->xp += $m->xp;
-                    $user->save();
-                    $missions_id[$loop]->added_xp = 1;
+                    $missions_id[$loop]->completed = 1;
                     $missions_id[$loop]->save();
                 }
             }
