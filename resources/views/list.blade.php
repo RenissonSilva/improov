@@ -3,7 +3,7 @@
 @section('content')
     <div class="container-default">
         <div class="row mb-0">
-            <h3 class="col-12 menu-title"><i class="icon-title far fa-folder"></i>Meus projetos <i class="fas fa-sync-alt tooltipped update-icon" data-position="bottom" data-html="true" data-tooltip="Atualização é feita a cada 24h<br><br>Última realizada em {{ $last_update->format('d/m/Y - H:m') }}"></i></h3> 
+            <h3 class="col-12 menu-title"><i class="icon-title far fa-folder"></i>Meus projetos <i class="fas fa-sync-alt tooltipped update-icon" data-position="bottom" data-html="true" data-tooltip="Atualização é feita a cada 24h<br><br>Última realizada em {{ $last_update->format('d/m/Y - H:m') }}"></i></h3>
         </div>
         <p class="sub-title">Clique na estrela para escolher seus projetos favoritos (máximo 3)</p>
         <div class="row">
@@ -32,7 +32,7 @@
                         <label class="right col-md-1">
                             <input type="checkbox" name="fav_repositories"
                             id="{{ $repo->id }}" {{ ($repo->favorite == 1) ? 'checked' : '' }}/>
-                            <span></span>
+                            <span id="span{{ $repo->id }}" class="{{ ($repo->favorite == 1) ? 'destaque' : 'apagada' }}"></span>
                         </label>
                     </div>
                 </div>
@@ -53,6 +53,9 @@
             if($('input[name="fav_repositories"]:checked').length >3){
                 e.preventDefault();
             };
+            if($('#span'+id).hasClass('destaque')){
+                e.preventDefault();
+            }
 
             $.ajaxSetup({
                 headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') } });
@@ -65,8 +68,12 @@
                     if(res.status === 'success') {
                         if(res.checked == "true"){
                             toastr.success('Adicionado aos favoritos com sucesso!')
+                            $('#span'+id).removeClass('apagada');
+                            $('#span'+id).addClass('destaque');
                         }else{
                             toastr.success('Removido dos favoritos com sucesso!')
+                            $('#span'+id).removeClass('destaque');
+                            $('#span'+id).addClass('apagada');
                         }
                     } else {
                         toastr.error('Você já tem 3 repositórios favoritos')
@@ -78,7 +85,7 @@
             });
         });
 
-        
+
     });
 </script>
 @endsection
