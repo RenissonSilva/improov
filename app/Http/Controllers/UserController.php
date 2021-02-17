@@ -23,24 +23,28 @@ class UserController extends Controller
         }
 
         if(!$isUpdated){
-            $github_repo = Http::get('https://api.github.com/users/'.$user->name.'/repos',[
+            $github_repo = Http::get('https://api.github.com/users/'.$user->nickname.'/repos',[
                 'per_page' => 100,
                 'sort' => 'updated',
             ]);
-            
+            // dd($github_repo);
+
             $github_repo = json_decode($github_repo);
             $items = [];
-            foreach ($github_repo as $repo) {
-                array_push($items, [
-                    'name' => $repo->name,
-                    'main_language' => $repo->language,
-                    'link' => $repo->html_url,
-                    'user_id' => Auth::id(),
-                    'updated_at' => Carbon::now(),
-                ]);
+            if(isset($github_repo)){
+
+                foreach ($github_repo as $repo) {
+                    array_push($items, [
+                        'name' => $repo->name,
+                        'main_language' => $repo->language,
+                        'link' => $repo->html_url,
+                        'user_id' => Auth::id(),
+                        'updated_at' => Carbon::now(),
+                        ]);
+                    }
+
             }
-    
-            foreach ($items as $repo) {
+                    foreach ($items as $repo) {
                 Repository::updateOrCreate(['link' => $repo['link']], $repo);
             }
         }
@@ -65,5 +69,5 @@ class UserController extends Controller
         }else{
             return response()->json(['status' => 'error']);
         }
-    } 
+    }
 }

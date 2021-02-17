@@ -33,6 +33,18 @@ class HomeController extends Controller
     {
         $user = User::where('id', Auth::id())->first();
 
+        $github_info = Http::get('https://api.github.com/users/'.$user->nickname.'/events/public');
+        $github_info = $github_info->json();
+        $counter = 0;
+        // dd($github_info);
+        foreach($github_info as $github_commit){
+            if(isset($github_commit['type'])){
+
+                if($github_commit['type'] == 'PushEvent' && Carbon::parse($github_commit['created_at'])->isToday()){
+                    $counter++;
+                }
+            }
+        }
         $mission_user = Mission::where('level_mission', $user->level+1)->get();
         $get_missions = $user->mission()->get();
         if($get_missions->isEmpty()){
@@ -40,7 +52,7 @@ class HomeController extends Controller
                 $user->mission()->attach($mission);
             }
         }else{
-            $github_info = Http::get('https://api.github.com/users/'.$user->name.'/events/public');
+            $github_info = Http::get('https://api.github.com/users/'.$user->nickname.'/events/public');
             $github_info = $github_info->json();
             $counter = 0;
 
@@ -54,7 +66,7 @@ class HomeController extends Controller
 
             $initial_date = Carbon::parse($getting_missions[0]->created_at->format('Y-m-d'));
             $final_date = Carbon::parse(Carbon::now()->format('Y-m-d'));
-            $diference = $initial_date->diff($final_date); 
+            $diference = $initial_date->diff($final_date);
             $diference = $diference->format('%d');
             if($diference >= 1){
                 $taking_2_missions = Mission::inRandomOrder()->limit(2)->get();
@@ -66,7 +78,7 @@ class HomeController extends Controller
         }
         $my_missions = [];
         $progress_of_missions = [];
-        
+
         $missions_id = Mission_user::where('user_id', $user->id)->latest()->limit(2)->get();
 
         foreach($missions_id as $m){

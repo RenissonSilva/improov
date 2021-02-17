@@ -53,6 +53,7 @@ class LoginController extends Controller
         $user_github = Socialite::driver('github')->user();
 
         $name = $user_github->getName() ?? $user_github->getNickname();
+        $nickname = $user_github->getNickname();
         $email = $user_github->getEmail();
         $github_id = $user_github->getId();
         $image = $user_github->getAvatar();
@@ -65,21 +66,22 @@ class LoginController extends Controller
         }else{
             $data = [
                 'name' => $name,
+                'nickname' => $nickname,
                 'email' => $email ,
                 'github_id' => $github_id,
                 'xp' => 0,
                 'image' => $image,
             ];
-    
+
             $user = User::create($data);
-    
+
             $token = Str::random(64);
-    
+
             DB::table('password_resets')->insert([
                 'email' => $email,
                 'token' => bcrypt($token),
             ]);
-    
+
             Auth::loginUsingId($user->id);
             return redirect('/user/home');
         }
