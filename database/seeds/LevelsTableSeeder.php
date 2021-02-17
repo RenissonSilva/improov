@@ -15,43 +15,33 @@ class LevelsTableSeeder extends Seeder
         $items = [
             [
                 "name" => "1",
-                "required_xp" => 0,
             ],
             [
                 "name" => "2",
-                "required_xp" => 20,
             ],
             [
                 "name" => "3",
-                "required_xp" => 40,
             ],
             [
                 "name" => "4",
-                "required_xp" => 60,
             ],
             [
                 "name" => "5",
-                "required_xp" => 80,
             ],
             [
                 "name" => "6",
-                "required_xp" => 100,
             ],
             [
                 "name" => "7",
-                "required_xp" => 120,
             ],
             [
                 "name" => "8",
-                "required_xp" => 140,
             ],
             [
                 "name" => "9",
-                "required_xp" => 160,
             ],
             [
                 "name" => "10",
-                "required_xp" => 180,
             ],
         ];
 

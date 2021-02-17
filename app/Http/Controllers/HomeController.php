@@ -95,17 +95,8 @@ class HomeController extends Controller
             array_push($my_missions, $m->name);
             $loop++;
         }
-        $level = Level::all();
 
-        $xp = $user->xp;
-        $i = 0;
-
-        for($i=0; $xp - $level[$i]->required_xp >= 0; $i++){
-            $xp -= $level[$i]->required_xp;
-        }
-
-        $next_level = $level[$i]->required_xp;
-        $level = $level[$i-1]->name;
+        $level = $user->level;
 
         $completed_missions = count(array_filter($progress_of_missions,function($value){return $value >= 100;}));
 
@@ -115,7 +106,7 @@ class HomeController extends Controller
 
         $favorites_repositories = Repository::where('user_id', Auth::id())->where('favorite', 1)->get();
 
-        return view('home', compact('my_missions', 'level', 'xp', 'next_level', 'progress_of_missions', 'completed_missions', 'favorites_repositories'));
+        return view('home', compact('my_missions', 'progress_of_missions', 'level', 'completed_missions', 'favorites_repositories'));
     }
 
 }

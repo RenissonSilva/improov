@@ -16,14 +16,35 @@ class MissionsTableSeeder extends Seeder
             [
                 "id" => 1,
                 "name" => "Commite em um projeto",
-                "xp" => 25,
+                "level_mission" => 2,
                 "points" => 1,
             ],
             [
                 "id" => 2,
-                "name" => "Realize 4 commits",
-                "xp" => 100,
-                "points" => 4,
+                "name" => "Realize 2 commits",
+                "level_mission" => 3,
+                "points" => 2,
+            ],
+
+            [
+                "id" => 3,
+                "name" => "Realize 3 commits",
+                "level_mission" => 4,
+                "points" => 3,
+            ],
+
+            [
+                "id" => 4,
+                "name" => "Realize 5 commits",
+                "level_mission" => 5,
+                "points" => 5,
+            ],
+
+            [
+                "id" => 5,
+                "name" => "Realize 20 commits",
+                "level_mission" => 6,
+                "points" => 20,
             ],
         ];
 

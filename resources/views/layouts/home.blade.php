@@ -62,7 +62,6 @@
             </nav>
             <div class="navbar navbar-expand-md default-padding">
                 <div class="btn-floating waves-effect waves-light btn-home"><i class="fas fa-crown"></i></div><h4 class="white-text stats-user">{{$level}}</h4>
-                <div class="btn-floating waves-effect waves-light btn-home"><h4 class="btn-xp">XP</h4></div><h4 class="white-text stats-user">{{$xp}} / {{$next_level}}</h4>
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav ml-auto" >
