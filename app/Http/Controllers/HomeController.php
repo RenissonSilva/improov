@@ -33,15 +33,6 @@ class HomeController extends Controller
     {
         $user = User::where('id', Auth::id())->first();
 
-        $github_info = Http::get('https://api.github.com/users/'.$user->name.'/events/public');
-        $github_info = $github_info->json();
-        $counter = 0;
-
-        foreach($github_info as $github_commit){
-            if($github_commit['type'] == 'PushEvent' && Carbon::parse($github_commit['created_at'])->isToday()){
-                $counter++;
-            }
-        }
         $mission_user = Mission::where('level_mission', $user->level+1)->get();
         $get_missions = $user->mission()->get();
         if($get_missions->isEmpty()){
@@ -89,7 +80,8 @@ class HomeController extends Controller
 
         foreach($missions_id as $mission){
             $m = Mission::where('id', $mission->mission_id)->first();
-            $percentage = $missions_id[$loop]->mission_user_points / $m->points * 100;
+
+            $percentage = ($m->points) ? $missions_id[$loop]->mission_user_points / $m->points * 100 : 0;
             if($percentage >= 100){
                 if($missions_id[$loop]->added_xp == 0){
                     $missions_id[$loop]->completed = 1;
@@ -103,6 +95,7 @@ class HomeController extends Controller
 
         $level = $user->level;
 
+        $total_missions = Mission_user::where('user_id', $user->id)->where('completed', 1)->join('missions', 'mission_id', '=', 'missions.id')->count();
         $completed_missions = count(array_filter($progress_of_missions,function($value){return $value >= 100;}));
 
         // $following = Http::get('https://api.github.com/users/'.$user->name.'/following');
@@ -111,7 +104,7 @@ class HomeController extends Controller
 
         $favorites_repositories = Repository::where('user_id', Auth::id())->where('favorite', 1)->get();
 
-        return view('home', compact('my_missions', 'progress_of_missions', 'level', 'completed_missions', 'favorites_repositories'));
+        return view('home', compact('my_missions', 'progress_of_missions', 'level', 'completed_missions', 'favorites_repositories', 'total_missions'));
     }
 
 }
