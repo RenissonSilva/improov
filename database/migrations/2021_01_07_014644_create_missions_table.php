@@ -18,6 +18,7 @@ class CreateMissionsTable extends Migration
             $table->string('name');
             $table->integer('level_mission')->nullable();
             $table->integer('points')->nullable();
+            $table->integer('criador')->nullable();
             $table->timestamps();
         });
     }
