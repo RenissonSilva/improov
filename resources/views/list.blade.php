@@ -1,6 +1,9 @@
 @extends('layouts.home')
 
 @section('content')
+<style>
+
+</style>
     <div class="container-default">
         <div class="row mb-0">
             <h3 class="col-12 menu-title"><i class="icon-title far fa-folder"></i>Meus projetos <i class="fas fa-sync-alt tooltipped update-icon" data-position="bottom" data-html="true" data-tooltip="Atualização é feita a cada 24h<br><br>Última realizada em {{ $last_update->format('d/m/Y - H:m') }}"></i></h3>
@@ -31,8 +34,8 @@
                         -->
                         <label class="right col-md-1">
                             <input type="checkbox" name="fav_repositories"
-                            id="{{ $repo->id }}" {{ ($repo->favorite == 1) ? 'checked' : '' }}/>
-                            <span id="span{{ $repo->id }}" class="{{ ($repo->favorite == 1) ? 'destaque' : 'apagada' }}"></span>
+                            id="{{ $repo->id }}" {{ ($repo->favorite == 1) ? 'checked' : 'dit' }}/>
+                            <span id="span{{ $repo->id }}" class="{{ ($repo->favorite == 1) ? 'star' : 'apagada' }}"></span>
                         </label>
                     </div>
                 </div>
@@ -49,7 +52,6 @@
         $("input[name=fav_repositories]").click(function(e){
             id = this.id;
             checked = this.checked;
-
             if($('input[name="fav_repositories"]:checked').length >3){
                 e.preventDefault();
             };
