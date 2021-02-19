@@ -35,7 +35,7 @@ class MissionController extends Controller
                         ->where('id',$id)
                         ->update([
                             'name' => $request->name,
-                            'updated_at' => date('Y-m-d H:i:s'),
+                            'updated_at' => date('Y-m-d H:i:s')
                         ]);
 
         return response()->json('Missão atualizada com Sucesso!');
@@ -45,9 +45,9 @@ class MissionController extends Controller
                         ->where('id',$id)->first();
 
         if($mission->completed == 0){
-            DB::table('mission_user')->where('id',$id)->update(['completed'=>1]);
+            DB::table('mission_user')->where('id',$id)->update(['completed'=>1,'updated_at' => date('Y-m-d H:i:s')]);
         }else{
-            DB::table('mission_user')->where('id',$id)->update(['completed'=>0]);
+            DB::table('mission_user')->where('id',$id)->update(['completed'=>0,'updated_at' => date('Y-m-d H:i:s')]);
         }
 
         return response()->json('Alterado o status da missão com sucesso!');

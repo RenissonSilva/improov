@@ -35,15 +35,14 @@
             </div>
 
             @foreach($favorites_repositories as $fav_repo)
-            <h5>{{ $fav_repo->name }}</h5>
-            @endforeach
+            @php ($fav_repo->main_language) ? $url_image = "images/languages/$fav_repo->main_language.png" : $url_image = "images/languages/default.png"; @endphp
 
             <div class="boxProjetoFavorito">
                 <div class="retanguloCor"></div>
                 <div class="conteudoBoxProjetoFavorito">
                     <div class="headerBoxConteudo">
-                        <img class="imagemBoxHeader" src="{{ Auth::user()->image }}" alt="">
-                        <h4 class="textoBoxHeader">Calculadora em JavaScript</h4>
+                        <img class="imagemBoxHeader" src="{{ url($url_image) }}" alt="">
+                        <h4 class="textoBoxHeader">{{$fav_repo->name}}</h4>
                     </div>
                     <div class="bodyBoxConteudo">
                         <div class="commits">
@@ -63,97 +62,11 @@
                                 <div class="bolaBodyBox bola10"></div>
                             </div>
                         </div>
-                        <button class="btnBodyBoxConteudo">Ver mais</button>
+                        <button class="btnBodyBoxConteudo" href="{{$fav_repo->link}}">Ver mais</button>
                     </div>
                 </div>
             </div>
-            <div class="boxProjetoFavorito">
-                <div class="retanguloCor"></div>
-                <div class="conteudoBoxProjetoFavorito">
-                    <div class="headerBoxConteudo">
-                        <img class="imagemBoxHeader" src="{{ Auth::user()->image }}" alt="">
-                        <h4 class="textoBoxHeader">Calculadora em JavaScript</h4>
-                    </div>
-                    <div class="bodyBoxConteudo">
-                        <div class="commits">
-                            <div class="textoBodyBoxConteudo">
-                                Commits nos últimos dias
-                            </div>
-                            <div class="bolasCommitsBodyBox">
-                                <div class="bolaBodyBox bola1"></div>
-                                <div class="bolaBodyBox bola2"></div>
-                                <div class="bolaBodyBox bola3"></div>
-                                <div class="bolaBodyBox bola4"></div>
-                                <div class="bolaBodyBox bola5"></div>
-                                <div class="bolaBodyBox bola6"></div>
-                                <div class="bolaBodyBox bola7"></div>
-                                <div class="bolaBodyBox bola8"></div>
-                                <div class="bolaBodyBox bola9"></div>
-                                <div class="bolaBodyBox bola10"></div>
-                            </div>
-                        </div>
-                        <button class="btnBodyBoxConteudo">Ver mais</button>
-                    </div>
-                </div>
-            </div>
-            <div class="boxProjetoFavorito">
-                <div class="retanguloCor"></div>
-                <div class="conteudoBoxProjetoFavorito">
-                    <div class="headerBoxConteudo">
-                        <img class="imagemBoxHeader" src="{{ Auth::user()->image }}" alt="">
-                        <h4 class="textoBoxHeader">Calculadora em JavaScript</h4>
-                    </div>
-                    <div class="bodyBoxConteudo">
-                        <div class="commits">
-                            <div class="textoBodyBoxConteudo">
-                                Commits nos últimos dias
-                            </div>
-                            <div class="bolasCommitsBodyBox">
-                                <div class="bolaBodyBox bola1"></div>
-                                <div class="bolaBodyBox bola2"></div>
-                                <div class="bolaBodyBox bola3"></div>
-                                <div class="bolaBodyBox bola4"></div>
-                                <div class="bolaBodyBox bola5"></div>
-                                <div class="bolaBodyBox bola6"></div>
-                                <div class="bolaBodyBox bola7"></div>
-                                <div class="bolaBodyBox bola8"></div>
-                                <div class="bolaBodyBox bola9"></div>
-                                <div class="bolaBodyBox bola10"></div>
-                            </div>
-                        </div>
-                        <button class="btnBodyBoxConteudo">Ver mais</button>
-                    </div>
-                </div>
-            </div>
-            <div class="boxProjetoFavorito">
-                <div class="retanguloCor"></div>
-                <div class="conteudoBoxProjetoFavorito">
-                    <div class="headerBoxConteudo">
-                        <img class="imagemBoxHeader" src="{{ Auth::user()->image }}" alt="">
-                        <h4 class="textoBoxHeader">Calculadora em JavaScript</h4>
-                    </div>
-                    <div class="bodyBoxConteudo">
-                        <div class="commits">
-                            <div class="textoBodyBoxConteudo">
-                                Commits nos últimos dias
-                            </div>
-                            <div class="bolasCommitsBodyBox">
-                                <div class="bolaBodyBox bola1"></div>
-                                <div class="bolaBodyBox bola2"></div>
-                                <div class="bolaBodyBox bola3"></div>
-                                <div class="bolaBodyBox bola4"></div>
-                                <div class="bolaBodyBox bola5"></div>
-                                <div class="bolaBodyBox bola6"></div>
-                                <div class="bolaBodyBox bola7"></div>
-                                <div class="bolaBodyBox bola8"></div>
-                                <div class="bolaBodyBox bola9"></div>
-                                <div class="bolaBodyBox bola10"></div>
-                            </div>
-                        </div>
-                        <button class="btnBodyBoxConteudo">Ver mais</button>
-                    </div>
-                </div>
-            </div>
+            @endforeach
         </div>
         <div class="col-6 backgroundRankingSemanal">
             <h3 class="tituloRankingSemanal">Ranking Semanal <img class="imgTituloRankingSemanal"src="{{ url('images/premio.png') }}"></span></h3>

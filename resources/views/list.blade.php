@@ -34,7 +34,7 @@
                         -->
                         <label class="right col-md-1">
                             <input type="checkbox" name="fav_repositories"
-                            id="{{ $repo->id }}" {{ ($repo->favorite == 1) ? 'checked' : 'dit' }}/>
+                            id="{{ $repo->id }}" {{ ($repo->favorite == 1) ? 'checked' : '' }}/>
                             <span id="span{{ $repo->id }}" class="{{ ($repo->favorite == 1) ? 'star' : 'apagada' }}"></span>
                         </label>
                     </div>
@@ -55,9 +55,10 @@
             if($('input[name="fav_repositories"]:checked').length >3){
                 e.preventDefault();
             };
-            if($('#span'+id).hasClass('destaque')){
+            if($('#span'+id).hasClass('star')){
                 e.preventDefault();
             }
+            console.log(id);
 
             $.ajaxSetup({
                 headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') } });
@@ -71,11 +72,13 @@
                         if(res.checked == "true"){
                             toastr.success('Adicionado aos favoritos com sucesso!')
                             $('#span'+id).removeClass('apagada');
-                            $('#span'+id).addClass('destaque');
+                            $('#span'+id).addClass('star');
+                            $('#'+id).attr('checked','checked');
                         }else{
                             toastr.success('Removido dos favoritos com sucesso!')
-                            $('#span'+id).removeClass('destaque');
+                            $('#span'+id).removeClass('star');
                             $('#span'+id).addClass('apagada');
+                            $('#'+id).removeAttr('checked');
                         }
                     } else {
                         toastr.error('Você já tem 3 repositórios favoritos')
