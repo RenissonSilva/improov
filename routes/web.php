@@ -24,6 +24,7 @@ Route::prefix('user')->middleware('auth')->group(function () {
     Route::get('repos', 'UserController@listRepositories')->name('repos');
     Route::post('addrepo', 'UserController@addFavoriteRepository')->name('addRepo');
     Route::prefix('mission')->middleware('auth')->group(function () {
+        Route::get('/', 'MissionController@index')->name('mission');
         Route::post('store', 'MissionController@store')->name('mission.store');
         Route::any('update/{id}', 'MissionController@update')->name('mission.update');
         Route::any('modifiedCompletedMission/{id}', 'MissionController@modifiedCompletedMission')->name('mission.modifiedCompletedMission');

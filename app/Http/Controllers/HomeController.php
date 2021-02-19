@@ -39,7 +39,6 @@ class HomeController extends Controller
         // dd($github_info);
         foreach($github_info as $github_commit){
             if(isset($github_commit['type'])){
-
                 if($github_commit['type'] == 'PushEvent' && Carbon::parse($github_commit['created_at'])->isToday()){
                     $counter++;
                 }
@@ -107,7 +106,7 @@ class HomeController extends Controller
 
         $level = $user->level;
 
-        $total_missions = Mission_user::where('user_id', $user->id)->where('completed', 1)->join('missions', 'mission_id', '=', 'missions.id')->count();
+        $total_missions = Mission_user::where('user_id', $user->id)->where('completed', 0)->join('missions', 'mission_id', '=', 'missions.id')->count();
         $completed_missions = count(array_filter($progress_of_missions,function($value){return $value >= 100;}));
 
         // $following = Http::get('https://api.github.com/users/'.$user->name.'/following');

@@ -13,8 +13,13 @@ use App\Repository;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
+
 class MissionController extends Controller
 {
+    public function index(){
+        return view('mission.index');
+    }
+
     public function store(Request $request){
         $addMission = DB::insert(
             'insert into missions (name,criador,created_at) values (?,?,?)',

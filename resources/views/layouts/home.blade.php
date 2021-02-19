@@ -46,6 +46,7 @@
                             <ul id='dropdown-logged' class='dropdown-content'>
                             <li><a href="{{ route('home') }}"> Início </a></li>
                             <li><a href="{{ route('repos') }}">Meus Projetos </a></li>
+                            <li><a href="{{ route('mission') }}">Minhas missões </a></li>
                             <li>
                                 <a href="{{ route('logout') }}"
                                     onclick="event.preventDefault();document.getElementById('logout-form').submit();">

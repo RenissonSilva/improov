@@ -6,7 +6,7 @@
 </style>
 <div class="container-default">
     <div class="row">
-        <h3 class="col-9 menu-title"><i class="fas fa-check-double icon-title"></i>Missões diárias</h3>
+        <h3 class="col-9 menu-title"><i class="fas fa-check icon-title"></i>Missões diárias</h3>
         <h3 class="col menu-title grey-text text-darken-1 right-align">{{ $completed_missions }}/{{ $total_missions }}</h3>
     </div>
     <table class="striped">
@@ -30,8 +30,7 @@
     <div class="row justify-content-around mt-5" style="height:1004px;">
         <div class="col-6">
             <div class="tituloProjetoFavorito">
-                <img src="{{ url('images/folder.png') }}" class="vector">
-                <h3 class="textoProjetoFavorito">Projetos Favoritos</h3>
+                <h3 class="col-9 menu-title"><i class="fas fa-folder icon-title"></i>Projetos Favoritos</h3>
             </div>
 
             @foreach($favorites_repositories as $fav_repo)

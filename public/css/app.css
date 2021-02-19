@@ -11045,6 +11045,23 @@ a.text-dark:focus {
   color:#fff;
 }
 
+.btn-mission {
+  background-color:#78ff85!important;
+  color: #3e8111!important;
+  border-radius: 5px!important;
+  text-transform: none!important;
+  font-weight: bold;
+  font-size:15px!important;
+  padding:0 20px!important;
+  margin: 1.9466666667rem 0 1.168rem 0;
+}
+
+.btn-mission:hover {
+  background-color:#8dff98!important;
+  box-shadow: 0 0 .6em #8dff98!important;
+  color:#6ea946!important;
+}
+
 .fr{
   float:right;
 }
