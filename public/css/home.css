@@ -115,7 +115,7 @@ main {
 }
 
 .menu-title {
-    font-size:30px;
+    font-size:28px;
     color: #8B64EC;
     font-weight: bold;
     padding-left:0;
@@ -245,12 +245,12 @@ nav ul a:hover {
     margin-top: 50px;
     display: block;
 }
-.imagem2{
-    width: 135px;
-    height: 135px
+.imagem2 {
+    width: 115px;
+    height: 115px;
 }
 .imagem3{
-    width: 100px;
+    width: 90px;
 }
 .backgroundRankingSemanal{
     background: #8B64EC;
@@ -260,7 +260,7 @@ nav ul a:hover {
 .tituloRankingSemanal{
     text-align:center;
     font-weight: bold;
-    font-size: 30px;
+    font-size: 26px;
     line-height: 47px;
     color: #FFFFFF;
     text-shadow: 2px 4px 4px rgba(0, 0, 0, 0.25);
@@ -272,8 +272,8 @@ nav ul a:hover {
     margin-top: -5px;
 }
 .backSelect{
-    width: 410px;
-    height: 47px;
+    width: 333px;
+    height: 42px;
     margin:auto;
 
     background: #5333A5;
@@ -283,9 +283,9 @@ nav ul a:hover {
 
 .buttonsRankingSemanal{
     width: 49%;
-    height: 90%;
+    height: 97%;
     font-weight: bold;
-    font-size: 22px;
+    font-size: 19px;
     line-height: 35px;
     color: #FFFFFF;
 }
@@ -295,26 +295,26 @@ nav ul a:hover {
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
     border-radius: 5px;
 }
-.coroa{
+.coroa {
     position: absolute;
-    width: 120.39px;
-    height: 160px;
-    margin-left: 200px;
-    margin-top: -246px;
-    /* transform: rotate(35.31deg); */
+    width: 106.39px;
+    /* height: 125px; */
+    margin-left: 161px;
+    margin-top: -216px;
+    transform: rotate(-1.69deg);
 }
 .backPremiacao{
     position: absolute;
-    width: 50px;
-    height: 50px;
+    width: 45px;
+    height: 45px;
     border-radius: 100%;
     text-align: center;
     box-sizing: border-box;
     box-shadow: inset 0px 0px 10px rgba(0, 0, 0, 0.25);
 }
 .premiacaoFirst{
-    margin-top: -61px;
-    margin-left: 126px;
+    margin-top: -40px;
+    margin-left: 100px;
     font-weight: bold;
     font-size: 28px;
     line-height: 44px;
@@ -352,9 +352,11 @@ nav ul a:hover {
     text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 }
 
-.textoFirst{
+.textoFirst {
     text-align: center;
-    margin-top:0px;
+    font-size: 28px;
+    margin-bottom: 8px;
+    margin-top: 1px;
 }
 .section3{
     text-align: center;
@@ -423,8 +425,10 @@ nav ul a:hover {
     margin: auto;
     height: 275px;
 }
-.headerBoxConteudo{
+.headerBoxConteudo {
     display: flex;
+    margin-left: -20px;
+    margin-top: 4px;
 }
 .imagemBoxHeader{
     width: 92px;
@@ -447,9 +451,10 @@ border-radius: 112.5px;
 .commits{
     width:75%;
 }
-.bodyBoxConteudo{
-    display:flex;
-    margin-top: 10px;
+.bodyBoxConteudo {
+    display: flex;
+    margin-top: 22px;
+    margin-left: -15px;
 }
 .textoBodyBoxConteudo{
     font-family: Saira;
