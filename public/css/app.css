@@ -11046,8 +11046,8 @@ a.text-dark:focus {
 }
 
 .btn-mission {
-  background-color:#78ff85!important;
-  color: #3e8111!important;
+  background-color:#8b64ec!important;
+  color: #fff!important;
   border-radius: 5px!important;
   text-transform: none!important;
   font-weight: bold;
@@ -11057,9 +11057,8 @@ a.text-dark:focus {
 }
 
 .btn-mission:hover {
-  background-color:#8dff98!important;
-  box-shadow: 0 0 .6em #8dff98!important;
-  color:#6ea946!important;
+  background-color:#9e83e1!important;
+  box-shadow: 0 0 .6em #9e83e1!important;
 }
 
 .fr{

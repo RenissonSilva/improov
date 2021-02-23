@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use Auth;
+use Response;
 use App\User;
 use App\Level;
 use App\Mission;
@@ -17,7 +18,9 @@ use Illuminate\Support\Facades\Http;
 class MissionController extends Controller
 {
     public function index(){
-        return view('mission.index');
+        $my_missions = Mission::where('criador', Auth::id())->get();
+
+        return view('mission.index', compact('my_missions'));
     }
 
     public function store(Request $request){
@@ -26,25 +29,34 @@ class MissionController extends Controller
             [$request->name, Auth::id(), date('Y-m-d H:i:s')]
         );
 
-        $mission = DB::table('missions')->select('criador','id')->where('criador',Auth::id())->orderBy('created_at', 'desc')->first();
-
-        $addMission_user = DB::insert(
-            'insert into mission_user (user_id, mission_id,completed,created_at) values (?,?,?)',
-            [$mission->criador, $mission->id,0,date('Y-m-d H:i:s')]
-        );
-
-        return response()->json('Missão adicionada com Sucesso!');
+        return redirect('user/mission')->with('success','Missão adicionada com Sucesso!');
     }
-    public function update(Request $request,$id){
+
+    public function modalEditMission(Request $request)
+    {   
+        $mission = Mission::where('id',$request->id)->first();
+
+        return Response::json($mission);
+    }
+
+    public function update(Request $request){
         $updateMission = DB::table('missions')
-                        ->where('id',$id)
+                        ->where('id',$request->id_edit)
                         ->update([
-                            'name' => $request->name,
+                            'name' => $request->name_edit,
                             'updated_at' => date('Y-m-d H:i:s')
                         ]);
 
-        return response()->json('Missão atualizada com Sucesso!');
+        return redirect('user/mission')->with('success','Missão atualizada com Sucesso!');
     }
+
+    public function delete($id)
+    {
+        $mission = Mission::where('id', $id)->first();
+        $mission->delete();
+        return redirect('user/mission')->with('success','Missão deletada com Sucesso!');
+    }
+
     public function modifiedCompletedMission($id){
         $mission = DB::table('mission_user')
                         ->where('id',$id)->first();
