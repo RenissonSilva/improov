@@ -27,7 +27,7 @@
             @endforeach
         </tbody>
     </table>
-    <div class="row justify-content-around mt-5" style="height:1004px;">
+    <div class="row justify-content-around mt-5" style="height:900px;margin-bottom:90px">
         <div class="col-6">
             <div class="tituloProjetoFavorito">
                 <h3 class="col-9 menu-title"><i class="fas fa-folder icon-title"></i>Projetos Favoritos</h3>
@@ -61,7 +61,7 @@
                                 <div class="bolaBodyBox bola10"></div>
                             </div>
                         </div>
-                        <button class="btnBodyBoxConteudo"><a target="_blank" href="{{$fav_repo->link}}" style="color:white;text-decoration:none">Ver mais</a></button>
+                        <button class="btnBodyBoxConteudo" style="margin-top: 15px;margin-left: 87px;"><a target="_blank" href="{{$fav_repo->link}}" style="color:white;text-decoration:none">Ver mais</a></button>
                     </div>
                 </div>
             </div>
