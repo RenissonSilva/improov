@@ -61,7 +61,7 @@
                                 <div class="bolaBodyBox bola10"></div>
                             </div>
                         </div>
-                        <button class="btnBodyBoxConteudo" href="{{$fav_repo->link}}">Ver mais</button>
+                        <button class="btnBodyBoxConteudo"><a target="_blank" href="{{$fav_repo->link}}" style="color:white;text-decoration:none">Ver mais</a></button>
                     </div>
                 </div>
             </div>
