@@ -52,8 +52,9 @@ class MissionController extends Controller
 
     public function delete($id)
     {
-        $mission = Mission::where('id', $id)->first();
-        $mission->delete();
+        $mission_user = Mission_user::where('mission_id', $id)->delete();
+        $mission = Mission::where('id', $id)->delete();
+
         return redirect('user/mission')->with('success','Missão deletada com Sucesso!');
     }
 
