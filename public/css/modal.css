@@ -1,8 +1,9 @@
-.modal-login, .modal-create-mission{
+.modal-login, .modal-missions{
     width:38vw!important;
     color:#8B64EC;
     border-top: 6px solid #8B64EC;
     border-radius: 10px!important;
+    min-width:500px;
 }
 
 .modal-title{

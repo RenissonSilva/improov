@@ -3,33 +3,27 @@
 @section('content')
     <div class="container-default">
         <div class="row">
-            <h3 class="col-9 menu-title"><i class="fas fa-list-ul icon-title"></i>Minhas missões</h3>
+            <h3 class="col-9 menu-title"><i class="fas fa-bullseye icon-title"></i>Minhas missões</h3>
             <a class="waves-effect waves-light btn modal-trigger btn-default btn-mission" href="#modal-create-mission">Criar uma missão</a>
         </div>
         <div class="row">
-            <div class="col s12 m6">
+            <div class="col s12">
                 <div class="card darken-1">
-                    <table class="highlight centered">
-                        <thead>
-                            <tr>
-                                <th>Nome</th>
-                                <th>Ações</th>
-                            </tr>
-                        </thead>
+                    <table class="highlight centered missions_list">
                         <tbody>
                             @foreach($my_missions as $mission)
                             <tr>
                                 <th>{{ $mission->name }}</th>
-                                <th>
-                                    <button class="waves-effect waves-light btn modal-trigger btn-default" 
-                                    onclick="modalEditMission(this)" href="#modal-edit-mission" id="{{ $mission->id }}">
-                                        Editar
+                                <th class="right-align">
+                                    <button class="btn-floating btn modal-trigger mr-2 newpurple" onclick="modalEditMission(this)" 
+                                        href="#modal-edit-mission" id="{{ $mission->id }}"><i class="material-icons">edit</i>
                                     </button>
                                     <form style="display:inline;" action="mission/delete/{{$mission->id}}" method="post">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit" onclick="return confirm('Tem certeza que deseja excluir a habilidade {{$mission->name}}' )" class= "btn btn-danger btn-sm">
-                                            <span  class="fa fa-trash-o">Deletar</span>
+                                        <button class="btn-floating btn red modal-trigger" 
+                                            onclick="return confirm('Tem certeza que deseja excluir a habilidade {{$mission->name}} ?')" 
+                                            id="{{ $mission->id }}"><i class="material-icons">delete</i>
                                         </button>
                                     </form>  
                                 </th>

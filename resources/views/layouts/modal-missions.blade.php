@@ -1,4 +1,4 @@
-<div id="modal-create-mission" class="modal modal-fixed-footer modal-create-mission">
+<div id="modal-create-mission" class="modal modal-fixed-footer modal-missions">
     <form action="{{ route('mission.store') }}" method="POST">
         @csrf
         <div class="modal-content">
@@ -18,12 +18,12 @@
         
         <div class="modal-footer">
             <a class="modal-close waves-effect waves-green btn-flat">Cancelar</a>
-            <button class="waves-effect waves-green btn">Salvar</button>
+            <button class="waves-effect waves-green btn btn-mission">Salvar</button>
         </div>
     </form>
   </div>
 
-  <div id="modal-edit-mission" class="modal modal-fixed-footer modal-edit-mission">
+  <div id="modal-edit-mission" class="modal modal-fixed-footer modal-missions">
     <form action="{{ route('mission.update') }}" method="POST">
         @csrf
         @method('PATCH')
@@ -45,7 +45,7 @@
         
         <div class="modal-footer">
             <a class="modal-close waves-effect waves-green btn-flat">Cancelar</a>
-            <button class="waves-effect waves-green btn">Salvar</button>
+            <button class="waves-effect waves-green btn btn-mission">Salvar</button>
         </div>
     </form>
   </div>
