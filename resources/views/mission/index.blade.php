@@ -4,10 +4,10 @@
     <div class="container-default">
         <div class="row">
             <h3 class="col-9 menu-title"><i class="fas fa-bullseye icon-title"></i>Minhas missões</h3>
-            <a class="waves-effect waves-light btn modal-trigger btn-default btn-mission" href="#modal-create-mission">Criar uma missão</a>
+            <a class="col waves-effect waves-light btn modal-trigger btn-default btn-mission" href="#modal-create-mission">Criar missão</a>
         </div>
         <div class="row">
-            <div class="col s12">
+            <div class="col s12 np">
                 <div class="card darken-1">
                     <table class="highlight centered missions_list">
                         <tbody>
@@ -22,13 +22,15 @@
                                     <span class="mission_name">{{ $mission->name }}</span>
                                 </th>
                                 <th class="right-align">
-                                    <button class="btn-floating btn modal-trigger mr-2 newpurple" onclick="modalEditMission(this)" 
+                                    <button class="btn-floating btn modal-trigger mr-2 newpurple tooltipped" data-position="top" 
+                                            data-html="true" data-tooltip="Editar"  onclick="modalEditMission(this)" 
                                         href="#modal-edit-mission" id="{{ $mission->id }}"><i class="material-icons">edit</i>
                                     </button>
                                     <form style="display:inline;" action="mission/delete/{{$mission->id}}" method="post">
                                         @csrf
                                         @method('DELETE')
-                                        <button class="btn-floating btn red modal-trigger" 
+                                        <button class="btn-floating btn red modal-trigger tooltipped" data-position="top" 
+                                            data-html="true" data-tooltip="Excluir" 
                                             onclick="return confirm('Tem certeza que deseja excluir a habilidade {{$mission->name}} ?')" 
                                             id="{{ $mission->id }}"><i class="material-icons">delete</i>
                                         </button>

@@ -3,7 +3,7 @@
         @csrf
         <div class="modal-content">
             <div class="row reset-margin">
-                <span class="modal-title">Criar uma missão</span>
+                <span class="modal-title">Criar missão</span>
             </div>
             <div class="line"></div>
             <div class="center-align modal-github">
@@ -27,7 +27,7 @@
         
         <div class="modal-footer">
             <a class="modal-close waves-effect waves-green btn-flat">Cancelar</a>
-            <button class="waves-effect waves-green btn btn-mission">Salvar</button>
+            <button class="waves-effect waves-green btn btn-mission">SALVAR</button>
         </div>
     </form>
   </div>
@@ -64,7 +64,7 @@
         
         <div class="modal-footer">
             <a class="modal-close waves-effect waves-green btn-flat">Cancelar</a>
-            <button class="waves-effect waves-green btn btn-mission">Salvar</button>
+            <button class="waves-effect waves-green btn btn-mission">SALVAR</button>
         </div>
     </form>
   </div>

@@ -544,3 +544,7 @@ border-radius: 112.5px;
 .mission_name{
     text-transform: capitalize;
 }
+
+.np{
+    padding:0!important;
+}

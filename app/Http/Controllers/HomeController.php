@@ -115,7 +115,7 @@ class HomeController extends Controller
 
         $favorites_repositories = Repository::where('user_id', Auth::id())->where('favorite', 1)->get();
 
-        return view('home', compact('my_missions', 'progress_of_missions', 'level', 'completed_missions', 'favorites_repositories', 'total_missions'));
+        return view('home', compact('my_missions', 'progress_of_missions', 'completed_missions', 'favorites_repositories', 'total_missions'));
     }
 
 }

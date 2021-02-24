@@ -55,7 +55,7 @@ class UserController extends Controller
 
         $last_update = ($github_repo[0]) ? $github_repo[0]->updated_at : 'Ainda não teve atualização';
 
-        return view('list', compact('github_repo', 'level', 'last_update'));
+        return view('list', compact('github_repo', 'last_update'));
     }
 
     public function addFavoriteRepository(Request $request) {
