@@ -528,3 +528,19 @@ border-radius: 112.5px;
 .newpurple{
     background-color: #8b64ec!important;
 }
+
+.badge-ativa{
+    background-color: #8b64ec!important;
+    font-size:15px!important;
+    font-weight:500!important;
+}
+
+.badge-inativa{
+    background-color: #F44336!important;
+    font-size:15px!important;
+    font-weight:500!important;
+}
+
+.mission_name{
+    text-transform: capitalize;
+}

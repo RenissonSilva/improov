@@ -13,6 +13,15 @@
                         <label for="name">Nome *</label>
                     </div>
                 </div>
+                <div class="row">
+                    <div class="input-field col s12">
+                        <select name="status_mission">
+                            <option value="0" selected>Inativa</option>
+                            <option value="1">Ativa</option>
+                        </select>
+                        <label>Estado da missão</label>
+                    </div>
+                </div>
             </div>
         </div>
         
@@ -38,6 +47,16 @@
                         <input type="hidden" name="id_edit" id="id_edit">
                         <input id="name_edit" type="text" name="name_edit" required>
                         <label for="name">Nome *</label>
+
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s12">
+                        <select name="status_mission" id="status_mission">
+                            <option value="0">Inativa</option>
+                            <option value="1">Ativa</option>
+                        </select>
+                        <label>Estado da missão</label>
                     </div>
                 </div>
             </div>

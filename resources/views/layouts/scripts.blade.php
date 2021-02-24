@@ -6,5 +6,6 @@
         $('.modal').modal();
         $('.tooltipped').tooltip();
         $('.dropdown-trigger').dropdown();
+        $('select').formSelect();
     });
 </script>

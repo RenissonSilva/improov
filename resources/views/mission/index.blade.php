@@ -11,9 +11,16 @@
                 <div class="card darken-1">
                     <table class="highlight centered missions_list">
                         <tbody>
+                            @if($my_missions->isEmpty())
+                            <b class="text-center my-5 grey-text h4">Nenhuma missão criada</b>
+                            @endif
                             @foreach($my_missions as $mission)
                             <tr>
-                                <th>{{ $mission->name }}</th>
+                                
+                                <th>
+                                    <span class="new badge mr-3 {{ ($mission->is_active == 1) ? 'badge-ativa' : 'badge-inativa' }}" data-badge-caption="">{{ ($mission->is_active == 1) ? 'ATIVA' : 'INATIVA' }}</span>
+                                    <span class="mission_name">{{ $mission->name }}</span>
+                                </th>
                                 <th class="right-align">
                                     <button class="btn-floating btn modal-trigger mr-2 newpurple" onclick="modalEditMission(this)" 
                                         href="#modal-edit-mission" id="{{ $mission->id }}"><i class="material-icons">edit</i>
@@ -53,16 +60,16 @@
             dataType: 'json',
             data: {'id' : $id},
             success: function (result) {
+                console.log(result.is_active);
                 $("#id_edit").val(result.id);
                 $("#name_edit").val(result.name);
                 $("#name_edit").focus();
-
-                // $("#modal-edit-mission").modal();
-
+                $(`#status_mission option[value=${result.is_active}]`).attr('selected','selected');
+                $('#status_mission').formSelect();
             },
             error: function (res) {
                 console.log(res);
-                console.log('erro');
+                console.log('Ocorreu algum erro');
             }
         });
 

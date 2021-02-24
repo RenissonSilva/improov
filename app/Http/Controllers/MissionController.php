@@ -24,11 +24,19 @@ class MissionController extends Controller
     }
 
     public function store(Request $request){
-        $addMission = DB::insert(
-            'insert into missions (name,criador,created_at) values (?,?,?)',
-            [$request->name, Auth::id(), date('Y-m-d H:i:s')]
+        $id = Auth::id();
+
+        $addMission = Mission::create(
+            ['name' => $request->name, 'criador' => $id]
         );
 
+        if($request->status_mission == 1){
+            Mission_user::create(
+                ['user_id' => $id, 'mission_id' => $addMission->id]
+            );
+        }
+        $addMission->is_active = $request->status_mission;
+        $addMission->save();
         return redirect('user/mission')->with('success','Missão adicionada com Sucesso!');
     }
 
@@ -40,12 +48,23 @@ class MissionController extends Controller
     }
 
     public function update(Request $request){
+        $id = Auth::id();
+
         $updateMission = DB::table('missions')
                         ->where('id',$request->id_edit)
                         ->update([
                             'name' => $request->name_edit,
+                            'is_active' => $request->status_mission,
                             'updated_at' => date('Y-m-d H:i:s')
                         ]);
+
+        if($request->status_mission == 1){
+            Mission_user::create(
+                ['user_id' => $id, 'mission_id' => $request->id_edit]
+            );
+        }else{
+            Mission_user::where('mission_id', $request->id_edit)->delete();
+        }
 
         return redirect('user/mission')->with('success','Missão atualizada com Sucesso!');
     }

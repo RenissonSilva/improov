@@ -32,7 +32,18 @@
             <div class="tituloProjetoFavorito">
                 <h3 class="col-9 menu-title"><i class="fas fa-folder icon-title"></i>Projetos Favoritos</h3>
             </div>
+            @if($favorites_repositories->isEmpty())
+            <div class="row">
+                <div class="col s12 m6">
+                <div class="card">
+                    <div class="card-content">
+                    <b class="text-center my-5 grey-text h4">Nenhum repositório favorito</b>
 
+                    </div>
+                </div>
+                </div>
+            </div>
+            @endif
             @foreach($favorites_repositories as $fav_repo)
             @php ($fav_repo->main_language) ? $url_image = "images/languages/$fav_repo->main_language.png" : $url_image = "images/languages/default.png"; @endphp
 

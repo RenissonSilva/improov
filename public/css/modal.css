@@ -60,3 +60,12 @@ input:not([type]):focus:not([readonly]),input[type=text]:not(.browser-default):f
     -webkit-box-shadow:0 1px 0 0 #8B64EC!important;
     box-shadow:0 1px 0 0 #8B64EC!important
 }
+
+.select-dropdown li.disabled, .select-dropdown li.disabled>span, .select-dropdown li.optgroup {
+    color: rgba(0,0,0,0.3)!important;
+    background-color: transparent;
+}
+
+.select-wrapper input.select-dropdown:focus{
+    border-bottom: 2px solid #8B64EC!important;
+}
