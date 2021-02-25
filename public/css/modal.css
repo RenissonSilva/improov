@@ -6,6 +6,25 @@
     min-width:500px;
 }
 
+.modal-confirm{
+    max-height:23%!important;
+    min-height:210px;
+}
+
+.modal-content-confirm{
+    height:100%;
+}
+
+.btn-remove:hover{
+    color:#fff;
+    box-shadow: 0 0 .6em red!important;
+}
+
+.confirm-text{
+    font-size: 18px;
+    color: #000;
+}
+
 .modal-title{
     font-size: 35px;
     font-weight: 900;

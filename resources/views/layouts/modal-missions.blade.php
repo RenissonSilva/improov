@@ -19,14 +19,14 @@
                             <option value="0" selected>Inativa</option>
                             <option value="1">Ativa</option>
                         </select>
-                        <label>Estado da missão</label>
+                        <label>Estado da missão *</label>
                     </div>
                 </div>
             </div>
         </div>
         
         <div class="modal-footer">
-            <a class="modal-close waves-effect waves-green btn-flat">Cancelar</a>
+            <a class="modal-close waves-effect waves-green btn-flat black_simple_link grey-text text-darken-2">Cancelar</a>
             <button class="waves-effect waves-green btn btn-mission">SALVAR</button>
         </div>
     </form>
@@ -56,15 +56,30 @@
                             <option value="0">Inativa</option>
                             <option value="1">Ativa</option>
                         </select>
-                        <label>Estado da missão</label>
+                        <label>Estado da missão *</label>
                     </div>
                 </div>
             </div>
         </div>
         
         <div class="modal-footer">
-            <a class="modal-close waves-effect waves-green btn-flat">Cancelar</a>
+            <a class="modal-close waves-effect waves-green btn-flat black_simple_link grey-text text-darken-2">Cancelar</a>
             <button class="waves-effect waves-green btn btn-mission">SALVAR</button>
         </div>
     </form>
+  </div>
+
+  <div id="modal-delete-mission" class="modal modal-login modal-confirm">
+    <div class="modal-content modal-content-confirm">
+      <h4>Confirmação</h4>
+      <p class="confirm-text grey-text text-darken-2">Tem certeza que deseja excluir essa missão?</p>
+      <div class="right-align">
+          <a class="modal-close waves-effect waves-green btn-flat black_simple_link grey-text text-darken-2">Cancelar</a>
+          <form id="form-delete" style="display:inline;" method="post">
+              @csrf
+              @method('DELETE')
+              <button type="submit" class="btn red modal-trigger btn-remove">Excluir</button>
+          </form>
+      </div>
+    </div>
   </div>

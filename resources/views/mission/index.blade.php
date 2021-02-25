@@ -23,18 +23,12 @@
                                 </th>
                                 <th class="right-align">
                                     <button class="btn-floating btn modal-trigger mr-2 newpurple tooltipped" data-position="top" 
-                                            data-html="true" data-tooltip="Editar"  onclick="modalEditMission(this)" 
+                                            data-html="true" data-tooltip="Editar" onclick="modalEditMission(this)" 
                                         href="#modal-edit-mission" id="{{ $mission->id }}"><i class="material-icons">edit</i>
                                     </button>
-                                    <form style="display:inline;" action="mission/delete/{{$mission->id}}" method="post">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button class="btn-floating btn red modal-trigger tooltipped" data-position="top" 
-                                            data-html="true" data-tooltip="Excluir" 
-                                            onclick="return confirm('Tem certeza que deseja excluir a habilidade {{$mission->name}} ?')" 
-                                            id="{{ $mission->id }}"><i class="material-icons">delete</i>
-                                        </button>
-                                    </form>  
+                                    <button class="btn-floating btn red modal-trigger tooltipped" data-position="top" 
+                                        data-html="true" data-tooltip="Excluir" onclick="modalRemoveMission(this)" href="#modal-delete-mission" id="{{ $mission->id }}"><i class="material-icons">delete</i>
+                                    </button>
                                 </th>
                             </tr>
                             @endforeach
@@ -76,6 +70,13 @@
         });
 
         return false;
+    }
+
+    function modalRemoveMission(data) {
+        var id = data.id;
+        var action = 'mission/delete/'+id;
+
+        $('#form-delete').attr('action', action);
     }
 </script>
 @endsection

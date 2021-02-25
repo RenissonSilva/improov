@@ -59,7 +59,7 @@ class MissionController extends Controller
                         ]);
 
         if($request->status_mission == 1){
-            Mission_user::create(
+            Mission_user::updateOrCreate(
                 ['user_id' => $id, 'mission_id' => $request->id_edit]
             );
         }else{
