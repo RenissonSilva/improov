@@ -541,7 +541,7 @@ border-radius: 112.5px;
 }
 
 .badge-inativa{
-    background-color: #F44336!important;
+    background-color: #fb6155!important;
     font-size:15px!important;
     font-weight:500!important;
 }
@@ -552,4 +552,8 @@ border-radius: 112.5px;
 
 .np{
     padding:0!important;
+}
+
+.newred{
+    background-color: #fb6155 !important;
 }

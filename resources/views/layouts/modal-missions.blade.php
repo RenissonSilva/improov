@@ -15,11 +15,21 @@
                 </div>
                 <div class="row">
                     <div class="input-field col s12">
-                        <select name="status_mission">
+                        <select name="status_mission" class="status_mission">
                             <option value="0" selected>Inativa</option>
                             <option value="1">Ativa</option>
                         </select>
                         <label>Estado da missão *</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s12">
+                        <select name="repeat_mission" class="repeat_mission" disabled>
+                            <option value="0" selected>Desabilitado</option>
+                            <option value="1">Repetir Diariamente</option>
+                            <option value="2">Repetir Semanalmente</option>
+                        </select>
+                        <label>Repetir *</label>
                     </div>
                 </div>
             </div>
@@ -52,11 +62,21 @@
                 </div>
                 <div class="row">
                     <div class="input-field col s12">
-                        <select name="status_mission" id="status_mission">
+                        <select name="status_mission" class="status_mission">
                             <option value="0">Inativa</option>
                             <option value="1">Ativa</option>
                         </select>
                         <label>Estado da missão *</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s12">
+                        <select name="repeat_mission" class="repeat_mission" disabled>
+                            <option value="0" selected>Desabilitado</option>
+                            <option value="1">Repetir Diariamente</option>
+                            <option value="2">Repetir Semanalmente</option>
+                        </select>
+                        <label>Repetir *</label>
                     </div>
                 </div>
             </div>

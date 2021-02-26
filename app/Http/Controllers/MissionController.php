@@ -38,12 +38,13 @@ class MissionController extends Controller
             ['name' => $request->name, 'criador' => $id]
         );
 
-        // if($request->status_mission == 1){
+        if($request->status_mission == 1){
             Mission_user::create(
                 ['user_id' => $id, 'mission_id' => $addMission->id]
             );
-        // }
-        $addMission->is_active = $request->status_mission;
+        }
+        $addMission->is_active = $request->status_mission ?? 0;
+        $addMission->repeat_mission = $request->repeat_mission ?? 0;
         $addMission->save();
         return redirect('user/mission')->with('success','Missão adicionada com Sucesso!');
     }
@@ -62,7 +63,8 @@ class MissionController extends Controller
                         ->where('id',$request->id_edit)
                         ->update([
                             'name' => $request->name_edit,
-                            'is_active' => $request->status_mission,
+                            'is_active' => $request->status_mission ?? 0,
+                            'repeat_mission' => $request->repeat_mission ?? 0,
                             'updated_at' => date('Y-m-d H:i:s')
                         ]);
 
@@ -79,14 +81,17 @@ class MissionController extends Controller
 
     public function delete($id)
     {
-        $mission_user = Mission_user::where('id', $id);
-        $muFirst = $mission_user->first();
-        $mission_user->delete();
+        // $mission_user = Mission_user::where('id', $id);
+        // $muFirst = $mission_user->first();
+        // $mission_user->delete();
 
-        $mission = Mission::where('id', $muFirst->mission_id)->first();
-        if($mission->criador != null){
-            Mission::where('id', $muFirst->mission_id)->delete();
-        }
+        // $mission = Mission::where('id', $muFirst->mission_id)->first();
+        // if($mission->criador != null){
+        //     Mission::where('id', $muFirst->mission_id)->delete();
+        // }
+        $mission_user = Mission_user::where('mission_id', $id)->delete();
+        $mission = Mission::where('id', $id)->delete();
+        
         return redirect('user/mission')->with('success','Missão deletada com Sucesso!');
     }
 

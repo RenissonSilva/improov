@@ -20,6 +20,7 @@ class CreateMissionsTable extends Migration
             $table->integer('points')->nullable();
             $table->integer('criador')->nullable();
             $table->boolean('is_active')->nullable();
+            $table->tinyInteger('repeat_mission')->default(0);
             $table->timestamps();
         });
     }

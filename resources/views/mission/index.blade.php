@@ -4,7 +4,7 @@
     <div class="container-default">
         <div class="row">
             <h3 class="col-9 menu-title"><i class="fas fa-bullseye icon-title"></i>Minhas missões</h3>
-            <a class="col waves-effect waves-light btn modal-trigger btn-default btn-mission" href="#modal-create-mission">Criar missão</a>
+            <a class="col waves-effect waves-light btn modal-trigger btn-default btn-mission" id="btn-create-mission" href="#modal-create-mission">Criar missão</a>
         </div>
         <div class="row">
             {{-- <form method="post" action="{{route('teste')}}">
@@ -37,8 +37,8 @@
                                                 data-html="true" data-tooltip="Editar" onclick="modalEditMission(this)"
                                                 href="#modal-edit-mission" id="{{ $mission->id }}"><i class="material-icons">edit</i>
                                             </button>
-                                            <button class="btn-floating btn red modal-trigger tooltipped" data-position="top"
-                                                data-html="true" data-tooltip="Excluir" onclick="modalRemoveMission(this)" href="#modal-delete-mission" id="{{ $mission->idMissionUser }}"><i class="material-icons">delete</i>
+                                            <button class="btn-floating btn newred modal-trigger tooltipped" data-position="top"
+                                                data-html="true" data-tooltip="Excluir" data-id="{{ $mission->id }}" onclick="modalRemoveMission(this)" href="#modal-delete-mission" id="{{ $mission->idMissionUser }}"><i class="material-icons">delete</i>
                                             </button>
                                         @endif
                                     </th>
@@ -93,12 +93,21 @@
             dataType: 'json',
             data: {'id' : $id},
             success: function (result) {
-                console.log(result.is_active);
                 $("#id_edit").val(result.id);
                 $("#name_edit").val(result.name);
                 $("#name_edit").focus();
-                $(`#status_mission option[value=${result.is_active}]`).attr('selected','selected');
-                $('#status_mission').formSelect();
+                $(`.status_mission`).val(result.is_active);
+                $('.status_mission').formSelect();
+
+                $(`.repeat_mission`).val(result.repeat_mission ?? 0);
+
+                if(result.is_active == 1){
+                    $(".repeat_mission").attr('disabled',false);
+                    $('.repeat_mission').formSelect();
+                }else{
+                    $(".repeat_mission").attr('disabled',true);
+                    $('.repeat_mission').formSelect();
+                }
             },
             error: function (res) {
                 console.log(res);
@@ -109,8 +118,28 @@
         return false;
     }
 
+    $('.status_mission').on('change', function (e) {
+        var value = this.value;
+
+        if(value == 1){
+            $(".repeat_mission").attr('disabled',false);
+            $('.repeat_mission').formSelect();
+        }else{
+            $(".repeat_mission").attr('disabled',true);
+            $('.repeat_mission').formSelect();
+        }
+    });
+
+    $('#btn-create-mission').on('click', function (e) {
+        $(`.status_mission`).val('0');
+        $(".repeat_mission").val('0');
+        $(".repeat_mission").attr('disabled',true);
+        $('.repeat_mission').formSelect();
+    });
+
     function modalRemoveMission(data) {
-        var id = data.id;
+        var id = $(data).data("id");
+
         var action = 'mission/delete/'+id;
 
         $('#form-delete').attr('action', action);
