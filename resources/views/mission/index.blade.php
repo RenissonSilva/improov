@@ -3,7 +3,7 @@
 @section('content')
     <div class="container-default">
         <div class="row">
-            <h3 class="col-9 menu-title"><i class="fas fa-bullseye icon-title"></i>Minhas missões</h3>
+            <h3 class="col-9 menu-title"><i class="fas fa-flag icon-title"></i>Minhas missões</h3>
             <a class="col waves-effect waves-light btn modal-trigger btn-default btn-mission" id="btn-create-mission" href="#modal-create-mission">Criar missão</a>
         </div>
         <div class="row">
