@@ -20,6 +20,7 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::prefix('user')->middleware('auth')->group(function () {
+    Route::post('teste', 'MissionController@teste')->name('teste');
     Route::get('home', 'HomeController@index')->name('home');
     Route::get('repos', 'UserController@listRepositories')->name('repos');
     Route::post('addrepo', 'UserController@addFavoriteRepository')->name('addRepo');
@@ -29,7 +30,7 @@ Route::prefix('user')->middleware('auth')->group(function () {
         Route::post('edit', 'MissionController@modalEditMission');
         Route::any('update', 'MissionController@update')->name('mission.update');
         Route::delete('delete/{id}', 'MissionController@delete')->name('mission.delete');
-        Route::any('modifiedCompletedMission/{id}', 'MissionController@modifiedCompletedMission')->name('mission.modifiedCompletedMission');
+        Route::post('modifiedCompletedMission/', 'MissionController@modifiedCompletedMission')->name('mission.modifiedCompletedMission');
     });
 });
 
