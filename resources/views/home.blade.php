@@ -13,7 +13,7 @@
         <tbody>
             @foreach($my_missions as $mission)
             <tr class="row">
-                <td class="col-8 mission-text">{{$mission}}</td>
+                <td class="col-8 mission-text">{{$mission->name}}</td>
                 <td class="col valign-wrapper">
                     <div class="progress">
                         @if ($loop->first)

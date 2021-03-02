@@ -10,6 +10,7 @@ use App\Mission;
 use App\Mission_user;
 use App\Repository;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 
 class HomeController extends Controller
@@ -109,6 +110,15 @@ class HomeController extends Controller
         $total_missions = Mission_user::where('user_id', $user->id)->where('completed', 0)->join('missions', 'mission_id', '=', 'missions.id')->count();
         $completed_missions = count(array_filter($progress_of_missions,function($value){return $value >= 100;}));
 
+        $my_missions = DB::table('missions AS m')
+                        ->leftJoin('mission_user AS mu','mu.mission_id','m.id')
+                        ->where('m.level_mission', Auth::user()->level)
+                        ->orwhere('m.criador', Auth::id())
+                        ->select('m.id','m.name','m.is_active','m.level_mission','m.points','m.criador',
+                                 'm.created_at','m.updated_at','mu.id AS idMissionUser','mu.user_id',
+                                 'mu.mission_user_points','mu.completed'
+                        )
+                        ->get();
         // $following = Http::get('https://api.github.com/users/'.$user->name.'/following');
         // $following = $following->json();
         // dd($following);

@@ -12,6 +12,7 @@ use App\Mission;
 use App\Mission_user;
 use App\Repository;
 use Carbon\Carbon;
+use DateTime;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 
@@ -113,20 +114,16 @@ class MissionController extends Controller
         $this->subirLevel(Auth::id(), Auth::user()->level);
     }
 
-    private function subirLevel($userId,$level){
-        $levelUp = (int) $level+1;
-        DB::table('users')->where('id',$userId)->update(['level'=>$levelUp]);
-        $this->addMissionWhenUpdateLevel($userId,$levelUp);
 
-        return response()->json('Subiu de level com sucesso!');
-    }
-    private function addMissionWhenUpdateLevel($userId,$level){
-        $missoes = DB::table('missions')->where('level_mission',$level)->get();
-        foreach($missoes as $m){
-            Mission_user::create(
-                ['user_id' => $userId, 'mission_id' => $m->id, 'mission_user_points'=>0,'completed'=>0]
-            );
-        }
 
-    }
+
+
+
+
+
+
+
+
+
+
 }

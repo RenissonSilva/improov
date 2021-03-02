@@ -21,6 +21,7 @@ class CreateUsersTable extends Migration
             $table->string('github_id');
             $table->string('image');
             $table->integer('level')->default(1);
+            $table->timestamp('dateUpLevel')->nullable();
             // $table->timestamp('email_verified_at')->nullable();
             // $table->string('password');
             $table->rememberToken();
