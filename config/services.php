@@ -31,9 +31,9 @@ return [
     ],
 
     'github' => [
-        'client_id' => env('GITHUB_CLIENT_ID'),
-        'client_secret' => env('GITHUB_CLIENT_SECRET'),
-        'redirect' => env('GITHUB_CALLBACK_URL'),
+        'client_id' => env('GITHUB_CLIENT_ID', '775177141bffec681691'),
+        'client_secret' => env('GITHUB_CLIENT_SECRET', '8cb486d55c9b4b4c334d4db58fc4c4d52c4623ca'),
+        'redirect' => env('GITHUB_CALLBACK_URL', 'https://improov.herokuapp.com/login/github/callback'),
     ],
 
 ];
