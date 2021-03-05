@@ -14,6 +14,20 @@ class MissionsTableSeeder extends Seeder
     {
         $items = [
             [
+                "id" => 7,
+                "name" => "Crie um repositorio",
+                "level_mission" => 1,
+                "points" => 2,
+                "is_active" => true
+            ],
+            [
+                "id" => 8,
+                "name" => "Ganhe um seguidor",
+                "level_mission" => 1,
+                "points" => 2,
+                "is_active" => true
+            ],
+            [
                 "id" => 1,
                 "name" => "Commite em um projeto",
                 "level_mission" => 1,

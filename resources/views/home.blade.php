@@ -19,7 +19,7 @@
                         @if ($loop->first)
                         <div class="determinate" style="width: {{ $progress_of_missions[0] }}%;"></div>
                         @else
-                        <div class="determinate" style="width: {{ $progress_of_missions[1] }}%;"></div>
+                        {{-- <div class="determinate" style="width: {{ $progress_of_missions[1] }}%;"></div> --}}
                         @endif
                     </div>
                 </td>
