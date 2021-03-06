@@ -98,13 +98,6 @@ class MissionController extends Controller
         $addMission = Mission::create(
             ['name' => $request->name, 'criador' => $id]
         );
-
-        if($request->status_mission == 1){
-            Mission_user::create(
-                ['user_id' => $id, 'mission_id' => $addMission->id]
-            );
-        }
-        $addMission->is_active = $request->status_mission ?? 0;
         $addMission->repeat_mission = $request->repeat_mission ?? 0;
         $addMission->save();
         return redirect('user/mission')->with('success','Missão adicionada com Sucesso!');
@@ -124,18 +117,9 @@ class MissionController extends Controller
                         ->where('id',$request->id_edit)
                         ->update([
                             'name' => $request->name_edit,
-                            'is_active' => $request->status_mission ?? 0,
                             'repeat_mission' => $request->repeat_mission ?? 0,
                             'updated_at' => date('Y-m-d H:i:s')
                         ]);
-
-        if($request->status_mission == 1){
-            Mission_user::updateOrCreate(
-                ['user_id' => $id, 'mission_id' => $request->id_edit]
-            );
-        }else{
-            Mission_user::where('mission_id', $request->id_edit)->delete();
-        }
 
         return redirect('user/mission')->with('success','Missão atualizada com Sucesso!');
     }
@@ -154,6 +138,21 @@ class MissionController extends Controller
         $mission = Mission::where('id', $id)->delete();
 
         return redirect('user/mission')->with('success','Missão deletada com Sucesso!');
+    }
+
+    public function changeStatusMission(Request $request)
+    {
+        $mission = Mission::where('id', $request->id)->first();
+        
+        if($request->is_active == "true"){
+            $mission->is_active = 1;
+            $mission->save();
+        }else{
+            $mission->is_active = 0;
+            $mission->save();
+        }
+        
+        return response()->json('Missão atualizada com Sucesso');
     }
 
     public function modifiedCompletedMission(Request $request){

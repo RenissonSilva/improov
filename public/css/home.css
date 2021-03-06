@@ -547,13 +547,23 @@ border-radius: 112.5px;
 }
 
 .mission_name{
+    font-size: 18px;
     text-transform: capitalize;
+    color: #565656;
 }
 
 .np{
     padding:0!important;
 }
 
+.nm{
+    margin:0!important;
+}
+
 .newred{
     background-color: #fb6155 !important;
+}
+
+.th-switch{
+    height: 80px!important;
 }

@@ -28,13 +28,6 @@ class MissionsTableSeeder extends Seeder
                 "is_active" => true
             ],
             [
-                "id" => 1,
-                "name" => "Commite em um projeto",
-                "level_mission" => 1,
-                "points" => 1,
-                "is_active" => true
-            ],
-            [
                 "id" => 2,
                 "name" => "Realize 2 commits",
                 "level_mission" => 2,

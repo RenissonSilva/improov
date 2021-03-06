@@ -13,15 +13,7 @@
                         <label for="name">Nome *</label>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="input-field col s12">
-                        <select name="status_mission" class="status_mission">
-                            <option value="0" selected>Inativa</option>
-                            <option value="1">Ativa</option>
-                        </select>
-                        <label>Estado da missão *</label>
-                    </div>
-                </div>
+
                 <div class="row">
                     <div class="input-field col s12">
                         <select name="repeat_mission" class="repeat_mission" disabled>
@@ -60,15 +52,7 @@
 
                     </div>
                 </div>
-                <div class="row">
-                    <div class="input-field col s12">
-                        <select name="status_mission" class="status_mission">
-                            <option value="0">Inativa</option>
-                            <option value="1">Ativa</option>
-                        </select>
-                        <label>Estado da missão *</label>
-                    </div>
-                </div>
+                
                 <div class="row">
                     <div class="input-field col s12">
                         <select name="repeat_mission" class="repeat_mission" disabled>

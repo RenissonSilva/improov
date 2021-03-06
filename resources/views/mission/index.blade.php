@@ -21,8 +21,13 @@
                             @foreach($my_missions as $mission)
                                 @if($mission->level_mission == null || $mission->level_mission == Auth::user()->level )
                                 <tr>
-                                    <th>
-                                        <span class="new badge mr-3 {{ ($mission->is_active == 1) ? 'badge-ativa' : 'badge-inativa' }}" data-badge-caption="">{{ ($mission->is_active == 1) ? 'ATIVA' : 'INATIVA' }}</span>
+                                    <th class="row nm th-switch valign-wrapper">
+                                        <div class="switch">
+                                            <label>
+                                            <input id="{{ $mission->id }}" class="toggle-mission" type="checkbox" {{ ($mission->is_active == 1) ? 'checked' : '' }}>
+                                            <span class="lever"></span>
+                                            </label>
+                                        </div>
                                         <span class="mission_name">{{ $mission->name }}</span>
                                     </th>
                                     <th class="right-align">
@@ -117,6 +122,35 @@
 
         return false;
     }
+
+    $('.toggle-mission').on('change', function (e) {
+        var id = this.id;
+        var is_active = this.checked;
+
+        $.ajaxSetup({
+            headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') } });
+
+        $.ajax({
+            type: "post",
+            url: "mission/change",
+            dataType: 'json',
+            data: {'id' : id, 'is_active': is_active},
+            success: function (result) {
+                console.log(is_active);
+                if(is_active == true){
+                    toastr.success('Missão ativada com sucesso!')
+                }else{
+                    toastr.success('Missão inativada com sucesso!')
+                }
+            },
+            error: function (res) {
+                console.log(res);
+                console.log('Ocorreu algum erro');
+            }
+        });
+
+        return false;
+    });
 
     $('.status_mission').on('change', function (e) {
         var value = this.value;
