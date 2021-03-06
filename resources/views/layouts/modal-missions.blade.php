@@ -1,7 +1,7 @@
 <div id="modal-create-mission" class="modal modal-fixed-footer modal-missions">
     <form action="{{ route('mission.store') }}" method="POST">
         @csrf
-        <div class="modal-content">
+        <div class="modal-content modal-padding">
             <div class="row reset-margin">
                 <span class="modal-title">Criar missão</span>
             </div>
@@ -38,7 +38,7 @@
     <form action="{{ route('mission.update') }}" method="POST">
         @csrf
         @method('PATCH')
-        <div class="modal-content">
+        <div class="modal-content modal-padding">
             <div class="row reset-margin">
                 <span class="modal-title">Editar missão</span>
             </div>
@@ -74,7 +74,7 @@
   </div>
 
   <div id="modal-delete-mission" class="modal modal-login modal-confirm">
-    <div class="modal-content modal-content-confirm">
+    <div class="modal-content modal-padding modal-content-confirm">
       <h4>Confirmação</h4>
       <p class="confirm-text grey-text text-darken-2">Tem certeza que deseja excluir essa missão?</p>
       <div class="right-align">

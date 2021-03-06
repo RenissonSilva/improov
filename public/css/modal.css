@@ -1,9 +1,11 @@
 .modal-login, .modal-missions{
-    width:38vw!important;
     color:#8B64EC;
     border-top: 6px solid #8B64EC;
     border-radius: 10px!important;
-    min-width:500px;
+    width:700px!important;
+    min-width:700px!important;
+    height: 550px!important;
+    min-height: 550px!important;
 }
 
 .modal-confirm{
@@ -30,14 +32,14 @@
     font-weight: 900;
 }
 
-.line{
-    width:3.5vw;
-    height:5px;
-    background-color: #8B64EC;
+.modal-padding {
+    padding: 40px 40px 0 40px!important;
 }
 
-.modal .modal-content {
-    padding: 40px!important;
+.line{
+    width:50px;
+    height:5px;
+    background-color: #8B64EC;
 }
 
 .fa-info-circle{
@@ -65,10 +67,6 @@
 
 .reset-margin {
     margin:0!important;
-}
-
-.modal .modal-content {
-    padding: 40px!important;
 }
 
 input:not([type]):focus:not([readonly])+label,input[type=text]:not(.browser-default):focus:not([readonly])+label,input[type=password]:not(.browser-default):focus:not([readonly])+label,input[type=email]:not(.browser-default):focus:not([readonly])+label,input[type=url]:not(.browser-default):focus:not([readonly])+label,input[type=time]:not(.browser-default):focus:not([readonly])+label,input[type=date]:not(.browser-default):focus:not([readonly])+label,input[type=datetime]:not(.browser-default):focus:not([readonly])+label,input[type=datetime-local]:not(.browser-default):focus:not([readonly])+label,input[type=tel]:not(.browser-default):focus:not([readonly])+label,input[type=number]:not(.browser-default):focus:not([readonly])+label,input[type=search]:not(.browser-default):focus:not([readonly])+label,textarea.materialize-textarea:focus:not([readonly])+label{
