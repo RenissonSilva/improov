@@ -567,3 +567,13 @@ border-radius: 112.5px;
 .th-switch{
     height: 80px!important;
 }
+
+.nmt{
+    margin-top: 0!important;
+}
+
+.truncate-custom{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
