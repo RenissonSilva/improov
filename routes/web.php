@@ -27,6 +27,7 @@ Route::prefix('user')->middleware('auth')->group(function () {
     Route::prefix('mission')->middleware('auth')->group(function () {
         Route::get('/', 'MissionController@index')->name('mission');
         Route::post('store', 'MissionController@store')->name('mission.store');
+        Route::post('change', 'MissionController@changeStatusMission')->name('mission.changeStatusMission');
         Route::post('edit', 'MissionController@modalEditMission');
         Route::any('update', 'MissionController@update')->name('mission.update');
         Route::delete('delete/{id}', 'MissionController@delete')->name('mission.delete');

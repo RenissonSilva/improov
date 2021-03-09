@@ -1,7 +1,7 @@
 <div id="modal-create-mission" class="modal modal-fixed-footer modal-missions">
     <form action="{{ route('mission.store') }}" method="POST">
         @csrf
-        <div class="modal-content">
+        <div class="modal-content modal-padding">
             <div class="row reset-margin">
                 <span class="modal-title">Criar missão</span>
             </div>
@@ -13,15 +13,7 @@
                         <label for="name">Nome *</label>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="input-field col s12">
-                        <select name="status_mission" class="status_mission">
-                            <option value="0" selected>Inativa</option>
-                            <option value="1">Ativa</option>
-                        </select>
-                        <label>Estado da missão *</label>
-                    </div>
-                </div>
+
                 <div class="row">
                     <div class="input-field col s12">
                         <select name="repeat_mission" class="repeat_mission" disabled>
@@ -29,7 +21,7 @@
                             <option value="1">Repetir Diariamente</option>
                             <option value="2">Repetir Semanalmente</option>
                         </select>
-                        <label>Repetir *</label>
+                        <label>Repetir * <i class="fas fa-info-circle right tooltipped" data-position="bottom" data-tooltip="Para agendar a repetição você precisa primeiramente ativar a missão" style="font-size:18px;"></i></label>
                     </div>
                 </div>
             </div>
@@ -46,7 +38,7 @@
     <form action="{{ route('mission.update') }}" method="POST">
         @csrf
         @method('PATCH')
-        <div class="modal-content">
+        <div class="modal-content modal-padding">
             <div class="row reset-margin">
                 <span class="modal-title">Editar missão</span>
             </div>
@@ -60,15 +52,7 @@
 
                     </div>
                 </div>
-                <div class="row">
-                    <div class="input-field col s12">
-                        <select name="status_mission" class="status_mission">
-                            <option value="0">Inativa</option>
-                            <option value="1">Ativa</option>
-                        </select>
-                        <label>Estado da missão *</label>
-                    </div>
-                </div>
+                
                 <div class="row">
                     <div class="input-field col s12">
                         <select name="repeat_mission" class="repeat_mission" disabled>
@@ -76,7 +60,8 @@
                             <option value="1">Repetir Diariamente</option>
                             <option value="2">Repetir Semanalmente</option>
                         </select>
-                        <label>Repetir *</label>
+                        <label>Repetir * <i class="fas fa-info-circle right tooltipped" data-position="bottom" data-tooltip="Para agendar a repetição você precisa primeiramente ativar a missão" style="font-size:18px;"></i></label>
+                        
                     </div>
                 </div>
             </div>
@@ -90,7 +75,7 @@
   </div>
 
   <div id="modal-delete-mission" class="modal modal-login modal-confirm">
-    <div class="modal-content modal-content-confirm">
+    <div class="modal-content modal-padding modal-content-confirm">
       <h4>Confirmação</h4>
       <p class="confirm-text grey-text text-darken-2">Tem certeza que deseja excluir essa missão?</p>
       <div class="right-align">
