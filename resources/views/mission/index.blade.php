@@ -136,11 +136,10 @@
             dataType: 'json',
             data: {'id' : id, 'is_active': is_active},
             success: function (result) {
-                console.log(is_active);
                 if(is_active == true){
                     toastr.success('Missão ativada com sucesso!')
                 }else{
-                    toastr.success('Missão inativada com sucesso!')
+                    toastr.success('Missão desativada com sucesso!')
                 }
             },
             error: function (res) {

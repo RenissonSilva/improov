@@ -38,11 +38,9 @@ class MissionController extends Controller
         // }
         // $linguagensFaltam = $this->LanguagesQueFaltam($languages);
         // DD($linguagensFaltam,$languages);
-
         $my_missions = DB::table('missions AS m')
                         ->leftJoin('mission_user AS mu','mu.mission_id','m.id')
-                        ->where('m.level_mission', Auth::user()->level)
-                        ->orwhere('m.criador', Auth::id())
+                        ->where('m.criador', Auth::id())
                         ->select('m.id','m.name','m.is_active','m.level_mission','m.points','m.criador',
                                  'm.created_at','m.updated_at','mu.id AS idMissionUser','mu.user_id',
                                  'mu.mission_user_points','mu.completed'
