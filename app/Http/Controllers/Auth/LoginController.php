@@ -64,10 +64,22 @@ class LoginController extends Controller
 
         $search_user = User::where('email', $email)->first();
 
+        // Verifica a quantidade de repositorios
+        $repos = Http::get('https://api.github.com/users/'.$nickname.'/repos')->json();
+        $quantRepos = 0;
+        foreach($repos as $f){
+            $e = explode('/', $f['full_name']);
+            if($e[0] == $nickname){
+                $quantRepos++;
+            }
+        }
+        // Quantidade de seguidores
+        $followers = Http::get('https://api.github.com/users/'.$nickname.'/followers')->json();
+        $quantFollowers = count($followers);
+        // dd($followers);
+        // dd(count($followers));
+
         if($search_user){
-
-
-
 
             Auth::loginUsingId($search_user->id);
 
@@ -87,9 +99,13 @@ class LoginController extends Controller
                 }
             }
 
-            $this->verificaUpLevel(Auth::user(),$c);
+            $this->verificaExperiencia(Auth::user(),$c,$quantRepos,$quantFollowers);
+            $this->verificaUpLevel(Auth::user());
             return redirect('/user/home');
         }else{
+
+
+
             $data = [
                 'name' => $name,
                 'nickname' => $nickname,
@@ -97,7 +113,9 @@ class LoginController extends Controller
                 'github_id' => $github_id,
                 'xp' => 0,
                 'image' => $image,
-                'dateUpLevel' => date('Y-m-d H:i:s')
+                'dateUpLevel' => date('Y-m-d H:i:s'),
+                'totalRepos' => $quantRepos,
+                'quantSeguidores' => $quantFollowers
             ];
 
             $user = User::create($data);
@@ -135,27 +153,46 @@ class LoginController extends Controller
         }
 
     }
-    private function verificaUpLevel($auth,$quantityCommits){
+    private function verificaExperiencia($auth,$quantityCommits,$totalRepositorios,$totalFollowers){
         if($auth->level == 1){
             if($quantityCommits > 1){
-                $this->subirLevel(Auth::id(), Auth::user()->level);
+                DB::table('users')->where('id',$auth->id)->update(['experiencia'=>$auth->experiencia+1]);
+            }
+            if($totalRepositorios > $auth->totalRepos){
+                DB::table('users')->where('id',$auth->id)->update(['totalRepos'=>$totalRepositorios,'experiencia'=>$auth->experiencia+2]);
+            }
+            if($totalFollowers > $auth->quantSeguidores){
+                DB::table('users')->where('id',$auth->id)->update(['quantSeguidores'=>$totalFollowers,'experiencia'=>$auth->experiencia+2]);
             }
         }elseif($auth->level == 2){
             if($quantityCommits > 2){
-                $this->subirLevel(Auth::id(), Auth::user()->level);
+                DB::table('users')->where('id',$auth->id)->update(['experiencia'=>$auth->experiencia+2]);
             }
         }elseif($auth->level == 3){
             if($quantityCommits > 3){
-                $this->subirLevel(Auth::id(), Auth::user()->level);
+                DB::table('users')->where('id',$auth->id)->update(['experiencia'=>$auth->experiencia+3]);
             }
         }elseif($auth->level == 4){
             if($quantityCommits > 5){
-                $this->subirLevel(Auth::id(), Auth::user()->level);
+                DB::table('users')->where('id',$auth->id)->update(['experiencia'=>$auth->experiencia+5]);
             }
         }elseif($auth->level == 5){
             if($quantityCommits > 20){
-                $this->subirLevel(Auth::id(), Auth::user()->level);
+                DB::table('users')->where('id',$auth->id)->update(['experiencia'=>$auth->experiencia+5]);
             }
+        }
+    }
+    private function verificaUpLevel($auth){
+        if($auth->level == 5){
+            $this->subirLevel($auth->id, $auth->experiencia);
+        }elseif($auth->level == 7){
+            $this->subirLevel($auth->id, $auth->experiencia);
+        }elseif($auth->level == 10){
+            $this->subirLevel($auth->id, $auth->experiencia);
+        }elseif($auth->level == 14){
+            $this->subirLevel($auth->id, $auth->experiencia);
+        }elseif($auth->level == 19){
+            $this->subirLevel($auth->id, $auth->experiencia);
         }
     }
 }

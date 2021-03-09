@@ -22,6 +22,8 @@ class CreateUsersTable extends Migration
             $table->string('image');
             $table->integer('level')->default(1);
             $table->timestamp('dateUpLevel')->nullable();
+            $table->integer('totalRepos')->nullable();
+            $table->integer('experiencia')->default(0);
             // $table->timestamp('email_verified_at')->nullable();
             // $table->string('password');
             $table->rememberToken();

@@ -7,10 +7,20 @@
 <div class="container-default">
     <div class="row">
         <h3 class="col-9 menu-title"><i class="fas fa-check icon-title"></i>Missões diárias</h3>
-        <h3 class="col menu-title grey-text text-darken-1 right-align">{{ $completed_missions }}/{{ $total_missions }}</h3>
     </div>
     <table class="striped">
         <tbody>
+            @if($my_missions->isEmpty())
+            <div class="row">
+                <div class="col s12 m6">
+                <div class="card">
+                    <div class="card-content">
+                        <b class="text-center my-5 grey-text h4">Nenhuma missão ativa</b>
+                    </div>
+                </div>
+                </div>
+            </div>
+            @endif
             @foreach($my_missions as $mission)
             <tr class="row">
                 <td class="col-8 mission-text">{{$mission->name}}</td>
@@ -19,7 +29,7 @@
                         @if ($loop->first)
                         <div class="determinate" style="width: {{ $progress_of_missions[0] }}%;"></div>
                         @else
-                        <div class="determinate" style="width: {{ $progress_of_missions[1] }}%;"></div>
+                        {{-- <div class="determinate" style="width: {{ $progress_of_missions[1] }}%;"></div> --}}
                         @endif
                     </div>
                 </td>
@@ -28,9 +38,9 @@
         </tbody>
     </table>
     <div class="row justify-content-around mt-5" style="height:900px;margin-bottom:90px">
-        <div class="col-6">
+        <div class="col-6 np">
             <div class="tituloProjetoFavorito">
-                <h3 class="col-9 menu-title"><i class="fas fa-folder icon-title"></i>Projetos Favoritos</h3>
+                <h3 class="col-12 menu-title nmt"><i class="fas fa-folder icon-title"></i>Projetos Favoritos</h3>
             </div>
             @if($favorites_repositories->isEmpty())
             <div class="row">
@@ -46,33 +56,22 @@
             @endif
             @foreach($favorites_repositories as $fav_repo)
             @php ($fav_repo->main_language) ? $url_image = "images/languages/$fav_repo->main_language.png" : $url_image = "images/languages/default.png"; @endphp
-
-            <div class="boxProjetoFavorito">
-                <div class="retanguloCor"></div>
-                <div class="conteudoBoxProjetoFavorito">
-                    <div class="headerBoxConteudo">
-                        <img class="imagemBoxHeader" src="{{ url($url_image) }}" alt="">
-                        <h4 class="textoBoxHeader">{{$fav_repo->name}}</h4>
-                    </div>
-                    <div class="bodyBoxConteudo">
-                        <div class="commits">
-                            <div class="textoBodyBoxConteudo">
-                                Commits nos últimos dias
+            <div class="col-md-12">
+                <div class="card-panel grey lighten-5 z-depth-1 card-margin-default card-margin-{{$fav_repo->main_language}} card-repo h-160">
+                    <div class="row nm-row h-100">
+                        <div class="col-md-3">
+                            <img src="{{ url($url_image) }}" class="circle responsive-img repo-language" style="min-width:80px;">
+                        </div>
+                        <div class="col-md-8 name-star np">
+                            <div class="truncate-custom">
+                                <span class="repo-title tooltipped" data-position="bottom" data-html="true" data-tooltip="{{ $fav_repo->name }}">
+                                    {{ $fav_repo->name }}
+                                </span>
                             </div>
-                            <div class="bolasCommitsBodyBox">
-                                <div class="bolaBodyBox bola1"></div>
-                                <div class="bolaBodyBox bola2"></div>
-                                <div class="bolaBodyBox bola3"></div>
-                                <div class="bolaBodyBox bola4"></div>
-                                <div class="bolaBodyBox bola5"></div>
-                                <div class="bolaBodyBox bola6"></div>
-                                <div class="bolaBodyBox bola7"></div>
-                                <div class="bolaBodyBox bola8"></div>
-                                <div class="bolaBodyBox bola9"></div>
-                                <div class="bolaBodyBox bola10"></div>
+                            <div class="right-align div-btn-github col np">
+                                <a class="waves-effect waves-light btn modal-trigger btn-default btn-github" href="{{ $fav_repo->link }}" target="_blank">Ver no github</a>
                             </div>
                         </div>
-                        <button class="btnBodyBoxConteudo" style="margin-top: 15px;margin-left: 87px;"><a target="_blank" href="{{$fav_repo->link}}" style="color:white;text-decoration:none">Ver mais</a></button>
                     </div>
                 </div>
             </div>

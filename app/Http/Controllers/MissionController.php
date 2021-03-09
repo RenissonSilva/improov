@@ -19,6 +19,26 @@ use Illuminate\Support\Facades\Http;
 class MissionController extends Controller
 {
     public function index(){
+
+        // $following = Http::get('https://api.github.com/users/'.Auth::user()->nickname.'/repos');
+        // $following = $following->json();
+        // $quantRepos = 0;
+        // foreach($following as $f){
+        //     // dd($f['full_name']);
+        //     $e = explode('/', $f['full_name']);
+        //     // dd($e[0]);
+
+        //     $languages[] = $f['language'];
+        //     $languages = array_unique($languages);
+
+        //     if($e[0] == Auth::user()->nickname){
+        //         $quantRepos++;
+        //     }
+        //     // $d[] = $f->full_name;
+        // }
+        // $linguagensFaltam = $this->LanguagesQueFaltam($languages);
+        // DD($linguagensFaltam,$languages);
+
         $my_missions = DB::table('missions AS m')
                         ->leftJoin('mission_user AS mu','mu.mission_id','m.id')
                         ->where('m.level_mission', Auth::user()->level)
@@ -31,6 +51,46 @@ class MissionController extends Controller
 
         return view('mission.index', compact('my_missions'));
     }
+    // public function LanguagesQueFaltam($languages){
+    //     $todasLanguages = [
+    //         'PHP',
+    //         'JAVA',
+    //         'Go',
+    //         'Swift',
+    //         'Kotlin',
+    //         'Python',
+    //         'JavaScript',
+    //         'C#',
+    //         'C++',
+    //         'C'
+    //     ];
+
+    //     for($i=0;$i<count($languages);$i++){
+    //         if($languages[$i] == 'PHP'){
+    //             unset($todasLanguages[$i]);
+    //         }elseif($languages[$i] == 'JAVA'){
+    //             unset($todasLanguages[$i]);
+    //         }elseif($languages[$i] == 'JavaScript'){
+    //             unset($todasLanguages[$i]);
+    //         }elseif($languages[$i] == 'Python'){
+    //             unset($todasLanguages[$i]);
+    //         }elseif($languages[$i] == 'C++'){
+    //             unset($todasLanguages[$i]);
+    //         }elseif($languages[$i] == 'Swift'){
+    //             unset($todasLanguages[$i]);
+    //         }elseif($languages[$i] == 'Go'){
+    //             unset($todasLanguages[$i]);
+    //         }elseif($languages[$i] == 'Kotlin'){
+    //             unset($todasLanguages[$i]);
+    //         }elseif($languages[$i] == 'C#'){
+    //             unset($todasLanguages[$i]);
+    //         }elseif($languages[$i] == 'C'){
+    //             unset($todasLanguages[$i]);
+    //         }
+    //     }
+    //     return $todasLanguages;
+    // }
+
 
     public function store(Request $request){
         $id = Auth::id();
@@ -38,13 +98,6 @@ class MissionController extends Controller
         $addMission = Mission::create(
             ['name' => $request->name, 'criador' => $id]
         );
-
-        if($request->status_mission == 1){
-            Mission_user::create(
-                ['user_id' => $id, 'mission_id' => $addMission->id]
-            );
-        }
-        $addMission->is_active = $request->status_mission ?? 0;
         $addMission->repeat_mission = $request->repeat_mission ?? 0;
         $addMission->save();
         return redirect('user/mission')->with('success','Missão adicionada com Sucesso!');
@@ -64,18 +117,9 @@ class MissionController extends Controller
                         ->where('id',$request->id_edit)
                         ->update([
                             'name' => $request->name_edit,
-                            'is_active' => $request->status_mission ?? 0,
                             'repeat_mission' => $request->repeat_mission ?? 0,
                             'updated_at' => date('Y-m-d H:i:s')
                         ]);
-
-        if($request->status_mission == 1){
-            Mission_user::updateOrCreate(
-                ['user_id' => $id, 'mission_id' => $request->id_edit]
-            );
-        }else{
-            Mission_user::where('mission_id', $request->id_edit)->delete();
-        }
 
         return redirect('user/mission')->with('success','Missão atualizada com Sucesso!');
     }
@@ -92,8 +136,23 @@ class MissionController extends Controller
         // }
         $mission_user = Mission_user::where('mission_id', $id)->delete();
         $mission = Mission::where('id', $id)->delete();
-        
+
         return redirect('user/mission')->with('success','Missão deletada com Sucesso!');
+    }
+
+    public function changeStatusMission(Request $request)
+    {
+        $mission = Mission::where('id', $request->id)->first();
+        
+        if($request->is_active == "true"){
+            $mission->is_active = 1;
+            $mission->save();
+        }else{
+            $mission->is_active = 0;
+            $mission->save();
+        }
+        
+        return response()->json('Missão atualizada com Sucesso');
     }
 
     public function modifiedCompletedMission(Request $request){
