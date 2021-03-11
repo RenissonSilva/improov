@@ -32,10 +32,17 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $user = User::where('id', Auth::id())->first();
 
-        $github_info = Http::get('https://api.github.com/users/'.$user->nickname.'/events/public');
-        $github_info = $github_info->json();
+        $missoesCriadasPeloUsuario = DB::table('missions')->where('criador',Auth::id())->get();
+        // dd(count($missoesCriadasPeloUsuario));
+
+        $user = User::where('id', Auth::id())->first();
+        if(session()->get('github_info')){
+            $github_info = session()->get('github_info');
+        }else{
+            $github_info = Http::get('https://api.github.com/users/'.Auth::user()->nickname.'/events/public')->json();
+            session()->put('github_info',$github_info);
+        }
         $counter = 0;
         // dd($github_info);
         foreach($github_info as $github_commit){
@@ -52,16 +59,6 @@ class HomeController extends Controller
                 $user->mission()->attach($mission);
             }
         }else{
-            $github_info = Http::get('https://api.github.com/users/'.$user->nickname.'/events/public');
-            $github_info = $github_info->json();
-            $counter = 0;
-
-            foreach($github_info as $github_commit){
-                if($github_commit['type'] == 'PushEvent' && Carbon::parse($github_commit['created_at'])->isToday()){
-                    $counter++;
-                }
-            }
-
             $getting_missions = Mission_user::where('user_id', $user->id)->latest()->limit(2)->get();
 
             $initial_date = Carbon::parse($getting_missions[0]->created_at->format('Y-m-d'));
@@ -112,13 +109,11 @@ class HomeController extends Controller
 
         $my_missions = DB::table('missions AS m')
                         ->leftJoin('mission_user AS mu','mu.mission_id','m.id')
-                        ->where('m.level_mission', Auth::user()->level)
-                        ->orWhere('m.criador', Auth::id())
-                        ->where('m.is_active', 1)
-                        ->select('m.id','m.name','m.is_active','m.level_mission','m.points','m.criador',
-                                 'm.created_at','m.updated_at','mu.id AS idMissionUser','mu.user_id',
-                                 'mu.mission_user_points','mu.completed'
-                        )
+                        ->where([
+                            ['m.level_mission', '=',Auth::user()->level],
+                            ['mu.completed', '=',0]
+                        ])
+                        // ->orwhere('m.criador', Auth::id())
                         ->get();
         // $following = Http::get('https://api.github.com/users/'.$user->name.'/following');
         // $following = $following->json();

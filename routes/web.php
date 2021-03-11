@@ -31,7 +31,7 @@ Route::prefix('user')->middleware('auth')->group(function () {
         Route::post('edit', 'MissionController@modalEditMission');
         Route::any('update', 'MissionController@update')->name('mission.update');
         Route::delete('delete/{id}', 'MissionController@delete')->name('mission.delete');
-        Route::post('modifiedCompletedMission/', 'MissionController@modifiedCompletedMission')->name('mission.modifiedCompletedMission');
+        Route::any('modifiedCompletedMission/{id}', 'MissionController@modifiedCompletedMission')->name('mission.modifiedCompletedMission');
     });
 });
 

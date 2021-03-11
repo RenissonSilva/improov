@@ -34,8 +34,8 @@
                                         @if($mission->points == null)
                                             @if($mission->completed == 0)
                                                 <button class="btn-floating btn mr-2 newpgreen tooltipped" data-position="top"
-                                                        data-html="true" data-tooltip="Concluída" onclick="missaoConcluida({{ $mission->idMissionUser }})"
-                                                        id="m{{ $mission->idMissionUser }}"><i class="material-icons">check</i>
+                                                        data-html="true" data-tooltip="Concluída" onclick="missaoConcluida({{ $mission->id }})"
+                                                        id="m{{ $mission->id }}"><i class="material-icons">check</i>
                                                 </button>
                                             @endif
                                             <button class="btn-floating btn modal-trigger mr-2 newpurple tooltipped" data-position="top"
@@ -68,17 +68,11 @@
             headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') } });
 
         $.ajax({
-            type: "post",
-            url: 'mission/modifiedCompletedMission/',
+            type: "get",
+            url: 'mission/modifiedCompletedMission/'+id,
             dataType: 'json',
-            data: {'id' : id},
-            success: function (result) {
-                // console.log(result);
-                $("#m"+id).hide();
-                // $("#name_edit").val(result.name);
-                // $("#name_edit").focus();
-                // $(`#status_mission option[value=${result.is_active}]`).attr('selected','selected');
-                // $('#status_mission').formSelect();
+            success: function (r) {
+                $("#m"+r).hide();
             },
             error: function (res) {
                 console.log(res);
@@ -128,7 +122,8 @@
         var is_active = this.checked;
 
         $.ajaxSetup({
-            headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') } });
+            headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') }
+        });
 
         $.ajax({
             type: "post",
@@ -140,27 +135,10 @@
                     toastr.success('Missão ativada com sucesso!')
                 }else{
                     toastr.success('Missão desativada com sucesso!')
+                     $('.repeat_mission').formSelect();
                 }
-            },
-            error: function (res) {
-                console.log(res);
-                console.log('Ocorreu algum erro');
             }
         });
-
-        return false;
-    });
-
-    $('.status_mission').on('change', function (e) {
-        var value = this.value;
-
-        if(value == 1){
-            $(".repeat_mission").attr('disabled',false);
-            $('.repeat_mission').formSelect();
-        }else{
-            $(".repeat_mission").attr('disabled',true);
-            $('.repeat_mission').formSelect();
-        }
     });
 
     $('#btn-create-mission').on('click', function (e) {
