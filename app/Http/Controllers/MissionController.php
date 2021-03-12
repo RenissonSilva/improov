@@ -20,46 +20,28 @@ class MissionController extends Controller
 {
     public function index(){
 
-//         $following = Http::get('https://api.github.com/users/'.Auth::user()->nickname.'/repos');
-//         $following = $following->json();
-//         $quantRepos = 0;
+        // $following = Http::get('https://api.github.com/users/'.Auth::user()->nickname.'/repos');
+        // $following = $following->json();
+        // $quantRepos = 0;
+        // foreach($following as $f){
+        //     // dd($f['full_name']);
+        //     $e = explode('/', $f['full_name']);
+        //     // dd($e[0]);
 
+        //     $languages[] = $f['language'];
+        //     $languages = array_unique($languages);
 
-//         $bio = Http::get('https://api.github.com/users/'.Auth::user()->nickname)->json();
-//         $bio = $bio->bio;
-// dd($bio);
-//         // Pegando o nome de uma linguagem que não fez o projeto principal
-//         foreach($following as $f){
-//             $languages[] = $f['language'];
-//             $languages = array_unique($languages);
-//         }
-//         $linguagensFaltam = $this->LanguagesQueFaltam($languages);
-//         $indiceAleatorio= array_rand($linguagensFaltam,1);
-//         $linguagemAleato = $linguagensFaltam[$indiceAleatorio];
-
-//         $repos = Http::get('https://api.github.com/users/ericksonferreira/repos')->json();
-//         $quantCommitsFeitos = 0;
-//         foreach($repos as $r){
-//             // $quantIssuesCriadas+= $r['contributors'];
-//             // $r['contributors_url'];
-//             // dd($r);
-//             $contribuidores = Http::get($r['contributors_url'])->json();
-//             foreach($contribuidores as $c){
-//                 if($c['login'] == Auth::user()->nickname){
-//                     // dd($c);
-//                     $quantCommitsFeitos += $c['contributions'];
-//                 }
-//             }
-//         }
-//         dd($quantCommitsFeitos);
-//         // dd($quantIssuesCriadas);
+        //     if($e[0] == Auth::user()->nickname){
+        //         $quantRepos++;
+        //     }
+        //     // $d[] = $f->full_name;
+        // }
+        // $linguagensFaltam = $this->LanguagesQueFaltam($languages);
+        // DD($linguagensFaltam,$languages);
 
         $my_missions = DB::table('missions AS m')
                         ->leftJoin('mission_user AS mu','mu.mission_id','m.id')
-                        ->where([
-                            ['m.level_mission', '=',Auth::user()->level],
-                            ['mu.completed', '=',0]
-                        ])
+                        ->where('m.level_mission', Auth::user()->level)
                         ->orwhere('m.criador', Auth::id())
                         ->select('m.id','m.name','m.is_active','m.level_mission','m.points','m.criador',
                                  'm.created_at','m.updated_at','mu.id AS idMissionUser','mu.user_id',
