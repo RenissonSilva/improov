@@ -59,7 +59,7 @@ class LoginController extends Controller
         try {
             $user_github = Socialite::driver('github')->user();
         } catch (Exception $e) {
-            return 'Sistema indisponivel por tempo indeterminado, por favor acesse mais tarde!';
+            return redirect('/error');
         }
         // dd(session()->get('user.repos'));
         $name = $user_github->getName() ?? $user_github->getNickname();
@@ -147,7 +147,7 @@ class LoginController extends Controller
                         }
                     }
                 }catch (Exception $e) {
-                    return 'Sistema indisponivel por tempo indeterminado, por favor acesse mais tarde!';
+                    return redirect('/error');
                 }
 
                 $quantMissoesCriadasCompletas = DB::table('missions AS m')
@@ -169,7 +169,6 @@ class LoginController extends Controller
                 $this->verificaUpLevel(Auth::user());
             }
 
-            return redirect('/user/home');
         }else{
             //  Adiciona a quantidae commits feitos
             try{
@@ -184,7 +183,8 @@ class LoginController extends Controller
                     }
                 }
             }catch (Exception $e) {
-                return 'Sistema indisponivel por tempo indeterminado, por favor acesse mais tarde!';
+                return redirect('/error');
+
             }
 
             $data = [
@@ -239,9 +239,8 @@ class LoginController extends Controller
             //     'created_at' => date('Y-m-d H:i:s')
             // ]);
 
-
-            return redirect('/user/home');
         }
+        return redirect('/user/home');
     }
 
     public function __construct()

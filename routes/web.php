@@ -17,6 +17,10 @@ Route::get('/', function () {
     return view('welcome');
 })->middleware('guest')->name('welcome');
 
+Route::get('/error', function () {
+    return view('error');
+})->middleware('guest')->name('error');
+
 Auth::routes();
 
 Route::prefix('user')->middleware('auth')->group(function () {
