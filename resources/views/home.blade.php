@@ -77,7 +77,7 @@
             </div>
             @endforeach
         </div>
-        <div class="col-6 backgroundRankingSemanal">
+        {{-- <div class="col-6 backgroundRankingSemanal">
             <h3 class="tituloRankingSemanal">Ranking Semanal <img class="imgTituloRankingSemanal"src="{{ url('images/premio.png') }}"></span></h3>
             <div class="backSelect">
                 <button class="buttonSelectedRankingSemanal buttonsRankingSemanal">Amigos</button>
@@ -112,7 +112,7 @@
                 {{-- <img src="{{ Auth::user()->image }}" class="imagem imagem3"></img>
                 <img src="{{ Auth::user()->image }}" class="imagem imagem4"></img> --}}
             </div>
-        </div>
+        </div> --}}
     </div>
 </div>
 @endsection
