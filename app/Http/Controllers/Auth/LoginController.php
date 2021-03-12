@@ -12,9 +12,10 @@ use Auth;
 use App\User;
 use Carbon\Carbon;
 use DateTime;
+use Exception;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Http;
-
+use Illuminate\Support\Facades\Redirect;
 
 class LoginController extends Controller
 {
@@ -45,7 +46,7 @@ class LoginController extends Controller
      */
     public function redirectToProvider()
     {
-        return Socialite::driver('github')->redirect();
+        return Socialite::driver('github')->stateless()->redirect();
     }
 
     /**
@@ -55,7 +56,11 @@ class LoginController extends Controller
      */
     public function handleProviderCallback()
     {
-        $user_github = Socialite::driver('github')->user();
+        try {
+            $user_github = Socialite::driver('github')->stateless()->user();
+        } catch (Exception $e) {
+            return Redirect::to('auth/github');
+        }
         // dd(session()->get('user.repos'));
         $name = $user_github->getName() ?? $user_github->getNickname();
         $nickname = $user_github->getNickname();
