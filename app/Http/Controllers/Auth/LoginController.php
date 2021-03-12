@@ -59,7 +59,7 @@ class LoginController extends Controller
         try {
             $user_github = Socialite::driver('github')->stateless()->user();
         } catch (Exception $e) {
-            return Redirect::to('auth/github');
+            return Redirect::to('login/github');
         }
         // dd(session()->get('user.repos'));
         $name = $user_github->getName() ?? $user_github->getNickname();
