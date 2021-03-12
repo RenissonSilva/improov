@@ -59,7 +59,7 @@ class LoginController extends Controller
         try {
             $user_github = Socialite::driver('github')->stateless()->user();
         } catch (Exception $e) {
-            return Redirect::to('login/github');
+            dd($_GET);
         }
         // dd(session()->get('user.repos'));
         $name = $user_github->getName() ?? $user_github->getNickname();
@@ -209,20 +209,19 @@ class LoginController extends Controller
             Auth::loginUsingId($user->id);
 
             // Adicionando missões aos usuários
-            DB::table('mission_user')->insert([
-                'id' => 1,
+            Mission_user::create([
                 'user_id' => Auth::id(),
                 'mission_id' => 1,
                 'completed' => 0,
                 'created_at' => date('Y-m-d H:i:s')
             ]);
-            DB::table('mission_user')->insert([
-                'id' => 2,
+            Mission_user::create([
                 'user_id' => Auth::id(),
                 'mission_id' => 2,
                 'completed' => 0,
                 'created_at' => date('Y-m-d H:i:s')
             ]);
+
 
             return redirect('/user/home');
         }
