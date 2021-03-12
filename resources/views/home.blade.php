@@ -27,7 +27,8 @@
                 <td class="col valign-wrapper">
                     <div class="progress">
                         @if ($loop->first)
-                        <div class="determinate" style="width: {{ $progress_of_missions[0] }}%;"></div>
+                        {{-- <div class="determinate" style="width: {{ $progress_of_missions[0] }}%;"></div> --}}
+                        <div class="determinate" style="width: 0%;"></div>
                         @else
                         {{-- <div class="determinate" style="width: {{ $progress_of_missions[1] }}%;"></div> --}}
                         @endif

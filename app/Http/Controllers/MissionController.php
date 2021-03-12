@@ -39,9 +39,15 @@ class MissionController extends Controller
         // $linguagensFaltam = $this->LanguagesQueFaltam($languages);
         // DD($linguagensFaltam,$languages);
 
+                   // Adicionando missões aos usuários
+
+
         $my_missions = DB::table('missions AS m')
                         ->leftJoin('mission_user AS mu','mu.mission_id','m.id')
-                        ->where('m.level_mission', Auth::user()->level)
+                        ->where([
+                            ['m.level_mission', Auth::user()->level],
+                            ['mu.completed', 0]
+                        ])
                         ->orwhere('m.criador', Auth::id())
                         ->select('m.id','m.name','m.is_active','m.level_mission','m.points','m.criador',
                                  'm.created_at','m.updated_at','mu.id AS idMissionUser','mu.user_id',
@@ -101,11 +107,19 @@ class MissionController extends Controller
             ['name' => $request->name, 'criador' => $id]
         );
         $missaoCriada = DB::table('missions')->where('criador',$id)->orderBy('id','desc')->first();
-        $addUserMission = Mission_user::create(
-            ['user_id' => $id, 'mission_id' => $missaoCriada->id,'mission_user_points'=>0,'completed'=>0]
-        );
-        $addMission->repeat_mission = $request->repeat_mission ?? 0;
-        $addMission->save();
+
+        $mission_user1 = new Mission_user();
+        $mission_user1->user_id = (int) Auth::id();
+        $mission_user1->mission_id = $missaoCriada->id;
+        $mission_user1->completed = 0;
+        $mission_user1->mission_user_points=0;
+        $mission_user1->save();
+
+        // $addUserMission = Mission_user::create(
+        //     ['user_id' => $id, 'mission_id' => $missaoCriada->id,'mission_user_points'=>0,'completed'=>0]
+        // );
+        // $addMission->repeat_mission = $request->repeat_mission ?? 0;
+        // $addMission->save();
         return redirect('user/mission')->with('success','Missão adicionada com Sucesso!');
     }
 

@@ -59,7 +59,7 @@ class LoginController extends Controller
         try {
             $user_github = Socialite::driver('github')->user();
         } catch (Exception $e) {
-            dd($_GET);
+            return 'Sistema indisponivel por tempo indeterminado, por favor acesse mais tarde!';
         }
         // dd(session()->get('user.repos'));
         $name = $user_github->getName() ?? $user_github->getNickname();
@@ -133,17 +133,21 @@ class LoginController extends Controller
             $dataHoje = new DateTime(date('Y-m-d'));
             if(new Datetime(Auth::user()->ultimaAtualizacao) < $dataHoje){
                 // Verifica os ultimos commits feitos
-                foreach( $sorted as $s){
-                    if(new DateTime($s->updated_at) >= new DateTime(Auth::user()->ultimaAtualizacao)){
-                        $contribuidores = Http::get($s->contributors_url)->json();
-                        if($contribuidores != null){
-                            foreach($contribuidores as $c){
-                                if($c['login'] == $nickname){
-                                    $quantCommitsFeitos += $c['contributions'];
+                try{
+                    foreach( $sorted as $s){
+                        if(new DateTime($s->updated_at) >= new DateTime(Auth::user()->ultimaAtualizacao)){
+                            $contribuidores = Http::get($s->contributors_url)->json();
+                            if($contribuidores != null){
+                                foreach($contribuidores as $c){
+                                    if($c['login'] == $nickname){
+                                        $quantCommitsFeitos += $c['contributions'];
+                                    }
                                 }
                             }
                         }
                     }
+                }catch (Exception $e) {
+                    return 'Sistema indisponivel por tempo indeterminado, por favor acesse mais tarde!';
                 }
 
                 $quantMissoesCriadasCompletas = DB::table('missions AS m')
@@ -168,15 +172,19 @@ class LoginController extends Controller
             return redirect('/user/home');
         }else{
             //  Adiciona a quantidae commits feitos
-            foreach($repos as $r){
-                $contribuidores = Http::get($r['contributors_url'])->json();
-                if (is_array($contribuidores) || is_object($contribuidores)){
-                    foreach($contribuidores as $c){
-                        if($c['login'] == $nickname){
-                            $quantCommitsFeitos += $c['contributions'];
+            try{
+                foreach($repos as $r){
+                    $contribuidores = Http::get($r['contributors_url'])->json();
+                    if (is_array($contribuidores) || is_object($contribuidores)){
+                        foreach($contribuidores as $c){
+                            if($c['login'] == $nickname){
+                                $quantCommitsFeitos += $c['contributions'];
+                            }
                         }
                     }
                 }
+            }catch (Exception $e) {
+                return 'Sistema indisponivel por tempo indeterminado, por favor acesse mais tarde!';
             }
 
             $data = [
@@ -209,18 +217,27 @@ class LoginController extends Controller
             Auth::loginUsingId($user->id);
 
             // Adicionando missões aos usuários
-            Mission_user::create([
-                'user_id' => Auth::id(),
-                'mission_id' => 1,
-                'completed' => 0,
-                'created_at' => date('Y-m-d H:i:s')
-            ]);
-            Mission_user::create([
-                'user_id' => Auth::id(),
-                'mission_id' => 2,
-                'completed' => 0,
-                'created_at' => date('Y-m-d H:i:s')
-            ]);
+            $mission_user1 = new Mission_user();
+            $mission_user1->user_id = (int) Auth::id();
+            $mission_user1->mission_id = 1;
+            $mission_user1->completed = 0;
+            $mission_user1->mission_user_points=0;
+            $mission_user1->save();
+
+            $mission_user2 = new Mission_user();
+            $mission_user2->user_id = (int) Auth::id();
+            $mission_user2->mission_id = 2;
+            $mission_user2->completed = 0;
+            $mission_user2->mission_user_points=0;
+            $mission_user2->save();
+
+            // Mission_user::create([
+            //     'user_id' => (int) Auth::id(),
+            //     'mission_id' => 2,
+            //     'completed' => 0,
+            //     'mission_user_points'=>0,
+            //     'created_at' => date('Y-m-d H:i:s')
+            // ]);
 
 
             return redirect('/user/home');
@@ -243,7 +260,8 @@ class LoginController extends Controller
         return response()->json('Subiu de level com sucesso!');
     }
     private function addMissionWhenUpdateLevel($userId,$level){
-        $missoes = DB::table('missions')->where('level_mission',$level+1)->get();
+        $upLevel = ($level ==1)? $level :$level+1;
+        $missoes = DB::table('missions')->where('level_mission',$upLevel)->get();
         foreach($missoes as $m){
             Mission_user::create(
                 ['user_id' => $userId, 'mission_id' => $m->id, 'mission_user_points'=>0,'completed'=>0]

@@ -87,20 +87,20 @@ class HomeController extends Controller
 
         $loop = 0;
 
-        foreach($missions_id as $mission){
-            $m = Mission::where('id', $mission->mission_id)->first();
+        // foreach($missions_id as $mission){
+        //     $m = Mission::where('id', $mission->mission_id)->first();
 
-            $percentage = ($m->points) ? $missions_id[$loop]->mission_user_points / $m->points * 100 : 0;
-            if($percentage >= 100){
-                if($missions_id[$loop]->added_xp == 0){
-                    $missions_id[$loop]->completed = 1;
-                    $missions_id[$loop]->save();
-                }
-            }
-            array_push($progress_of_missions, $percentage);
-            array_push($my_missions, $m->name);
-            $loop++;
-        }
+        //     $percentage = ($m->points) ? $missions_id[$loop]->mission_user_points / $m->points * 100 : 0;
+        //     if($percentage >= 100){
+        //         if($missions_id[$loop]->added_xp == 0){
+        //             $missions_id[$loop]->completed = 1;
+        //             $missions_id[$loop]->save();
+        //         }
+        //     }
+        //     array_push($progress_of_missions, $percentage);
+        //     array_push($my_missions, $m->name);
+        //     $loop++;
+        // }
 
         $level = $user->level;
 
