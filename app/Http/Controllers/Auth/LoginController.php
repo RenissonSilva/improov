@@ -46,7 +46,7 @@ class LoginController extends Controller
      */
     public function redirectToProvider()
     {
-        return Socialite::driver('github')->stateless()->redirect();
+        return Socialite::driver('github')->redirect();
     }
 
     /**
@@ -57,7 +57,7 @@ class LoginController extends Controller
     public function handleProviderCallback()
     {
         try {
-            $user_github = Socialite::driver('github')->stateless()->user();
+            $user_github = Socialite::driver('github')->user();
         } catch (Exception $e) {
             dd($_GET);
         }
