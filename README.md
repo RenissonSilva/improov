@@ -5,9 +5,9 @@
 Nosso sistema tem a finalidade principal de estimular os desenvolvedores e curiosos da área para que estudem programação diariamente, trazendo uma plataforma gamificada onde terá missões, conquistas, análise de desempenho, disputa entre amigos, integração com github, dentre outras funcionalidades.
 
 ### Tecnologias
-Backend e Frontend: Laravel
-Framework de estilização: Bootstrap
-SGBD: Mysql
+**Backend e Frontend:** Laravel<br>
+**Framework de estilização:** Bootstrap<br>
+**SGBD:** Mysql<br>
 
 ### MakeFile
 Arquivo de configuração que permite automatizar parte da preparação para execução do projeto.
