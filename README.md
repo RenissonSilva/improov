@@ -4,6 +4,25 @@
 ### O Sistema
 Nosso sistema tem a finalidade principal de estimular os desenvolvedores e curiosos da área para que estudem programação diariamente, trazendo uma plataforma gamificada onde terá missões, conquistas, análise de desempenho, disputa entre amigos, integração com github, dentre outras funcionalidades.
 
+### **Funcionalidades implementadas**
+- Cadastro/Login integrado com github
+- Sistema de nível
+- Missões de acordo com o nível
+- Missões personalizadas
+- Listagem de repositórios do github
+- Repositórios favoritos
+
+### **Funcionalidades futuras**
+- Foco (dias estudados)
+- Ranking
+- Conquistas
+- Análise de desempenho
+- Sugestão de projetos para usuários fazerem com dicas e sugestões
+- Notificações por e-mail e/ou whatsapp
+- Fale conosco (formulário que envia e-mail para os devs)
+- Integração com udemy
+- Integração com site de empregos
+
 ### Tecnologias
 **Backend e Frontend:** Laravel<br>
 **Framework de estilização:** Bootstrap<br>
