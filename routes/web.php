@@ -27,6 +27,7 @@ Route::prefix('user')->middleware('auth')->group(function () {
     Route::post('teste', 'MissionController@teste')->name('teste');
     Route::get('home', 'HomeController@index')->name('home');
     Route::get('repos', 'UserController@listRepositories')->name('repos');
+    Route::get('performance', 'UserController@getPerformance')->name('performance');
     Route::post('addrepo', 'UserController@addFavoriteRepository')->name('addRepo');
     Route::prefix('mission')->middleware('auth')->group(function () {
         Route::get('/', 'MissionController@index')->name('mission');

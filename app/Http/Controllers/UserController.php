@@ -70,4 +70,8 @@ class UserController extends Controller
             return response()->json(['status' => 'error']);
         }
     }
+
+    public function getPerformance(Request $request) {
+        return view('performance');
+    }
 }
