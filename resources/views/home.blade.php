@@ -94,62 +94,62 @@
 
 @section('scripts')
 <script>
-var ctx = document.getElementById('chartProjectsTech').getContext('2d');
-var chartProjectsTech = new Chart(ctx, {
-    type: 'doughnut',
-    data: {
-        labels: [
-            'Laravel',
-            'React',
-            'JS'
-        ],
-        datasets: [{
-            label: 'Projetos por tecnologia',
-            data: [18, 5, 10],
-            backgroundColor: [
-            'rgb(255, 99, 132)',
-            'rgb(54, 162, 235)',
-            'rgb(255, 205, 86)'
-            ],
-            hoverOffset: 4
-        }]
-    },
-    options: {
-        plugins: {
-            title: {
-                display: true,
-                text: 'Projetos por tecnologia'
-            }
-        },
-        scales: {
-            y: {
-                beginAtZero: true
-            }
-        }
-    }
-});
+// var ctx = document.getElementById('chartProjectsTech').getContext('2d');
+// var chartProjectsTech = new Chart(ctx, {
+//     type: 'doughnut',
+//     data: {
+//         labels: [
+//             'Laravel',
+//             'React',
+//             'JS'
+//         ],
+//         datasets: [{
+//             label: 'Projetos por tecnologia',
+//             data: [18, 5, 10],
+//             backgroundColor: [
+//             'rgb(255, 99, 132)',
+//             'rgb(54, 162, 235)',
+//             'rgb(255, 205, 86)'
+//             ],
+//             hoverOffset: 4
+//         }]
+//     },
+//     options: {
+//         plugins: {
+//             title: {
+//                 display: true,
+//                 text: 'Projetos por tecnologia'
+//             }
+//         },
+//         scales: {
+//             y: {
+//                 beginAtZero: true
+//             }
+//         }
+//     }
+// });
 
-var ctx = document.getElementById('chartCommits').getContext('2d');
-var chartCommits = new Chart(ctx, {
-    type: 'line',
-    data: {
-        labels: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio'],
-        datasets: [{
-            label: 'Nº de commits',
-            data: [65, 59, 80, 81, 56],
-            fill: false,
-            borderColor: 'rgb(75, 192, 192)',
-            tension: 0.1
-        }],
-        // options: {
-        //     plugins: {
-        //         title: {
-        //             display: true,
-        //             text: 'Projetos por tecnologia'
-        //         }
-        //     },
-        // }
-}
-});
+// var ctx = document.getElementById('chartCommits').getContext('2d');
+// var chartCommits = new Chart(ctx, {
+//     type: 'line',
+//     data: {
+//         labels: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio'],
+//         datasets: [{
+//             label: 'Nº de commits',
+//             data: [65, 59, 80, 81, 56],
+//             fill: false,
+//             borderColor: 'rgb(75, 192, 192)',
+//             tension: 0.1
+//         }],
+//         // options: {
+//         //     plugins: {
+//         //         title: {
+//         //             display: true,
+//         //             text: 'Projetos por tecnologia'
+//         //         }
+//         //     },
+//         // }
+// }
+// });
 </script>
 @endsection
