@@ -10,6 +10,7 @@ use App\Mission;
 use App\Mission_user;
 use App\Repository;
 use Carbon\Carbon;
+use Exception;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 
@@ -32,26 +33,35 @@ class HomeController extends Controller
      */
     public function index()
     {
+        // try{
+        //     $github_info = Http::get('https://api.github.com/users/'.Auth::user()->nickname.'/events/public')->json();
+        // }catch (Exception $e){
+        //     return redirect('/error');
+        // }
+// dd(session()->get('github_info'));
+        // for($iasd=0;$iasd<5;$iasd++ ){
+        // }
 
         $missoesCriadasPeloUsuario = DB::table('missions')->where('criador',Auth::id())->get();
         // dd(count($missoesCriadasPeloUsuario));
 
         $user = User::where('id', Auth::id())->first();
-        if(session()->get('github_info')){
-            $github_info = session()->get('github_info');
-        }else{
-            $github_info = Http::get('https://api.github.com/users/'.Auth::user()->nickname.'/events/public')->json();
-            session()->put('github_info',$github_info);
-        }
-        $counter = 0;
+        $counter =  (Auth::user()->totalCommits)??0;
+        // if(session()->get('github_info')){
+        //     $github_info = session()->get('github_info');
+        // }else{
+        //     $github_info = RequisicaoController::acoesUser(Auth::user()->nickname);
+        //     session()->put('github_info',$github_info);
+        // }
+        // $counter = 0;
         // dd($github_info);
-        foreach($github_info as $github_commit){
-            if(isset($github_commit['type'])){
-                if($github_commit['type'] == 'PushEvent' && Carbon::parse($github_commit['created_at'])->isToday()){
-                    $counter++;
-                }
-            }
-        }
+        // foreach($github_info as $github_commit){
+        //     if(isset($github_commit['type'])){
+        //         if($github_commit['type'] == 'PushEvent' && Carbon::parse($github_commit['created_at'])->isToday()){
+        //             $counter++;
+        //         }
+        //     }
+        // }
         $mission_user = Mission::where('level_mission', $user->level+1)->get();
         $get_missions = $user->mission()->get();
         if($get_missions->isEmpty()){

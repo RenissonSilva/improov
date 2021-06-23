@@ -7,52 +7,14 @@ use App\User;
 use App\Level;
 use App\Repository;
 use Carbon\Carbon;
+use Exception;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Http;
+// use Illuminate\Support\Facades\Http;
 
 class UserController extends Controller
 {
     public function listRepositories() {
-        $user = User::where('id', Auth::id())->first();
-        $verify_update_hour = Repository::where('user_id', Auth::id())->first();
-
-        if($verify_update_hour){
-            $isUpdated = Carbon::parse($verify_update_hour->updated_at)->isToday();
-        }else{
-            $isUpdated = false;
-        }
-
-        if(!$isUpdated){
-            $github_repo = Http::get('https://api.github.com/users/'.$user->nickname.'/repos',[
-                'per_page' => 100,
-                'sort' => 'updated',
-            ]);
-            // dd($github_repo);
-
-            $github_repo = json_decode($github_repo);
-            $items = [];
-            if(isset($github_repo)){
-
-                foreach ($github_repo as $repo) {
-                    array_push($items, [
-                        'name' => $repo->name,
-                        'main_language' => $repo->language,
-                        'link' => $repo->html_url,
-                        'user_id' => Auth::id(),
-                        'updated_at' => Carbon::now(),
-                        ]);
-                    }
-
-            }
-                    foreach ($items as $repo) {
-                Repository::updateOrCreate(['link' => $repo['link']], $repo);
-            }
-        }
-
-        $level = $user->level;
-
         $github_repo = Repository::where('user_id', Auth::id())->get();
-
         $last_update = ($github_repo[0]) ? $github_repo[0]->updated_at : 'Ainda não teve atualização';
 
         return view('list', compact('github_repo', 'last_update'));
@@ -73,5 +35,38 @@ class UserController extends Controller
 
     public function getPerformance(Request $request) {
         return view('performance');
+    }
+
+    public static function adicionAtualizaRepositoriosUsuario(){
+        $verify_update_hour = Repository::where('user_id', Auth::id())->first();
+
+        if($verify_update_hour){
+            $isUpdated = Carbon::parse($verify_update_hour->updated_at)->isToday();
+        }else{
+            $isUpdated = false;
+        }
+
+        if(!$isUpdated){
+            $github_repo = RequisicaoController::getRepositorios(Auth::user()->nickname);
+        
+            $items = [];
+            if(isset($github_repo)){
+
+                foreach ($github_repo as $repo) {
+                    // dd($repo);
+                    array_push($items, [
+                        'name' => $repo['name'],
+                        'main_language' => $repo['language'],
+                        'link' => $repo['html_url'],
+                        'user_id' => Auth::id(),
+                        'updated_at' => Carbon::now(),
+                        ]);
+                    }
+
+            }
+            foreach ($items as $repo) {
+                Repository::updateOrCreate(['link' => $repo['link']], $repo);
+            }
+        }
     }
 }

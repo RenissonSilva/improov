@@ -23,7 +23,9 @@ Route::get('/error', function () {
 
 Auth::routes();
 
-Route::prefix('user')->middleware('auth')->group(function () {
+Route::get('teste','TesteController@index');
+
+Route::prefix('user')->middleware('auth','throttle:500,1')->group(function () {
     Route::post('teste', 'MissionController@teste')->name('teste');
     Route::get('home', 'HomeController@index')->name('home');
     Route::get('repos', 'UserController@listRepositories')->name('repos');
