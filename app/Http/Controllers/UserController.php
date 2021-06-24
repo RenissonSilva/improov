@@ -49,11 +49,11 @@ class UserController extends Controller
         if(!$isUpdated){
             $github_repo = RequisicaoController::getRepositorios(Auth::user()->nickname);
         
+            // Já tenho esse método em LoginController::adicionaAtualizaRepositorios($github_repo);
             $items = [];
-            if(isset($github_repo)){
+            if(isset($repos)){
 
                 foreach ($github_repo as $repo) {
-                    // dd($repo);
                     array_push($items, [
                         'name' => $repo['name'],
                         'main_language' => $repo['language'],

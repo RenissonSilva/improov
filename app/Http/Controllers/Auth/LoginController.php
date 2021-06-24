@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Controllers\RequisicaoController;
 use App\Mission_user;
 use App\Providers\RouteServiceProvider;
+use App\Repository;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Laravel\Socialite\Facades\Socialite;
 use DB;
@@ -321,19 +322,41 @@ class LoginController extends Controller
 
         Auth::loginUsingId($user->id);
 
+        $this->adicionaAtualizaRepositorios($repos);
+
         // Adicionando missões aos usuários
         $mission_user1 = new Mission_user();
-        $mission_user1->user_id = (int) Auth::id;
+        $mission_user1->user_id = (int) Auth::id();
         $mission_user1->mission_id = 1;
         $mission_user1->completed = 0;
         $mission_user1->mission_user_points=0;
         $mission_user1->save();
 
         $mission_user2 = new Mission_user();
-        $mission_user2->user_id = (int) Auth::id;
+        $mission_user2->user_id = (int) Auth::id();
         $mission_user2->mission_id = 2;
         $mission_user2->completed = 0;
         $mission_user2->mission_user_points=0;
         $mission_user2->save();
+    }
+
+    public function adicionaAtualizaRepositorios($repos){
+        $items = [];
+        if(isset($repos)){
+
+            foreach ($repos as $repo) {
+                array_push($items, [
+                    'name' => $repo['name'],
+                    'main_language' => $repo['language'],
+                    'link' => $repo['html_url'],
+                    'user_id' => Auth::id(),
+                    'created_at' => Carbon::now(),
+                    ]);
+                }
+
+        }
+        foreach ($items as $repo) {
+            Repository::updateOrCreate(['link' => $repo['link']], $repo);
+        }
     }
 }
