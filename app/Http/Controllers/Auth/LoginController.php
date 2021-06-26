@@ -3,17 +3,22 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\RequisicaoController;
 use App\Mission_user;
 use App\Providers\RouteServiceProvider;
+use App\Repository;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Laravel\Socialite\Facades\Socialite;
 use DB;
 use Auth;
 use App\User;
+use App\Commit;
 use Carbon\Carbon;
+use DateTime;
+use Exception;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Http;
-
+use Illuminate\Support\Facades\Redirect;
 
 class LoginController extends Controller
 {
@@ -54,82 +59,207 @@ class LoginController extends Controller
      */
     public function handleProviderCallback()
     {
-        $user_github = Socialite::driver('github')->user();
-
-        $name = $user_github->getName() ?? $user_github->getNickname();
-        $nickname = $user_github->getNickname();
-        $email = $user_github->getEmail();
-        $github_id = $user_github->getId();
-        $image = $user_github->getAvatar();
-
-        $search_user = User::where('email', $email)->first();
-
-        // Verifica a quantidade de repositorios
-        $repos = Http::get('https://api.github.com/users/'.$nickname.'/repos')->json();
-        $quantRepos = 0;
-        foreach($repos as $f){
-            $e = explode('/', $f['full_name']);
-            if($e[0] == $nickname){
-                $quantRepos++;
-            }
+        try{
+            $user_github = RequisicaoController::getUser();
+            // dd(session()->get('user.repos'));
+            $name = $user_github->getName() ?? $user_github->getNickname();
+            $nickname = $user_github->getNickname();
+            $email = $user_github->getEmail();
+            $github_id = $user_github->getId();
+            $image = $user_github->getAvatar();
+            $bio = $user_github->user['bio'];
+            $search_user = User::where('email', $email)->first();
+        }catch (Exception $e    ){
+            return redirect('/error');
         }
-        // Quantidade de seguidores
-        $followers = Http::get('https://api.github.com/users/'.$nickname.'/followers')->json();
-        $quantFollowers = count($followers);
-        // dd($followers);
-        // dd(count($followers));
-
-        if($search_user){
-
+        $usuarioJaFoiCadastrado = (count(DB::table('users')->where('nickname',$nickname)->get())) > 0? true : false;
+        if($usuarioJaFoiCadastrado){
+            // dd();
             Auth::loginUsingId($search_user->id);
-
-            $github_info = Http::get('https://api.github.com/users/'.Auth::user()->nickname.'/events/public');
-            // dd($github_info->json());
-            $dateLevel = Carbon::parse(Auth::user()->dateUpLevel)->valueOf();
-
-            foreach($github_info->json() as $git){
-
-                $created_at[] = Carbon::parse($git['created_at'])->valueOf();
-            }
-            $c=0;
-            foreach($created_at as $created){
-
-                if($dateLevel < $created){
-                    $c++;
-                }
-            }
-
-            $this->verificaExperiencia(Auth::user(),$c,$quantRepos,$quantFollowers);
-            $this->verificaUpLevel(Auth::user());
-            return redirect('/user/home');
+            return redirect()->route('home');
         }else{
-
-
-
-            $data = [
-                'name' => $name,
-                'nickname' => $nickname,
-                'email' => $email ,
-                'github_id' => $github_id,
-                'xp' => 0,
-                'image' => $image,
-                'dateUpLevel' => date('Y-m-d H:i:s'),
-                'totalRepos' => $quantRepos,
-                'quantSeguidores' => $quantFollowers
-            ];
-
-            $user = User::create($data);
-
-            $token = Str::random(64);
-
-            DB::table('password_resets')->insert([
-                'email' => $email,
-                'token' => bcrypt($token),
-            ]);
-
-            Auth::loginUsingId($user->id);
-            return redirect('/user/home');
+            $this->cadastraUsuario($name,$nickname,$email,$github_id,$image,$bio);
+            return redirect()->route('home');
         }
+
+
+        // // pega repositorio e filtra ele pelos ultimos modificados
+
+        // // Verifica a quantidade de repositorios
+        // $repos = RequisicaoController::getRepositorios($nickname);
+
+        // // Quantidade de Issues, milestones e de commits feitos!
+        // $quantIssuesCriadas = 0;
+        // $quantCommitsFeitos = 0;
+        // $quantRepos = 0;
+
+        // // Filtrando pelos ultimos repositorios modificados
+        // $jsonString = json_encode($repos);
+        // $b = json_decode($jsonString);
+        // $collection = collect($b);
+        // $sorted = $collection->sortBy('updated_at');
+
+        // // Codigo que possivelmete será reaaprovietado
+        // // foreach($repos as $r){
+
+        // //     // quantidadede Issues criadas
+        // //     // $e = explode('/', $r['full_name']);
+        // //     // if($e[0] == $nickname){
+        // //     //     $i[] = $e[1];
+        // //     //     $quantRepos++;
+        // //     // }
+        // //     // $quantIssuesCriadas+= $r['open_issues_count'];
+
+        // //     $contribuidores = Http::get($r['contributors_url'])->json();
+        // //     foreach($contribuidores as $c){
+        // //         if($c['login'] == $nickname){
+        // //             $quantCommitsFeitos += $c['contributions'];
+        // //         }
+        // //     }
+        // // }
+
+        // // Quantidade de seguidores
+        // // $followers = Http::get('https://api.github.com/users/'.$nickname.'/followers')->json();
+        // // $quantFollowers = count($followers);
+
+        // if($search_user){
+
+        //     Auth::loginUsingId($search_user->id);
+
+        //     // $github_info = Http::get('https://api.github.com/users/'.$nickname.'/events/public')->json();
+        //     // session()->put('github_info',$github_info);
+        //     // // $repos->count();
+        //     // // dd($github_info->json());
+        //     // $dateLevel = Carbon::parse(Auth::user()->dateUpLevel)->valueOf();
+
+        //     // foreach($github_info as $git){
+
+        //     //     $created_at[] = Carbon::parse($git['created_at'])->valueOf();
+        //     // }
+        //     // $c=0;
+        //     // foreach($created_at as $created){
+
+        //     //     if($dateLevel < $created){
+        //     //         $c++;
+        //     //     }
+        //     // }
+
+
+        //     $dataHoje = new DateTime(date('Y-m-d'));
+        //     if(new Datetime(Auth::user()->ultimaAtualizacao) < $dataHoje){
+        //         // Verifica os ultimos commits feitos
+
+        //         RequisicaoController::AtualizaQuantCommitsFeitos($sorted, Auth::user(), $nickname,$quantCommitsFeitos);
+        //         // try{
+        //         //     foreach( $sorted as $s){
+        //         //         if(new DateTime($s->updated_at) >= new DateTime(Auth::user()->ultimaAtualizacao)){
+        //         //             $contribuidores = Http::get($s->contributors_url)->json();
+        //         //             if($contribuidores != null){
+        //         //                 foreach($contribuidores as $c){
+        //         //                     if($c['login'] == $nickname){
+        //         //                         $quantCommitsFeitos += $c['contributions'];
+        //         //                     }
+        //         //                 }
+        //         //             }
+        //         //         }
+        //         //     }
+        //         // }catch (Exception $e) {
+        //         //     return redirect('/error');
+        //         // }
+
+        //         $quantMissoesCriadasCompletas = DB::table('missions AS m')
+        //         ->join('mission_user AS mu','mu.mission_id','m.id')
+        //         ->where('m.criador',Auth::id())
+        //         ->where('mu.completed',1)
+        //         ->count();
+
+        //         $missoesCriadasPeloUsuario = DB::table('missions')
+        //         ->where('criador',Auth::id())
+        //         ->get();
+
+        //         SubirLevelController::verificaExperiencia(
+        //                 Auth::user(),$c,$quantRepos,
+        //                 // $quantFollowers,
+        //                 $missoesCriadasPeloUsuario,
+        //                 $quantMissoesCriadasCompletas,$quantIssuesCriadas,$quantCommitsFeitos,$bio
+        //             );
+        //         SubirLevelController::verificaUpLevel(Auth::user());
+        //     }
+
+        // }else{
+        //     RequisicaoController::AdicionaQuantCommitsFeitos($repos, $nickname,$quantCommitsFeitos);
+
+        //     //  Adiciona a quantidae commits feitos
+        //     // try{
+        //     //     foreach($repos as $r){
+        //     //         $contribuidores = Http::get($r['contributors_url'])->json();
+        //     //         if (is_array($contribuidores) || is_object($contribuidores)){
+        //     //             foreach($contribuidores as $c){
+        //     //                 if($c['login'] == $nickname){
+        //     //                     $quantCommitsFeitos += $c['contributions'];
+        //     //                 }
+        //     //             }
+        //     //         }
+        //     //     }
+        //     // }catch (Exception $e) {
+        //     //     return redirect('/error');
+
+        //     // }
+
+        //     $data = [
+        //         'name' => $name,
+        //         'nickname' => $nickname,
+        //         'email' => $email ,
+        //         'github_id' => $github_id,
+        //         'image' => $image,
+        //         'experiencia' => 0,
+        //         'dateUpLevel' => date('Y-m-d H:i:s'),
+        //         'ultimaAtualizacao' => date('Y-m-d H:i:s'),
+        //         'totalRepos' => $quantRepos,
+        //         'totalIssue' => $quantIssuesCriadas,
+        //         'totalCommit' => $quantCommitsFeitos,
+        //         // 'totalMilestone' => $quantMilestonesCriadas,
+        //         // 'quantSeguidores' => $quantFollowers,
+        //         'bio' => $bio
+        //     ];
+
+
+        //     $user = User::create($data);
+
+        //     $token = Str::random(64);
+
+        //     DB::table('password_resets')->insert([
+        //         'email' => $email,
+        //         'token' => bcrypt($token),
+        //     ]);
+
+        //     Auth::loginUsingId($user->id);
+
+        //     // Adicionando missões aos usuários
+        //     $mission_user1 = new Mission_user();
+        //     $mission_user1->user_id = (int) Auth::id();
+        //     $mission_user1->mission_id = 1;
+        //     $mission_user1->completed = 0;
+        //     $mission_user1->mission_user_points=0;
+        //     $mission_user1->save();
+
+        //     $mission_user2 = new Mission_user();
+        //     $mission_user2->user_id = (int) Auth::id();
+        //     $mission_user2->mission_id = 2;
+        //     $mission_user2->completed = 0;
+        //     $mission_user2->mission_user_points=0;
+        //     $mission_user2->save();
+
+        //     // Mission_user::create([
+        //     //     'user_id' => (int) Auth::id(),
+        //     //     'mission_id' => 2,
+        //     //     'completed' => 0,
+        //     //     'mission_user_points'=>0,
+        //     //     'created_at' => date('Y-m-d H:i:s')
+        //     // ]);
+
+        // }
+        // return redirect('/user/home');
     }
 
     public function __construct()
@@ -137,62 +267,107 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
     }
 
-    private function subirLevel($userId,$level){
-        $levelUp = (int) $level+1;
-        DB::table('users')->where('id',$userId)->update(['dateUplevel'=>date('Y-m-d H:i:s'),'level'=>$levelUp]);
-        $this->addMissionWhenUpdateLevel($userId,$levelUp);
+    private function cadastraUsuario($name,$nickname,$email,$github_id,$image,$bio){
+         // Verifica a quantidade de repositorios
+         $repos = RequisicaoController::getRepositorios($nickname);
 
-        return response()->json('Subiu de level com sucesso!');
-    }
-    private function addMissionWhenUpdateLevel($userId,$level){
-        $missoes = DB::table('missions')->where('level_mission',$level)->get();
-        foreach($missoes as $m){
-            Mission_user::create(
-                ['user_id' => $userId, 'mission_id' => $m->id, 'mission_user_points'=>0,'completed'=>0]
-            );
+         // Quantidade de Issues, milestones e de commits feitos!
+         $quantIssuesCriadas = 0;
+         $quantCommitsFeitos = 0;
+         $quantRepos = 0;
+ 
+         // Filtrando pelos ultimos repositorios modificados
+         $jsonString = json_encode($repos);
+         $b = json_decode($jsonString);
+         $collection = collect($b);
+         $sorted = $collection->sortBy('updated_at');
+
+         $commitsLastMonth = RequisicaoController::getCommitsLastMonth($nickname);
+         
+         //  Adiciona a quantidae commits feitos
+        //  $quantCommitsFeitos = RequisicaoController::adicionaQuantCommitsFeitos($repos, $nickname,$quantCommitsFeitos);
+        //  $info = RequisicaoController::acoesUser($nickname);
+        //  $counter=0;
+        //  foreach($info as $github_commit){
+        //     if(isset($github_commit['type'])){
+        //         if($github_commit['type'] == 'PushEvent' && Carbon::parse($github_commit['created_at'])->isToday()){
+        //             $counter++;
+        //         }
+        //     }
+        // }
+
+         $data = [
+            'name' => $name,
+            'nickname' => $nickname,
+            'email' => $email ,
+            'github_id' => $github_id,
+            'image' => $image,
+            'experiencia' => 0,
+            'dateUpLevel' => date('Y-m-d H:i:s'),
+            'ultimaAtualizacao' => date('Y-m-d H:i:s'),
+            'totalRepos' => $quantRepos,
+            'totalIssue' => $quantIssuesCriadas,
+            'totalCommit' => $quantCommitsFeitos,
+            // 'totalMilestone' => $quantMilestonesCriadas,
+            // 'quantSeguidores' => $quantFollowers,
+            'bio' => $bio
+        ];
+
+
+        $user = User::create($data);
+
+        foreach($commitsLastMonth as $commit) {
+            // dd($commitsLastMonth);
+            Commit::create([
+                'user_id' => $user->id,
+                'created_at' => $commit['created_at'],
+            ]);
         }
 
+        $token = Str::random(64);
+
+        DB::table('password_resets')->insert([
+            'email' => $email,
+            'token' => bcrypt($token),
+        ]);
+
+        Auth::loginUsingId($user->id);
+
+        $this->adicionaAtualizaRepositorios($repos);
+
+        // Adicionando missões aos usuários
+        $mission_user1 = new Mission_user();
+        $mission_user1->user_id = (int) Auth::id();
+        $mission_user1->mission_id = 1;
+        $mission_user1->completed = 0;
+        $mission_user1->mission_user_points=0;
+        $mission_user1->save();
+
+        $mission_user2 = new Mission_user();
+        $mission_user2->user_id = (int) Auth::id();
+        $mission_user2->mission_id = 2;
+        $mission_user2->completed = 0;
+        $mission_user2->mission_user_points=0;
+        $mission_user2->save();
     }
-    private function verificaExperiencia($auth,$quantityCommits,$totalRepositorios,$totalFollowers){
-        if($auth->level == 1){
-            if($quantityCommits > 1){
-                DB::table('users')->where('id',$auth->id)->update(['experiencia'=>$auth->experiencia+1]);
-            }
-            if($totalRepositorios > $auth->totalRepos){
-                DB::table('users')->where('id',$auth->id)->update(['totalRepos'=>$totalRepositorios,'experiencia'=>$auth->experiencia+2]);
-            }
-            if($totalFollowers > $auth->quantSeguidores){
-                DB::table('users')->where('id',$auth->id)->update(['quantSeguidores'=>$totalFollowers,'experiencia'=>$auth->experiencia+2]);
-            }
-        }elseif($auth->level == 2){
-            if($quantityCommits > 2){
-                DB::table('users')->where('id',$auth->id)->update(['experiencia'=>$auth->experiencia+2]);
-            }
-        }elseif($auth->level == 3){
-            if($quantityCommits > 3){
-                DB::table('users')->where('id',$auth->id)->update(['experiencia'=>$auth->experiencia+3]);
-            }
-        }elseif($auth->level == 4){
-            if($quantityCommits > 5){
-                DB::table('users')->where('id',$auth->id)->update(['experiencia'=>$auth->experiencia+5]);
-            }
-        }elseif($auth->level == 5){
-            if($quantityCommits > 20){
-                DB::table('users')->where('id',$auth->id)->update(['experiencia'=>$auth->experiencia+5]);
-            }
+
+    public function adicionaAtualizaRepositorios($repos){
+        $items = [];
+        if(isset($repos)){
+
+            foreach ($repos as $repo) {
+                array_push($items, [
+                    'name' => $repo['name'],
+                    'main_language' => $repo['language'],
+                    'link' => $repo['html_url'],
+                    'user_id' => Auth::id(),
+                    'created_at' => Carbon::now(),
+                    ]);
+                }
+
         }
-    }
-    private function verificaUpLevel($auth){
-        if($auth->level == 5){
-            $this->subirLevel($auth->id, $auth->experiencia);
-        }elseif($auth->level == 7){
-            $this->subirLevel($auth->id, $auth->experiencia);
-        }elseif($auth->level == 10){
-            $this->subirLevel($auth->id, $auth->experiencia);
-        }elseif($auth->level == 14){
-            $this->subirLevel($auth->id, $auth->experiencia);
-        }elseif($auth->level == 19){
-            $this->subirLevel($auth->id, $auth->experiencia);
+        foreach ($items as $repo) {
+            Repository::updateOrCreate(['link' => $repo['link']], $repo);
         }
     }
 }

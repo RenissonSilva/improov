@@ -2,10 +2,34 @@
 # Improov
 
 ### O Sistema
-Nosso sistema tem a finalidade principal de ajudar os profissionais da área de TI a estarem em uma capacitação continua, para desempenharem seu papel no mercado de trabalho com melhor exatidão. 
+Nosso sistema tem a finalidade principal de estimular os desenvolvedores e curiosos da área para que estudem programação diariamente, trazendo uma plataforma gamificada onde terá missões, conquistas, análise de desempenho, disputa entre amigos, integração com github, dentre outras funcionalidades.
+
+### **Funcionalidades implementadas**
+- Cadastro/Login integrado com github
+- Sistema de nível
+- Missões de acordo com o nível
+- Missões personalizadas
+- Listagem de repositórios do github
+- Repositórios favoritos
+
+### **Funcionalidades futuras**
+- Foco (dias estudados)
+- Ranking
+- Conquistas
+- Análise de desempenho
+- Sugestão de projetos para usuários fazerem com dicas e sugestões
+- Notificações por e-mail e/ou whatsapp
+- Fale conosco (formulário que envia e-mail para os devs)
+- Integração com udemy
+- Integração com site de empregos
+
+### Tecnologias
+**Backend e Frontend:** Laravel<br>
+**Framework de estilização:** Bootstrap<br>
+**SGBD:** Mysql<br>
 
 ### MakeFile
-Basicamente e em poucas palavras o “Makefile” instala o PHP, MYSQL e o COMPOSER. Além disso, ele configura o e-mail e usuário. Por fim, há nele um rápido e pequeno “script” do banco.
+Arquivo de configuração que permite automatizar parte da preparação para execução do projeto.
 
 ### Os passos para baixar o projeto:
 1. Acesse o “github” através do link “https://github.com/RenissonSilva/improov.git”, clique no botão esverdeado “Clone or Download”.
@@ -21,9 +45,5 @@ Basicamente e em poucas palavras o “Makefile” instala o PHP, MYSQL e o COMPO
 ### Colaboradores
 
 Renisson Silva - renissonx@gmail.com
-
-Pedro Marinho - phsm@discente.ifpe.edu.br
-
-José Henrique - henribeiro99@gmail.com
 
 Erickson Nascimento - erickson.ferreira@outlook.com.br

@@ -10,6 +10,7 @@ use App\Mission;
 use App\Mission_user;
 use App\Repository;
 use Carbon\Carbon;
+use Exception;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 
@@ -32,19 +33,35 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $user = User::where('id', Auth::id())->first();
+        // try{
+        //     $github_info = Http::get('https://api.github.com/users/'.Auth::user()->nickname.'/events/public')->json();
+        // }catch (Exception $e){
+        //     return redirect('/error');
+        // }
+// dd(session()->get('github_info'));
+        // for($iasd=0;$iasd<5;$iasd++ ){
+        // }
 
-        $github_info = Http::get('https://api.github.com/users/'.$user->nickname.'/events/public');
-        $github_info = $github_info->json();
-        $counter = 0;
+        $missoesCriadasPeloUsuario = DB::table('missions')->where('criador',Auth::id())->get();
+        // dd(count($missoesCriadasPeloUsuario));
+
+        $user = User::where('id', Auth::id())->first();
+        $counter =  (Auth::user()->totalCommits)??0;
+        // if(session()->get('github_info')){
+        //     $github_info = session()->get('github_info');
+        // }else{
+        //     $github_info = RequisicaoController::acoesUser(Auth::user()->nickname);
+        //     session()->put('github_info',$github_info);
+        // }
+        // $counter = 0;
         // dd($github_info);
-        foreach($github_info as $github_commit){
-            if(isset($github_commit['type'])){
-                if($github_commit['type'] == 'PushEvent' && Carbon::parse($github_commit['created_at'])->isToday()){
-                    $counter++;
-                }
-            }
-        }
+        // foreach($github_info as $github_commit){
+        //     if(isset($github_commit['type'])){
+        //         if($github_commit['type'] == 'PushEvent' && Carbon::parse($github_commit['created_at'])->isToday()){
+        //             $counter++;
+        //         }
+        //     }
+        // }
         $mission_user = Mission::where('level_mission', $user->level+1)->get();
         $get_missions = $user->mission()->get();
         if($get_missions->isEmpty()){
@@ -52,16 +69,6 @@ class HomeController extends Controller
                 $user->mission()->attach($mission);
             }
         }else{
-            $github_info = Http::get('https://api.github.com/users/'.$user->nickname.'/events/public');
-            $github_info = $github_info->json();
-            $counter = 0;
-
-            foreach($github_info as $github_commit){
-                if($github_commit['type'] == 'PushEvent' && Carbon::parse($github_commit['created_at'])->isToday()){
-                    $counter++;
-                }
-            }
-
             $getting_missions = Mission_user::where('user_id', $user->id)->latest()->limit(2)->get();
 
             $initial_date = Carbon::parse($getting_missions[0]->created_at->format('Y-m-d'));
@@ -90,20 +97,20 @@ class HomeController extends Controller
 
         $loop = 0;
 
-        foreach($missions_id as $mission){
-            $m = Mission::where('id', $mission->mission_id)->first();
+        // foreach($missions_id as $mission){
+        //     $m = Mission::where('id', $mission->mission_id)->first();
 
-            $percentage = ($m->points) ? $missions_id[$loop]->mission_user_points / $m->points * 100 : 0;
-            if($percentage >= 100){
-                if($missions_id[$loop]->added_xp == 0){
-                    $missions_id[$loop]->completed = 1;
-                    $missions_id[$loop]->save();
-                }
-            }
-            array_push($progress_of_missions, $percentage);
-            array_push($my_missions, $m->name);
-            $loop++;
-        }
+        //     $percentage = ($m->points) ? $missions_id[$loop]->mission_user_points / $m->points * 100 : 0;
+        //     if($percentage >= 100){
+        //         if($missions_id[$loop]->added_xp == 0){
+        //             $missions_id[$loop]->completed = 1;
+        //             $missions_id[$loop]->save();
+        //         }
+        //     }
+        //     array_push($progress_of_missions, $percentage);
+        //     array_push($my_missions, $m->name);
+        //     $loop++;
+        // }
 
         $level = $user->level;
 

@@ -27,7 +27,8 @@
                 <td class="col valign-wrapper">
                     <div class="progress">
                         @if ($loop->first)
-                        <div class="determinate" style="width: {{ $progress_of_missions[0] }}%;"></div>
+                        {{-- <div class="determinate" style="width: {{ $progress_of_missions[0] }}%;"></div> --}}
+                        <div class="determinate" style="width: 0%;"></div>
                         @else
                         {{-- <div class="determinate" style="width: {{ $progress_of_missions[1] }}%;"></div> --}}
                         @endif
@@ -38,7 +39,7 @@
         </tbody>
     </table>
     <div class="row justify-content-around mt-5" style="height:900px;margin-bottom:90px">
-        <div class="col-6 np">
+        <div class="col-12 np">
             <div class="tituloProjetoFavorito">
                 <h3 class="col-12 menu-title nmt"><i class="fas fa-folder icon-title"></i>Projetos Favoritos</h3>
             </div>
@@ -56,7 +57,7 @@
             @endif
             @foreach($favorites_repositories as $fav_repo)
             @php ($fav_repo->main_language) ? $url_image = "images/languages/$fav_repo->main_language.png" : $url_image = "images/languages/default.png"; @endphp
-            <div class="col-md-12">
+            <div class="col-md-6">
                 <div class="card-panel grey lighten-5 z-depth-1 card-margin-default card-margin-{{$fav_repo->main_language}} card-repo h-160">
                     <div class="row nm-row h-100">
                         <div class="col-md-3">
@@ -76,43 +77,79 @@
                 </div>
             </div>
             @endforeach
-        </div>
-        {{-- <div class="col-6 backgroundRankingSemanal">
-            <h3 class="tituloRankingSemanal">Ranking Semanal <img class="imgTituloRankingSemanal"src="{{ url('images/premio.png') }}"></span></h3>
-            <div class="backSelect">
-                <button class="buttonSelectedRankingSemanal buttonsRankingSemanal">Amigos</button>
-                <button class="buttonsRankingSemanal" style="background:#5333A5;border-radius:5px;">Geral</button>
-                <img src="{{ Auth::user()->image }}" class="imagem imagem1">
-                <img src="{{ url('images/coroa.png') }}" class="coroa">
-                <div class="backPremiacao premiacaoFirst">1</div>
-                <h4 class="textoRankingPremiacao textoFirst">Erickson Ferreira</h4>
-                <div class="section3">
-                    <div class="col">
-                        <img src="{{ Auth::user()->image }}" class="imagem imagem2"></img>
-                        <div class="backPremiacao premiacaoSecond">2</div>
-                        <h4 class="textoRankingPremiacao textoSecond">Erickson Ferreira</h4>
-                    </div>
-                    <div class="col">
-                        <img src="{{ Auth::user()->image }}" class="imagem imagem2"></img>
-                        <div class="backPremiacao premiacaoThird">3</div>
-                        <h4 class="textoRankingPremiacao textoThird">Erickson Ferreira</h4>
-                    </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <canvas id="chartProjectsTech" width="400" height="400"></canvas>
                 </div>
-                <div class="section4" style="margin-top: 10px;">
-                    <div class="FinalPremiacao">4</div>
-                    <img src="{{ Auth::user()->image }}" class="imagem imagem3"></img>
-                    <h4 class="textoRanking">Erickson Ferreira</h4>
+                <div class="col-md-6">
+                    <canvas id="chartCommits" width="400" height="400"></canvas>
                 </div>
-                <hr style=" background: #A37EFF; height: 2px;">
-                <div class="section4">
-                    <div class="FinalPremiacao">5</div>
-                    <img src="{{ Auth::user()->image }}" class="imagem imagem3"></img>
-                    <h4 class="textoRanking">Erickson Ferreira</h4>
-                </div>
-                {{-- <img src="{{ Auth::user()->image }}" class="imagem imagem3"></img>
-                <img src="{{ Auth::user()->image }}" class="imagem imagem4"></img> --}}
             </div>
-        </div> --}}
+        </div>
+
     </div>
+    
 </div>
+@endsection
+
+@section('scripts')
+<script>
+// var ctx = document.getElementById('chartProjectsTech').getContext('2d');
+// var chartProjectsTech = new Chart(ctx, {
+//     type: 'doughnut',
+//     data: {
+//         labels: [
+//             'Laravel',
+//             'React',
+//             'JS'
+//         ],
+//         datasets: [{
+//             label: 'Projetos por tecnologia',
+//             data: [18, 5, 10],
+//             backgroundColor: [
+//             'rgb(255, 99, 132)',
+//             'rgb(54, 162, 235)',
+//             'rgb(255, 205, 86)'
+//             ],
+//             hoverOffset: 4
+//         }]
+//     },
+//     options: {
+//         plugins: {
+//             title: {
+//                 display: true,
+//                 text: 'Projetos por tecnologia'
+//             }
+//         },
+//         scales: {
+//             y: {
+//                 beginAtZero: true
+//             }
+//         }
+//     }
+// });
+
+// var ctx = document.getElementById('chartCommits').getContext('2d');
+// var chartCommits = new Chart(ctx, {
+//     type: 'line',
+//     data: {
+//         labels: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio'],
+//         datasets: [{
+//             label: 'Nº de commits',
+//             data: [65, 59, 80, 81, 56],
+//             fill: false,
+//             borderColor: 'rgb(75, 192, 192)',
+//             tension: 0.1
+//         }],
+//         // options: {
+//         //     plugins: {
+//         //         title: {
+//         //             display: true,
+//         //             text: 'Projetos por tecnologia'
+//         //         }
+//         //     },
+//         // }
+// }
+// });
+</script>
 @endsection

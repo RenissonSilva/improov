@@ -577,3 +577,30 @@ border-radius: 112.5px;
     overflow: hidden;
     text-overflow: ellipsis;
 }
+
+.icon-performance{
+    font-size: 40px!important;
+}
+
+.circle-performance{
+    border: 5px solid #46C86B;
+    box-shadow: inset 0px 0px 10px #8d8d8d;
+    min-width:80px;
+}
+
+.card-performance{
+    height:260px;
+    border-left: 6px solid #46C86B
+}
+
+.name-chart{
+    color:#262626;
+    font-size: 40px;
+    font-weight: bold;
+}
+
+.value-chart{
+    color:#5D5D5D;
+    font-size: 22px;
+    font-weight: bold;
+}

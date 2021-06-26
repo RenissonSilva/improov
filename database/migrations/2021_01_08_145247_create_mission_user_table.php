@@ -14,9 +14,9 @@ class CreateMissionUserTable extends Migration
     public function up()
     {
         Schema::create('mission_user', function (Blueprint $table) {
-            $table->id();
-            $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('mission_id');
+            $table->increments('id');
+            $table->bigInteger('user_id')->unsigned();
+            $table->bigInteger('mission_id')->unsigned();
             $table->integer('mission_user_points')->default(0);
             $table->boolean('completed')->default(0);
 

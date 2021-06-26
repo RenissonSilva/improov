@@ -16,7 +16,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'nickname', 'email', 'github_id', 'image', 'level','dateUpLevel','totalRepos','experiencia'
+        'name', 'nickname', 'email', 'github_id', 'image', 'level','dateUpLevel','totalRepos','experiencia','totalCommits'
     ];
 
     /**
@@ -33,6 +33,20 @@ class User extends Authenticatable
         return $this->belongsToMany(Mission::class)->withTimestamps();
     }
 
+    public function repo()
+    {
+        return $this->hasMany(Repository::class);
+    }
+
+    public function mission_user()
+    {
+        return $this->hasMany(Mission_user::class);
+    }
+
+    public function commits()
+    {
+        return $this->hasMany(Commit::class);
+    }
     /**
      * The attributes that should be cast to native types.
      *

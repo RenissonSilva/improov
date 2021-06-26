@@ -17,12 +17,19 @@ Route::get('/', function () {
     return view('welcome');
 })->middleware('guest')->name('welcome');
 
+Route::get('/error', function () {
+    return view('error');
+})->middleware('guest')->name('error');
+
 Auth::routes();
 
-Route::prefix('user')->middleware('auth')->group(function () {
+Route::get('teste','TesteController@index');
+
+Route::prefix('user')->middleware('auth','throttle:500,1')->group(function () {
     Route::post('teste', 'MissionController@teste')->name('teste');
     Route::get('home', 'HomeController@index')->name('home');
     Route::get('repos', 'UserController@listRepositories')->name('repos');
+    Route::get('performance', 'UserController@getPerformance')->name('performance');
     Route::post('addrepo', 'UserController@addFavoriteRepository')->name('addRepo');
     Route::prefix('mission')->middleware('auth')->group(function () {
         Route::get('/', 'MissionController@index')->name('mission');
@@ -31,7 +38,7 @@ Route::prefix('user')->middleware('auth')->group(function () {
         Route::post('edit', 'MissionController@modalEditMission');
         Route::any('update', 'MissionController@update')->name('mission.update');
         Route::delete('delete/{id}', 'MissionController@delete')->name('mission.delete');
-        Route::post('modifiedCompletedMission/', 'MissionController@modifiedCompletedMission')->name('mission.modifiedCompletedMission');
+        Route::any('modifiedCompletedMission/{id}', 'MissionController@modifiedCompletedMission')->name('mission.modifiedCompletedMission');
     });
 });
 
