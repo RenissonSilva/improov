@@ -12,6 +12,7 @@ use Laravel\Socialite\Facades\Socialite;
 use DB;
 use Auth;
 use App\User;
+use App\Commit;
 use Carbon\Carbon;
 use DateTime;
 use Exception;
@@ -280,18 +281,20 @@ class LoginController extends Controller
          $b = json_decode($jsonString);
          $collection = collect($b);
          $sorted = $collection->sortBy('updated_at');
+
+         $commitsLastMonth = RequisicaoController::getCommitsLastMonth($nickname);
          
          //  Adiciona a quantidae commits feitos
-         $quantCommitsFeitos = RequisicaoController::adicionaQuantCommitsFeitos($repos, $nickname,$quantCommitsFeitos);
-         $info = RequisicaoController::acoesUser($nickname);
-         $counter=0;
-         foreach($info as $github_commit){
-            if(isset($github_commit['type'])){
-                if($github_commit['type'] == 'PushEvent' && Carbon::parse($github_commit['created_at'])->isToday()){
-                    $counter++;
-                }
-            }
-        }
+        //  $quantCommitsFeitos = RequisicaoController::adicionaQuantCommitsFeitos($repos, $nickname,$quantCommitsFeitos);
+        //  $info = RequisicaoController::acoesUser($nickname);
+        //  $counter=0;
+        //  foreach($info as $github_commit){
+        //     if(isset($github_commit['type'])){
+        //         if($github_commit['type'] == 'PushEvent' && Carbon::parse($github_commit['created_at'])->isToday()){
+        //             $counter++;
+        //         }
+        //     }
+        // }
 
          $data = [
             'name' => $name,
@@ -312,6 +315,14 @@ class LoginController extends Controller
 
 
         $user = User::create($data);
+
+        foreach($commitsLastMonth as $commit) {
+            // dd($commitsLastMonth);
+            Commit::create([
+                'user_id' => $user->id,
+                'created_at' => $commit['created_at'],
+            ]);
+        }
 
         $token = Str::random(64);
 

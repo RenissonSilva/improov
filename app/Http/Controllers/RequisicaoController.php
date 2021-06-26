@@ -6,12 +6,15 @@ use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Laravel\Socialite\Facades\Socialite;
+use Carbon\Carbon;
 
 class RequisicaoController extends Controller
 {
     public static function acoesUser($nickname){
         try {
-            $public = Http::get('https://api.github.com/users/'.$nickname.'/events/public')->json();
+            $public = Http::withHeaders([
+                'Authorization' => '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',
+            ])->get('https://api.github.com/users/'.$nickname.'/events/public')->json();
             if(isset($public['message']) && $public['mensagem'] == "API rate limit exceeded for 186.233.109.156. (But here's the good news: Authenticated requests get a higher rate limit. Check out the documentation for more details.)"){
                 return redirect('/error');
             }
@@ -34,7 +37,9 @@ class RequisicaoController extends Controller
     }
     public static function getRepositorios($nickname){
         try {
-            $repos = Http::get('https://api.github.com/users/'.$nickname.'/repos')->json();
+            $repos = Http::withHeaders([
+                'Authorization' => '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',
+            ])->get('https://api.github.com/users/'.$nickname.'/repos')->json();
             // //Verifica se irei usar esse!
             // $repos = Http::get('https://api.github.com/users/'.$nickname.'/repos',[
             //     'per_page' => 100,
@@ -51,12 +56,40 @@ class RequisicaoController extends Controller
             return redirect('/error');
         }
     }
+
+    public static function getCommitsLastMonth($nickname){
+        try {
+            $commits_month = Http::withHeaders([
+                'Authorization' => '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',
+            ])->get('https://api.github.com/users/'.$nickname.'/events')->json();
+
+            // if(isset($commits_month['message']) && $commits_month['mensagem'] == "API rate limit exceeded for 186.233.109.156. (But here's the good news: Authenticated requests get a higher rate limit. Check out the documentation for more details.)"){
+            //     return redirect('/error');
+            // }
+            $today = Carbon::now();
+
+            foreach($commits_month as $key => $commit) {
+                $diff = $today->diffInDays($commit['created_at']);
+
+                if($commit['type'] !== "PushEvent" || $diff > 30) {
+                    unset($commits_month[$key]);
+                }
+            }
+            // dd('commits', $commits_month);
+            return $commits_month;
+        } catch (Exception $e) {
+            return redirect('/error');
+        }
+    }
+
     public static function atualizaQuantCommitsFeitos($sorted, $user,$nickname,$quantCommitsFeitos){
         try{
             foreach( $sorted as $s){
                 // if(new DateTime($s->updated_at) >= new DateTime($user->ultimaAtualizacao)){
                 if(1 == 2){
-                    $contribuidores = Http::get($s->contributors_url)->json();
+                    $contribuidores = Http::withHeaders([
+                        'Authorization' => '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',
+                    ])->get($s->contributors_url)->json();
                     // Verifica rate Limit
                     if(isset($contribuidores['message']) && $contribuidores['mensagem'] == "API rate limit exceeded for 186.233.109.156. (But here's the good news: Authenticated requests get a higher rate limit. Check out the documentation for more details.)"){
                         return redirect('/error');
@@ -80,7 +113,9 @@ class RequisicaoController extends Controller
     public static function adicionaQuantCommitsFeitos($repos,$nickname,$quantCommitsFeitos){
         try{
             foreach($repos as $r){
-                $contribuidores = Http::get($r['contributors_url'])->json();
+                $contribuidores = Http::withHeaders([
+                    'Authorization' => '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',
+                ])->get($r['contributors_url'])->json();
                 // Verifica rate Limit
                 if(isset($contribuidores['message']) && $contribuidores['mensagem'] == "API rate limit exceeded for 186.233.109.156. (But here's the good news: Authenticated requests get a higher rate limit. Check out the documentation for more details.)"){
                     return redirect('/error');
