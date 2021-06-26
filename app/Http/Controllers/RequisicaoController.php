@@ -13,7 +13,7 @@ class RequisicaoController extends Controller
     public static function acoesUser($nickname){
         try {
             $public = Http::withHeaders([
-                'Authorization' => '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',
+                'Authorization' => env('GITHUB_TOKEN'),
             ])->get('https://api.github.com/users/'.$nickname.'/events/public')->json();
             if(isset($public['message']) && $public['mensagem'] == "API rate limit exceeded for 186.233.109.156. (But here's the good news: Authenticated requests get a higher rate limit. Check out the documentation for more details.)"){
                 return redirect('/error');
@@ -38,7 +38,7 @@ class RequisicaoController extends Controller
     public static function getRepositorios($nickname){
         try {
             $repos = Http::withHeaders([
-                'Authorization' => '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',
+                'Authorization' => env('GITHUB_TOKEN'),
             ])->get('https://api.github.com/users/'.$nickname.'/repos')->json();
             // //Verifica se irei usar esse!
             // $repos = Http::get('https://api.github.com/users/'.$nickname.'/repos',[
@@ -60,7 +60,7 @@ class RequisicaoController extends Controller
     public static function getCommitsLastMonth($nickname){
         try {
             $commits_month = Http::withHeaders([
-                'Authorization' => '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',
+                'Authorization' => env('GITHUB_TOKEN'),
             ])->get('https://api.github.com/users/'.$nickname.'/events')->json();
 
             // if(isset($commits_month['message']) && $commits_month['mensagem'] == "API rate limit exceeded for 186.233.109.156. (But here's the good news: Authenticated requests get a higher rate limit. Check out the documentation for more details.)"){
@@ -88,7 +88,7 @@ class RequisicaoController extends Controller
                 // if(new DateTime($s->updated_at) >= new DateTime($user->ultimaAtualizacao)){
                 if(1 == 2){
                     $contribuidores = Http::withHeaders([
-                        'Authorization' => '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',
+                        'Authorization' => env('GITHUB_TOKEN'),
                     ])->get($s->contributors_url)->json();
                     // Verifica rate Limit
                     if(isset($contribuidores['message']) && $contribuidores['mensagem'] == "API rate limit exceeded for 186.233.109.156. (But here's the good news: Authenticated requests get a higher rate limit. Check out the documentation for more details.)"){
@@ -114,7 +114,7 @@ class RequisicaoController extends Controller
         try{
             foreach($repos as $r){
                 $contribuidores = Http::withHeaders([
-                    'Authorization' => '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',
+                    'Authorization' => env('GITHUB_TOKEN'),
                 ])->get($r['contributors_url'])->json();
                 // Verifica rate Limit
                 if(isset($contribuidores['message']) && $contribuidores['mensagem'] == "API rate limit exceeded for 186.233.109.156. (But here's the good news: Authenticated requests get a higher rate limit. Check out the documentation for more details.)"){
