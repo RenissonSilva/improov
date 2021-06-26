@@ -59,7 +59,12 @@ class UserController extends Controller
                         ->get()
                         ->toArray();
 
-        $commits = $user->commits()->whereDate('created_at', '>',  $day->sub('31 days'))->get();
+        $commits = $user->commits()
+                        ->whereDate('created_at', '>',  $day->sub('31 days'))
+                        ->select(DB::raw('DATE(created_at) as date'), DB::raw('count(*) as count'))
+                        ->orderBy('date', 'asc')
+                        ->groupBy('date')
+                        ->get();
         
         return view('performance', compact('countOfRepo', 'completedMissions', 'focus', 'main_languages', 'commits'));
     }

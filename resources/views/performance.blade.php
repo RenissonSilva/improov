@@ -26,13 +26,10 @@
 
             <div class="col-md-8">
                 <div class="card-panel grey lighten-5 z-depth-1 card-margin-default card-performance d-flex align-items-center justify-content-center">
-                    <div>
+                    <div style="width: -webkit-fill-available; height: auto;">
                         <div class="d-flex justify-content-center">
-                            <!-- <div class="circle responsive-img repo-language circle-performance justify-content-center valign-wrapper">
-                                <i class="fas fa-fire icon-performance" style="color: #46C86B;"></i>
-                            </div> -->
+                            <canvas id="chartCommits"></canvas>
                         </div>
-                        <!-- <p class="text-center mb-0 mt-2 name-chart">22</p> -->
                         <p class="text-center value-chart">Frequência de commits</p>
                     </div>
                 </div>
@@ -98,15 +95,12 @@
 
 @section('scripts')
 <script>
-var ctx = document.getElementById('chartProjectsTech').getContext('2d');
-var data = {!! json_encode($main_languages) !!};
-var labels = data.map((x) => x.main_language);
-var count_of_projects = data.map((x) => x.count);
+const ctx = document.getElementById('chartProjectsTech').getContext('2d');
+const data = {!! json_encode($main_languages) !!};
+const labels = data.map((x) => x.main_language);
+const count_of_projects = data.map((x) => x.count);
 
-var test = {!! json_encode($commits) !!};
-console.log('test', test);
-
-var chartProjectsTech = new Chart(ctx, {
+const chartProjectsTech = new Chart(ctx, {
     type: 'bar',
     data: {
         labels: labels,
@@ -131,6 +125,54 @@ var chartProjectsTech = new Chart(ctx, {
     },
     options: {
         indexAxis: 'y',
+        elements: {
+            bar: {
+                borderWidth: 2,
+            }
+        },
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+            legend: {
+                display: false,
+            },
+        },
+        scales: {
+            x: {
+                grid: {
+                    display: false
+                }
+            },
+            y: {
+                grid: {
+                    display: false
+                }
+            }
+        },
+    }
+});
+
+const ctxCommit = document.getElementById('chartCommits').getContext('2d');
+const commits = {!! json_encode($commits) !!};
+const labels_commit = commits.map((x) => x.date);
+const count_of_commits = commits.map((x) => x.count);
+
+const chartCommits = new Chart(ctxCommit, {
+    type: 'line',
+    data: {
+        labels: labels_commit,
+        datasets: [{
+            data: count_of_commits,
+            backgroundColor: [
+                'rgba(43, 166, 125)',
+            ],
+            borderColor:[
+                'rgba(43, 166, 125, 0.8)',
+            ],
+            hoverOffset: 4
+        }]
+    },
+    options: {
         elements: {
             bar: {
                 borderWidth: 2,
