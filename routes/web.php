@@ -44,3 +44,7 @@ Route::prefix('user')->middleware('auth','throttle:500,1')->group(function () {
 
 Route::get('login/github', 'Auth\LoginController@redirectToProvider');
 Route::get('login/github/callback', 'Auth\LoginController@handleProviderCallback');
+
+// Rotas de atualização
+Route::get('atualizaRepositorios/WcDzrAL3Hbhc', 'AcaoController@atualizaRepositorios');
+Route::get('atualizaSubirNivel/WcDzrAL3Hbhc', 'AcaoController@atualizaSubirNivel');

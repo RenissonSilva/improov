@@ -11,31 +11,7 @@ use Illuminate\Support\Facades\DB;
 class SubirLevelController extends Controller
 {
 
-    public function verificaSubirLevel(){
-        
-        // Quantidade de Issues, milestones e de commits feitos!
-        $quantIssuesCriadas = 0;
-        $quantCommitsFeitos = 0;
-        $quantRepos = 0;
-
-        $quantMissoesCriadasCompletas = DB::table('missions AS m')
-        ->join('mission_user AS mu','mu.mission_id','m.id')
-        ->where('m.criador',Auth::id())
-        ->where('mu.completed',1)
-        ->count();
-
-        $missoesCriadasPeloUsuario = DB::table('missions')
-        ->where('criador',Auth::id())
-        ->get();
-
-        SubirLevelController::verificaExperiencia(
-                Auth::user(),$c,$quantRepos,
-                // $quantFollowers,
-                $missoesCriadasPeloUsuario,
-                $quantMissoesCriadasCompletas,$quantIssuesCriadas,$quantCommitsFeitos,$bio
-            );
-        SubirLevelController::verificaUpLevel(Auth::user());
-    }
+   
 
     public static function verificaExperiencia(
         $auth,$quantityCommits,$totalRepositorios,
@@ -113,11 +89,11 @@ class SubirLevelController extends Controller
                 DB::table('users')->where('id',$auth->id)->update(['experiencia'=>$auth->experiencia+5]);
             }
         }
-        return Auth::user()->experiencia;
+        // return Auth::user()->experiencia;
     }
 
     public static function addMissionWhenUpdateLevel($userId,$level){
-        $upLevel = ($level ==1)? $level :$level+1;
+        $upLevel = $level+1;
         $missoes = DB::table('missions')->where('level_mission',$upLevel)->get();
         foreach($missoes as $m){
             Mission_user::create(
@@ -133,7 +109,7 @@ class SubirLevelController extends Controller
         );
         SubirLevelController::addMissionWhenUpdateLevel($userId,$level);
 
-        return response()->json('Subiu de level com sucesso!');
+        // return response()->json('Subiu de level com sucesso!');
     }
     public static function verificaUpLevel($auth){
         $user = DB::table('users')->where('id',$auth->id)->first();

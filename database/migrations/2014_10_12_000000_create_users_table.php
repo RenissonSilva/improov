@@ -20,6 +20,8 @@ class CreateUsersTable extends Migration
             $table->string('email')->unique();
             $table->string('github_id');
             $table->string('image');
+            $table->string('bio');
+            $table->string('ultimaAtualizacao');
             $table->integer('level')->default(1);
             $table->timestamp('dateUpLevel')->nullable();
             $table->integer('totalRepos')->nullable();
