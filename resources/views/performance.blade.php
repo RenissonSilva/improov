@@ -9,6 +9,11 @@
             <h3 class="col-12 menu-title"><i class="fas fa-chart-line icon-title"></i>Análise de desempenho</h3>
         </div>
 
+        <div class="row pl-3 valign-wrapper">
+            <div class="legend-square green"></div><span class="green-text fw-500" style="margin:0 10px; font-size:17px">Ideal</span>
+            <div class="legend-square red"></div><span class="red-text fw-500" style="margin-left:10px; font-size:17px">Abaixo do ideal</span>
+        </div>
+
         <div class="row">
             <div class="col-md-4">
                 <div class="card-panel grey lighten-5 z-depth-1 card-margin-default card-performance d-flex align-items-center justify-content-center">
