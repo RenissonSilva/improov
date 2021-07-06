@@ -10,7 +10,8 @@ class Mission_user extends Model
 
     protected $fillable = [
         'completed',
-        'mission_user_points'
+        'mission_user_points',
+        'user_id',
+        'mission_id'
     ];
-    protected $guarded	= [ 'user_id','mission_id'];
 }

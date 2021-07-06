@@ -310,7 +310,7 @@ class LoginController extends Controller
             'totalCommit' => $quantCommitsFeitos,
             // 'totalMilestone' => $quantMilestonesCriadas,
             // 'quantSeguidores' => $quantFollowers,
-            'bio' => $bio
+            'bio' => $bio??""
         ];
 
 
@@ -351,7 +351,7 @@ class LoginController extends Controller
         $mission_user2->save();
     }
 
-    public function adicionaAtualizaRepositorios($repos){
+    public static function adicionaAtualizaRepositorios($repos){
         $items = [];
         if(isset($repos)){
 
@@ -362,8 +362,8 @@ class LoginController extends Controller
                     'link' => $repo['html_url'],
                     'user_id' => Auth::id(),
                     'created_at' => Carbon::now(),
-                    ]);
-                }
+                ]);
+            }
 
         }
         foreach ($items as $repo) {

@@ -14,7 +14,7 @@ class RequisicaoController extends Controller
         try {
             $public = Http::withHeaders([
                 'Authorization' => env('GITHUB_TOKEN'),
-            ])->get('https://api.github.com/users/'.$nickname.'/events/public')->json();
+            ])->get('https://api.github.com/users/'.$nickname.'/events')->json();
             if(isset($public['message']) && $public['mensagem'] == "API rate limit exceeded for 186.233.109.156. (But here's the good news: Authenticated requests get a higher rate limit. Check out the documentation for more details.)"){
                 return redirect('/error');
             }
@@ -129,6 +129,16 @@ class RequisicaoController extends Controller
                     }
                 }
             }
+        }catch (Exception $e) {
+            return redirect('/error');
+
+        }
+    }
+    public static function usuario($nickname){
+        try{
+            return  Http::withHeaders([
+                        'Authorization' => env('GITHUB_TOKEN'),
+                    ])->get('https://api.github.com/users/'.$nickname)->json();
         }catch (Exception $e) {
             return redirect('/error');
 
