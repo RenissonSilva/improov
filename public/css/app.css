@@ -11120,3 +11120,36 @@ a.text-dark:focus {
 .fw-900 {
   font-weight: 900;
 }
+
+.legend-style {
+  margin:0 10px;
+  font-size:17px
+}
+
+.range-date-tab {
+  background-color: #5333A5;
+  max-width: 60rem;
+  min-height: 3rem;
+  border-radius: 5px;
+}
+
+.btn-performance-range{
+  margin: 5px 2.5px;
+  color: #fff;
+  min-width: 14.5rem;
+  max-width: 100%;
+  min-height: 2.5rem;
+  font-weight: 700;
+  font-size: 16px;
+}
+
+.btn-performance-range:hover{
+  background-color: #7e53e9;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.focus-button {
+  background-color: #8B64EC;
+  border-radius: 5px;
+}

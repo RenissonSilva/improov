@@ -9,9 +9,16 @@
             <h3 class="col-12 menu-title"><i class="fas fa-chart-line icon-title"></i>Análise de desempenho</h3>
         </div>
 
+        <div class="row range-date-tab d-flex align-items-center justify-content-center">
+            <span class="d-flex align-items-center justify-content-center btn-performance-range">Diário</span>
+            <span class="d-flex align-items-center justify-content-center btn-performance-range">Semanal</span>
+            <span class="d-flex align-items-center justify-content-center btn-performance-range focus-button">Mensal</span>
+            <span class="d-flex align-items-center justify-content-center btn-performance-range">Todos</span>
+        </div>
+
         <div class="row pl-3 valign-wrapper">
-            <div class="legend-square green"></div><span class="green-text fw-500" style="margin:0 10px; font-size:17px">Ideal</span>
-            <div class="legend-square red"></div><span class="red-text fw-500" style="margin-left:10px; font-size:17px">Abaixo do ideal</span>
+            <div class="legend-square green"></div><span class="green-text fw-500 legend-style">Ideal</span>
+            <div class="legend-square red"></div><span class="red-text fw-500 legend-style">Abaixo do ideal</span>
         </div>
 
         <div class="row">
@@ -100,6 +107,11 @@
 
 @section('scripts')
 <script>
+$(".btn-performance-range").click(function () {
+    $('.focus-button').removeClass('focus-button');
+    $(this).addClass('focus-button');
+})
+    
 const ctx = document.getElementById('chartProjectsTech').getContext('2d');
 const data = {!! json_encode($main_languages) !!};
 const labels = data.map((x) => x.main_language);
