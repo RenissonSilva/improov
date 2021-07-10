@@ -81,40 +81,6 @@ class LoginController extends Controller
             $completedMissions = $user->mission()->where('completed', '1')->count();
             $focus = 0;
             $missions = $user->mission_user()->orderBy('updated_at', 'DESC')->get();
-    
-
-            $commitsFromUser = $user->commits()->get();
-            $lastCommit = $user->commits()->latest('created_at')->first();
-            // dd($lastCommit->created_at->isToday());
-            
-            if($lastCommit->created_at->isToday()) {
-                $commitsLastMonth = RequisicaoController::getCommitsLastMonth($user->name);
-    
-                foreach($commitsLastMonth as $commit) {
-                    $created_at = Carbon::create($commit['created_at'])->subHours(3);
-    
-                    Commit::updateOrCreate([
-                        'user_id' => $user->id,
-                        'created_at' => $created_at
-                    ]);
-                }
-    
-                $day = Carbon::now();
-    
-                foreach($commitsFromUser as $c) {
-                    $cday = new Carbon($c->created_at);
-        
-                    if ($day->diffInDays($cday) === 1) {
-                        $day = $cday;
-                        $focus++;
-                    }
-                }
-                $user->focus_days = $focus;
-                if($focus > $user->max_days_in_focus){
-                    $user->max_days_in_focus = $focus;
-                }
-                $user->save();
-            }
 
             return redirect()->route('home');
         }else{
