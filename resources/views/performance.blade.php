@@ -130,13 +130,6 @@ const chartProjectsTech = new Chart(ctx, {
                 'rgba(46, 80, 179)',
                 'rgba(217, 169, 46)',
             ],
-            borderColor:[
-                'rgba(43, 166, 125, 0.8)',
-                'rgba(72, 35, 166, 0.8)',
-                'rgba(61, 45, 64, 0.8)',
-                'rgba(46, 80, 179, 0.8)',
-                'rgba(217, 169, 46, 0.8)',
-            ],
             hoverOffset: 4
         }]
     },
@@ -144,7 +137,7 @@ const chartProjectsTech = new Chart(ctx, {
         indexAxis: 'y',
         elements: {
             bar: {
-                borderWidth: 2,
+                // borderWidth: 2,
             }
         },
         responsive: true,
@@ -192,7 +185,7 @@ const chartCommits = new Chart(ctxCommit, {
     options: {
         elements: {
             bar: {
-                borderWidth: 2,
+                // borderWidth: 2,
             }
         },
         responsive: true,

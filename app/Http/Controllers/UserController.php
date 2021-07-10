@@ -38,18 +38,8 @@ class UserController extends Controller
         $user = User::find(Auth::id());
         $countOfRepo = $user->repo()->count();
         $completedMissions = $user->mission()->where('completed', '1')->count();
-        $focus = 0;
-        $missions = $user->mission_user()->orderBy('updated_at', 'DESC')->get();
 
         $day = Carbon::now();
-        foreach($missions as $m) {
-            $mday = new Carbon($m->updated_at);
-
-            if ($day->diffInDays($mday) === 1) {
-                $day = $mday;
-                $focus++;
-            }
-        }
 
         $main_languages = $user->repo()
                         ->where('main_language', '<>', null)

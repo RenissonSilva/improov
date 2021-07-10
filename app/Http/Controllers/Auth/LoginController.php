@@ -68,14 +68,54 @@ class LoginController extends Controller
             $github_id = $user_github->getId();
             $image = $user_github->getAvatar();
             $bio = $user_github->user['bio'];
-            $search_user = User::where('email', $email)->first();
+            $user = User::where('email', $email)->first();
         }catch (Exception $e    ){
             return redirect('/error');
         }
         $usuarioJaFoiCadastrado = (count(DB::table('users')->where('nickname',$nickname)->get())) > 0? true : false;
         if($usuarioJaFoiCadastrado){
             // dd();
-            Auth::loginUsingId($search_user->id);
+            Auth::loginUsingId($user->id);
+
+            $countOfRepo = $user->repo()->count();
+            $completedMissions = $user->mission()->where('completed', '1')->count();
+            $focus = 0;
+            $missions = $user->mission_user()->orderBy('updated_at', 'DESC')->get();
+    
+
+            $commitsFromUser = $user->commits()->get();
+            $lastCommit = $user->commits()->latest('created_at')->first();
+            // dd($lastCommit->created_at->isToday());
+            
+            if($lastCommit->created_at->isToday()) {
+                $commitsLastMonth = RequisicaoController::getCommitsLastMonth($user->name);
+    
+                foreach($commitsLastMonth as $commit) {
+                    $created_at = Carbon::create($commit['created_at'])->subHours(3);
+    
+                    Commit::updateOrCreate([
+                        'user_id' => $user->id,
+                        'created_at' => $created_at
+                    ]);
+                }
+    
+                $day = Carbon::now();
+    
+                foreach($commitsFromUser as $c) {
+                    $cday = new Carbon($c->created_at);
+        
+                    if ($day->diffInDays($cday) === 1) {
+                        $day = $cday;
+                        $focus++;
+                    }
+                }
+                $user->focus_days = $focus;
+                if($focus > $user->max_days_in_focus){
+                    $user->max_days_in_focus = $focus;
+                }
+                $user->save();
+            }
+
             return redirect()->route('home');
         }else{
             $this->cadastraUsuario($name,$nickname,$email,$github_id,$image,$bio);
@@ -122,9 +162,9 @@ class LoginController extends Controller
         // // $followers = Http::get('https://api.github.com/users/'.$nickname.'/followers')->json();
         // // $quantFollowers = count($followers);
 
-        // if($search_user){
+        // if($user){
 
-        //     Auth::loginUsingId($search_user->id);
+        //     Auth::loginUsingId($user->id);
 
         //     // $github_info = Http::get('https://api.github.com/users/'.$nickname.'/events/public')->json();
         //     // session()->put('github_info',$github_info);
