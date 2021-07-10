@@ -30,7 +30,7 @@
                                 <i class="fas fa-fire icon-performance" style="color: #46C86B;"></i>
                             </div>
                         </div>
-                        <p class="text-center mb-0 mt-2 name-chart">{{ $focus }}</p>
+                        <p class="text-center mb-0 mt-2 name-chart">{{ Auth::user()->focus_days }}</p>
                         <p class="text-center value-chart">Dias em foco</p>
                     </div>
                 </div>

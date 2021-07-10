@@ -66,7 +66,7 @@ class UserController extends Controller
                         ->groupBy('date')
                         ->get();
         
-        return view('performance', compact('countOfRepo', 'completedMissions', 'focus', 'main_languages', 'commits'));
+        return view('performance', compact('countOfRepo', 'completedMissions', 'main_languages', 'commits'));
     }
 
     public static function adicionAtualizaRepositoriosUsuario(){
