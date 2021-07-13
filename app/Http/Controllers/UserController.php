@@ -35,14 +35,24 @@ class UserController extends Controller
     }
 
     public function getPerformance(Request $request) {
-        $user = User::find(Auth::id());
-        $countOfRepo = $user->repo()->count();
-        $completedMissions = $user->mission()->where('completed', '1')->count();
+        $period = $request->period ?? 36500;
+        $json = $request->json ?? false;
 
-        $day = Carbon::now();
+        $date = Carbon::today()->subDays($period);
+
+        $user = User::find(Auth::id());
+        $countOfRepo = $user->repo()
+                        ->whereDate('created_at', '>=', $date)
+                        ->count();
+                        
+        $completedMissions = $user->mission_user()
+                        ->where('completed', '1')
+                        ->whereDate('created_at', '>=', $date)
+                        ->count();
 
         $main_languages = $user->repo()
                         ->where('main_language', '<>', null)
+                        ->whereDate('created_at', '>=', $date)
                         ->select(DB::raw('count(*) as count, main_language'))
                         ->groupBy('main_language')
                         ->orderBy('count', 'DESC')
@@ -50,12 +60,20 @@ class UserController extends Controller
                         ->toArray();
 
         $commits = $user->commits()
-                        ->whereDate('created_at', '>',  $day->sub('31 days'))
+                        ->whereDate('created_at', '>=',  $date)
                         ->select(DB::raw('DATE(created_at) as date'), DB::raw('count(*) as count'))
                         ->orderBy('date', 'asc')
                         ->groupBy('date')
                         ->get();
-        
+        if($json) {
+            return response()->json([
+                'status' => 'success',
+                'countOfRepo' => $countOfRepo,
+                'completedMissions' => $completedMissions,
+                'main_languages' => $main_languages,
+                'commits' => $commits,
+            ]);
+        }                
         return view('performance', compact('countOfRepo', 'completedMissions', 'main_languages', 'commits'));
     }
 
@@ -74,18 +92,19 @@ class UserController extends Controller
             // Já tenho esse método em LoginController::adicionaAtualizaRepositorios($github_repo);
             $items = [];
             if(isset($repos)){
-
                 foreach ($github_repo as $repo) {
+                    $createdAt = Carbon::parse($repo['created_at']);
+
                     array_push($items, [
                         'name' => $repo['name'],
                         'main_language' => $repo['language'],
                         'link' => $repo['html_url'],
                         'user_id' => Auth::id(),
-                        'updated_at' => Carbon::now(),
-                        ]);
-                    }
-
+                        'created_at' => $createdAt->format('Y-m-d H:i:s'),
+                    ]);
+                }
             }
+            
             foreach ($items as $repo) {
                 Repository::updateOrCreate(['link' => $repo['link']], $repo);
             }

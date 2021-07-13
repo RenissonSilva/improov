@@ -363,18 +363,19 @@ class LoginController extends Controller
     public static function adicionaAtualizaRepositorios($repos){
         $items = [];
         if(isset($repos)){
-
             foreach ($repos as $repo) {
+                $createdAt = Carbon::parse($repo['created_at']);
+
                 array_push($items, [
                     'name' => $repo['name'],
                     'main_language' => $repo['language'],
                     'link' => $repo['html_url'],
                     'user_id' => Auth::id(),
-                    'created_at' => Carbon::now(),
+                    'created_at' => $createdAt->format('Y-m-d H:i:s'),
                 ]);
             }
-
         }
+        
         foreach ($items as $repo) {
             Repository::updateOrCreate(['link' => $repo['link']], $repo);
         }
