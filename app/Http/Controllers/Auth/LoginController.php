@@ -59,6 +59,7 @@ class LoginController extends Controller
      */
     public function handleProviderCallback()
     {
+        // dd();
         try{
             $user_github = RequisicaoController::getUser();
             // dd(session()->get('user.repos'));
@@ -72,6 +73,8 @@ class LoginController extends Controller
         }catch (Exception $e    ){
             return redirect('/error');
         }
+        $bio = $user_github->user['bio'];
+        $search_user = User::where('email', $email)->first();
         $usuarioJaFoiCadastrado = (count(DB::table('users')->where('nickname',$nickname)->get())) > 0? true : false;
         if($usuarioJaFoiCadastrado){
             // dd();
@@ -281,7 +284,7 @@ class LoginController extends Controller
          $quantIssuesCriadas = 0;
          $quantCommitsFeitos = 0;
          $quantRepos = 0;
- 
+
          // Filtrando pelos ultimos repositorios modificados
          $jsonString = json_encode($repos);
          $b = json_decode($jsonString);
@@ -289,7 +292,7 @@ class LoginController extends Controller
          $sorted = $collection->sortBy('updated_at');
 
          $commitsLastMonth = RequisicaoController::getCommitsLastMonth($nickname);
-         
+
          //  Adiciona a quantidae commits feitos
         //  $quantCommitsFeitos = RequisicaoController::adicionaQuantCommitsFeitos($repos, $nickname,$quantCommitsFeitos);
         //  $info = RequisicaoController::acoesUser($nickname);

@@ -104,7 +104,7 @@ class MissionController extends Controller
         $id = Auth::id();
 
         $addMission = Mission::create(
-            ['name' => $request->name, 'criador' => $id]
+            ['name' => $request->name, 'criador' => $id,'is_active'=>1]
         );
         $missaoCriada = DB::table('missions')->where('criador',$id)->orderBy('id','desc')->first();
 

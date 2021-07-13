@@ -32,12 +32,12 @@
                                     </th>
                                     <th class="right-align">
                                         @if($mission->points == null)
-                                            @if($mission->completed == 0)
-                                                <button class="btn-floating btn mr-2 newpgreen tooltipped" data-position="top"
-                                                        data-html="true" data-tooltip="Concluída" onclick="missaoConcluida({{ $mission->id }})"
-                                                        id="m{{ $mission->id }}"><i class="material-icons">check</i>
-                                                </button>
-                                            @endif
+                                            {{-- @if($mission->completed == 0) --}}
+                                            <button class="btn-floating btn mr-2 newpgreen tooltipped" data-position="top"
+                                                    data-html="true" data-tooltip="Concluída" onclick="missaoConcluida({{ $mission->id }})"
+                                                    id="m{{ $mission->id }}" {{ ($mission->completed != 0  && $mission->is_active != 1) ? 'disabled':''}} ><i class="material-icons">check</i>
+                                            </button>
+                                            {{-- @endif --}}
                                             <button class="btn-floating btn modal-trigger mr-2 newpurple tooltipped" data-position="top"
                                                 data-html="true" data-tooltip="Editar" onclick="modalEditMission(this)"
                                                 href="#modal-edit-mission" id="{{ $mission->id }}"><i class="material-icons">edit</i>
@@ -63,18 +63,38 @@
 @section('scripts')
 <script>
     function missaoConcluida(id) {
+        $('#'+id).prop('checked',false);
+        $("#m"+id).attr('disabled','disabled');
+        toastr.success('Missão concluída com sucesso!')
+
 
         $.ajaxSetup({
             headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') } });
-
         $.ajax({
             type: "get",
             url: 'mission/modifiedCompletedMission/'+id,
             dataType: 'json',
             success: function (r) {
-                $("#m"+r).hide();
+
+                is_active = false;
+                $.ajaxSetup({
+                    headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') }
+                });
+                $.ajax({
+                    type: "post",
+                    url: "mission/change",
+                    dataType: 'json',
+                    data: {'id' : id, 'is_active': is_active},
+                    success: function (result) {
+
+                    }
+                });
+
+
             },
             error: function (res) {
+                $("#m"+id).attr('disabled',false);
+                $('#'+id).prop('checked',true);
                 console.log(res);
                 console.log('Ocorreu algum erro');
             }
@@ -120,6 +140,14 @@
     $('.toggle-mission').on('change', function (e) {
         var id = this.id;
         var is_active = this.checked;
+        if(is_active == true){
+            toastr.success('Missão ativada com sucesso!')
+            $("#m"+id).attr('disabled',false);
+        }else{
+            toastr.success('Missão desativada com sucesso!')
+            $("#m"+id).attr('disabled',true);
+            $('.repeat_mission').formSelect();
+        }
 
         $.ajaxSetup({
             headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') }
@@ -131,13 +159,18 @@
             dataType: 'json',
             data: {'id' : id, 'is_active': is_active},
             success: function (result) {
-                console.log(is_active);
-                if(is_active == true){
+            },
+            error: function (res) {
+                if(is_active == false){
                     toastr.success('Missão ativada com sucesso!')
+                    $("#m"+id).attr('disabled',false);
                 }else{
                     toastr.success('Missão desativada com sucesso!')
-                     $('.repeat_mission').formSelect();
+                    $("#m"+id).attr('disabled',true);
+                    $('.repeat_mission').formSelect();
                 }
+                console.log(res);
+                console.log('Ocorreu algum erro');
             }
         });
     });
