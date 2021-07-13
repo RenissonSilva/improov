@@ -4,6 +4,9 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Auth;
+use Carbon\Carbon;
+use App\Http\Controllers\RequisicaoController;
+use App\Commit;
 
 class UpdateUser
 {
@@ -18,6 +21,7 @@ class UpdateUser
     {
         $user = Auth::user();
         $lastCommit = $user->commits()->latest('created_at')->first();
+        $focus = 0;
         if(!$lastCommit->created_at->isToday()) {
             $commitsLastMonth = RequisicaoController::getCommitsLastMonth($user->name);
 
