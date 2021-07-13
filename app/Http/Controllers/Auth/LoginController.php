@@ -59,6 +59,7 @@ class LoginController extends Controller
      */
     public function handleProviderCallback()
     {
+        // dd();
         try{
             $user_github = RequisicaoController::getUser();
             // dd(session()->get('user.repos'));
@@ -68,14 +69,22 @@ class LoginController extends Controller
             $github_id = $user_github->getId();
             $image = $user_github->getAvatar();
             $bio = $user_github->user['bio'];
-            $search_user = User::where('email', $email)->first();
+            $user = User::where('email', $email)->first();
         }catch (Exception $e    ){
             return redirect('/error');
         }
+        $bio = $user_github->user['bio'];
+        $search_user = User::where('email', $email)->first();
         $usuarioJaFoiCadastrado = (count(DB::table('users')->where('nickname',$nickname)->get())) > 0? true : false;
         if($usuarioJaFoiCadastrado){
             // dd();
-            Auth::loginUsingId($search_user->id);
+            Auth::loginUsingId($user->id);
+
+            $countOfRepo = $user->repo()->count();
+            $completedMissions = $user->mission()->where('completed', '1')->count();
+            $focus = 0;
+            $missions = $user->mission_user()->orderBy('updated_at', 'DESC')->get();
+
             return redirect()->route('home');
         }else{
             $this->cadastraUsuario($name,$nickname,$email,$github_id,$image,$bio);
@@ -122,9 +131,9 @@ class LoginController extends Controller
         // // $followers = Http::get('https://api.github.com/users/'.$nickname.'/followers')->json();
         // // $quantFollowers = count($followers);
 
-        // if($search_user){
+        // if($user){
 
-        //     Auth::loginUsingId($search_user->id);
+        //     Auth::loginUsingId($user->id);
 
         //     // $github_info = Http::get('https://api.github.com/users/'.$nickname.'/events/public')->json();
         //     // session()->put('github_info',$github_info);
@@ -275,7 +284,7 @@ class LoginController extends Controller
          $quantIssuesCriadas = 0;
          $quantCommitsFeitos = 0;
          $quantRepos = 0;
- 
+
          // Filtrando pelos ultimos repositorios modificados
          $jsonString = json_encode($repos);
          $b = json_decode($jsonString);
@@ -283,7 +292,7 @@ class LoginController extends Controller
          $sorted = $collection->sortBy('updated_at');
 
          $commitsLastMonth = RequisicaoController::getCommitsLastMonth($nickname);
-         
+
          //  Adiciona a quantidae commits feitos
         //  $quantCommitsFeitos = RequisicaoController::adicionaQuantCommitsFeitos($repos, $nickname,$quantCommitsFeitos);
         //  $info = RequisicaoController::acoesUser($nickname);
@@ -354,18 +363,19 @@ class LoginController extends Controller
     public static function adicionaAtualizaRepositorios($repos){
         $items = [];
         if(isset($repos)){
-
             foreach ($repos as $repo) {
+                $createdAt = Carbon::parse($repo['created_at']);
+
                 array_push($items, [
                     'name' => $repo['name'],
                     'main_language' => $repo['language'],
                     'link' => $repo['html_url'],
                     'user_id' => Auth::id(),
-                    'created_at' => Carbon::now(),
+                    'created_at' => $createdAt->format('Y-m-d H:i:s'),
                 ]);
             }
-
         }
+        
         foreach ($items as $repo) {
             Repository::updateOrCreate(['link' => $repo['link']], $repo);
         }

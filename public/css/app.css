@@ -12,10 +12,10 @@
   --indigo: #6574cd;
   --purple: #9561e2;
   --pink: #f66d9b;
-  --red: #e3342f;
+  --red: #FF4242;
   --orange: #f6993f;
   --yellow: #ffed4a;
-  --green: #38c172;
+  --green: #46C86B;
   --teal: #4dc0b5;
   --cyan: #6cb2eb;
   --white: #fff;
@@ -23,10 +23,10 @@
   --gray-dark: #343a40;
   --primary: #3490dc;
   --secondary: #6c757d;
-  --success: #38c172;
+  --success: #46C86B;
   --info: #6cb2eb;
   --warning: #ffed4a;
-  --danger: #e3342f;
+  --danger: #FF4242;
   --light: #f8f9fa;
   --dark: #343a40;
   --breakpoint-xs: 0;
@@ -11094,4 +11094,62 @@ a.text-dark:focus {
 
 .last_update{
   font-size:15px;
+}
+
+.legend-square {
+  width: 16px;
+  height: 16px;
+}
+
+.fw-100 {
+  font-weight: 100;
+}
+
+.fw-300 {
+  font-weight: 300;
+}
+
+.fw-500 {
+  font-weight: 500;
+}
+
+.fw-700 {
+  font-weight: 700;
+}
+
+.fw-900 {
+  font-weight: 900;
+}
+
+.legend-style {
+  margin:0 10px;
+  font-size:17px
+}
+
+.range-date-tab {
+  background-color: #5333A5;
+  max-width: 60rem;
+  min-height: 3rem;
+  border-radius: 5px;
+}
+
+.btn-performance-range{
+  margin: 5px 2.5px;
+  color: #fff;
+  min-width: 14.5rem;
+  max-width: 100%;
+  min-height: 2.5rem;
+  font-weight: 700;
+  font-size: 16px;
+}
+
+.btn-performance-range:hover{
+  background-color: #7e53e9;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.focus-button {
+  background-color: #8B64EC;
+  border-radius: 5px;
 }

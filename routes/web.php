@@ -25,7 +25,7 @@ Auth::routes();
 
 Route::get('teste','TesteController@index');
 
-Route::prefix('user')->middleware('auth','throttle:500,1')->group(function () {
+Route::prefix('user')->middleware('auth','throttle:500,1', 'update.user')->group(function () {
     Route::post('teste', 'MissionController@teste')->name('teste');
     Route::get('home', 'HomeController@index')->name('home');
     Route::get('repos', 'UserController@listRepositories')->name('repos');

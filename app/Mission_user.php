@@ -12,6 +12,7 @@ class Mission_user extends Model
         'completed',
         'mission_user_points',
         'user_id',
-        'mission_id'
+        'mission_id',
+        'created_at',
     ];
 }
