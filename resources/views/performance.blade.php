@@ -23,11 +23,11 @@
 
         <div class="row">
             <div class="col-md-4">
-                <div class="card-panel grey lighten-5 z-depth-1 card-margin-default card-performance d-flex align-items-center justify-content-center">
+                <div class="card-panel grey lighten-5 z-depth-1 card-margin-default card-{{ $color_focus }} d-flex align-items-center justify-content-center">
                     <div>
                         <div class="d-flex justify-content-center">
-                            <div class="circle responsive-img repo-language circle-performance justify-content-center valign-wrapper">
-                                <i class="fas fa-fire icon-performance" style="color: #46C86B;"></i>
+                            <div class="circle responsive-img repo-language circle-{{ $color_focus }} justify-content-center valign-wrapper icon-{{ $color_focus }}">
+                                <i class="fas fa-fire icon-performance icon-{{ $color_focus }}"></i>
                             </div>
                         </div>
                         <p class="text-center mb-0 mt-2 name-chart">{{ Auth::user()->focus_days }}</p>
@@ -37,7 +37,7 @@
             </div>
 
             <div class="col-md-8">
-                <div class="card-panel grey lighten-5 z-depth-1 card-margin-default card-performance d-flex align-items-center justify-content-center">
+                <div class="card-panel grey lighten-5 z-depth-1 card-margin-default card-{{ $color_commits }} d-flex align-items-center justify-content-center">
                     <div style="width: -webkit-fill-available; height: auto;">
                         <div class="d-flex justify-content-center">
                             <canvas id="chartCommits"></canvas>
@@ -50,7 +50,7 @@
 
         <div class="row">
             <div class="col-md-8">
-                <div class="card-panel grey lighten-5 z-depth-1 card-margin-default card-performance d-flex align-items-center justify-content-center">
+                <div class="card-panel grey lighten-5 z-depth-1 card-margin-default card-{{ $color_mainLanguages }} d-flex align-items-center justify-content-center">
                     <div style="width: -webkit-fill-available; height: auto;">
                         <div class="d-flex justify-content-center">
                             <canvas id="chartProjectsTech"></canvas>
@@ -61,11 +61,11 @@
             </div>
 
             <div class="col-md-4">
-                <div class="card-panel grey lighten-5 z-depth-1 card-margin-default card-performance d-flex align-items-center justify-content-center">
+                <div class="card-panel grey lighten-5 z-depth-1 card-margin-default card-{{ $color_countOfRepo }} d-flex align-items-center justify-content-center">
                     <div>
                         <div class="d-flex justify-content-center">
-                            <div class="circle responsive-img repo-language circle-performance justify-content-center valign-wrapper" style="min-width:80px;border: 5px solid #46C86B;">
-                                <i class="far fa-folder icon-performance" style="color: #46C86B;"></i>
+                            <div class="circle responsive-img repo-language circle-{{ $color_countOfRepo }} justify-content-center valign-wrapper">
+                                <i class="far fa-folder icon-performance icon-{{ $color_countOfRepo }}" ></i>
                             </div>
                         </div>
                         <p class="text-center mb-0 mt-2 name-chart" id="countOfRepo">{{ $countOfRepo }}</p>
@@ -88,11 +88,11 @@
             </div> -->
 
             <div class="col-md-4">
-                <div class="card-panel grey lighten-5 z-depth-1 card-margin-default card-performance d-flex align-items-center justify-content-center" style="border-left: 6px solid #FF4242">
+                <div class="card-panel grey lighten-5 z-depth-1 card-margin-default card-{{ $color_completedMissions }} d-flex align-items-center justify-content-center card-{{ $color_completedMissions }}">
                     <div>
                         <div class="d-flex justify-content-center">
-                            <div class="circle responsive-img repo-language circle-performance justify-content-center valign-wrapper" style="border: 5px solid #FF4242;">
-                                <i class="fas fa-check icon-performance" style="color: #FF4242;"></i>
+                            <div class="circle responsive-img repo-language circle-{{ $color_completedMissions }} justify-content-center valign-wrapper">
+                                <i class="fas fa-check icon-performance icon-{{ $color_completedMissions }}"></i>
                             </div>
                         </div>
                         <p class="text-center mb-0 mt-2 name-chart" id="completedMissions">{{ $completedMissions }}</p>
