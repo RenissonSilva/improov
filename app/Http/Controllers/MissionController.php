@@ -46,7 +46,8 @@ class MissionController extends Controller
                         ->leftJoin('mission_user AS mu','mu.mission_id','m.id')
                         ->where([
                             ['m.level_mission', Auth::user()->level],
-                            ['mu.completed', 0]
+                            ['mu.completed', 0],
+                            ['mu.user_id', Auth::id()]
                         ])
                         ->orwhere('m.criador', Auth::id())
                         ->select('m.id','m.name','m.is_active','m.level_mission','m.points','m.criador',
@@ -54,7 +55,7 @@ class MissionController extends Controller
                                  'mu.mission_user_points','mu.completed'
                         )
                         ->get();
-                        // dd($my_missions);
+
         return view('mission.index', compact('my_missions'));
     }
 
