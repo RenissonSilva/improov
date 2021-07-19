@@ -40,7 +40,7 @@
                                             {{-- @endif --}}
                                             <button class="btn-floating btn modal-trigger mr-2 newpurple tooltipped" data-position="top"
                                                 data-html="true" data-tooltip="Editar" onclick="modalEditMission(this)"
-                                                href="#modal-edit-mission" id="{{ $mission->id }}"><i class="material-icons">edit</i>
+                                                href="#modal-edit-mission" id="{{ $mission->id }}" data-name="{{ $mission->name }}"><i class="material-icons">edit</i>
                                             </button>
                                             <button class="btn-floating btn newred modal-trigger tooltipped" data-position="top"
                                                 data-html="true" data-tooltip="Excluir" data-id="{{ $mission->id }}" onclick="modalRemoveMission(this)" href="#modal-delete-mission" id="{{ $mission->idMissionUser }}"><i class="material-icons">delete</i>
@@ -102,6 +102,7 @@
     }
     function modalEditMission(data) {
         $id = data.id;
+        $("#name_edit").val(data.dataset.name);
 
         $.ajaxSetup({
             headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') } });
@@ -113,7 +114,6 @@
             data: {'id' : $id},
             success: function (result) {
                 $("#id_edit").val(result.id);
-                $("#name_edit").val(result.name);
                 $("#name_edit").focus();
                 $(`.status_mission`).val(result.is_active);
                 $('.status_mission').formSelect();
