@@ -20,7 +20,7 @@
                             @endif
                             @foreach($my_missions as $mission)
                                 @if($mission->level_mission == null || $mission->level_mission == Auth::user()->level )
-                                <tr>
+                                <tr id="tr-{{ $mission->id }}">
                                     <th class="row nm th-switch valign-wrapper">
                                         <div class="switch">
                                             <label>
@@ -28,7 +28,7 @@
                                             <span class="lever"></span>
                                             </label>
                                         </div>
-                                        <span class="mission_name">{{ $mission->name }}</span>
+                                        <span id="mission_name-{{$mission->id}}" class="mission_name">{{ $mission->name }}</span>
                                     </th>
                                     <th class="right-align">
                                         @if($mission->points == null)
@@ -43,7 +43,10 @@
                                                 href="#modal-edit-mission" id="{{ $mission->id }}" data-name="{{ $mission->name }}"><i class="material-icons">edit</i>
                                             </button>
                                             <button class="btn-floating btn newred modal-trigger tooltipped" data-position="top"
-                                                data-html="true" data-tooltip="Excluir" data-id="{{ $mission->id }}" onclick="modalRemoveMission(this)" href="#modal-delete-mission" id="{{ $mission->idMissionUser }}"><i class="material-icons">delete</i>
+                                                    data-html="true" data-tooltip="Excluir" data-id="{{ $mission->id }}" 
+                                                    onclick="modalRemoveMission(this)" href="#modal-delete-mission"
+                                                    id="{{ $mission->idMissionUser }}">
+                                                        <i class="material-icons">delete</i>
                                             </button>
                                         @endif
                                     </th>
@@ -62,6 +65,94 @@
 
 @section('scripts')
 <script>
+    function criarMissao() {
+        action="{{ route('mission.store') }}"
+    }
+    $('#form-delete').submit(function(e) {
+        e.preventDefault();
+        const id = $('input[name="id_delete"]').val();
+        url = "{!! url('user/mission/delete/"+id+"') !!}";
+        disableBtnDel = $('#btn-del').attr('disabled','disabled');
+
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $.ajax({
+            url: url,
+            type: 'DELETE',
+            success: function(response) {
+                $('#tr-'+id).hide();
+                $('.modal').modal('close');
+                disableBtnDel = $('#btn-del').attr('disabled',false);
+
+            },
+            error: function(xhr, status, error) {
+                console.log(xhr.responseText);
+                disableBtnDel = $('#btn-del').attr('disabled',false);
+
+            }
+        });
+    });
+    
+    $('#criar-missao').submit(function(e) {
+        e.preventDefault();
+        const nome = $('input[name="name"]').val();
+
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+        $.ajax({
+            url: "{{ route('mission.store') }}", // caminho para o script que vai processar os dados
+            type: 'POST',
+            data: {name: nome},
+            success: function(id) {
+                $('#mission_name-'+id).html(nome);
+                $('#name').val();
+                $('tbody').append("<tr id='tr-"+id+"'><th class='row nm th-switch valign-wrapper'><div class='switch'><label><input id='"+id+"' class='toggle-mission' type='checkbox' checked=''><span class='lever'></span></label></div><span id='mission_name-"+id+"' class='mission_name'>"+nome+"</span></th> <th class='right-align'><button class='btn-floating btn mr-2 newpgreen tooltipped' data-position='top' data-html='true' data-tooltip='Concluída' onclick='missaoConcluida("+id+")' id='m"+id+"'><i class='material-icons'>check</i></button><button class='btn-floating btn modal-trigger mr-2 newpurple tooltipped' data-position='top' data-html='true' data-tooltip='Editar' onclick='modalEditMission(this)' href='#modal-edit-mission' id='"+id+"' data-name='testasdf'><i class='material-icons'>edit</i></button><button class='btn-floating btn newred modal-trigger tooltipped' data-position='top' data-html='true' data-tooltip='Excluir' data-id='"+id+"' onclick='modalRemoveMission(this)' href='#modal-delete-mission' id='30'><i class='material-icons'>delete</i></button></th>");
+                $('.modal').modal('close');
+                disableBtnDel = $('#btn-del').attr('disabled',false);            
+            },
+            error: function(xhr, status, error) {
+                console.log(xhr.responseText);
+                disableBtnDel = $('#btn-del').attr('disabled',false);
+            }
+        });
+    });
+    $('#editar-missao').submit(function(e) {
+        e.preventDefault();
+        const nome = $('input[name="name_edit"]').val();
+        const repetir = $('input[name="repeat_mission"]').val();
+        const id = $('input[name="id_edit"]').val();
+
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+        $.ajax({
+            url: "{{ route('mission.update') }}", // caminho para o script que vai processar os dados
+            type: 'PUT',
+            data: {name_edit: nome, repeat_mission: repetir,id_edit: id},
+            success: function(response) {
+                console.log("funcionou");
+                $('#mission_name-'+id).html(nome);
+                $('.modal').modal('close');
+                disableBtnDel = $('#btn-del').attr('disabled',false);
+
+            },
+            error: function(xhr, status, error) {
+                console.log(xhr.responseText);
+                disableBtnDel = $('#btn-del').attr('disabled',false);
+            }
+        });
+    });
+
     function missaoConcluida(id) {
         $('#'+id).prop('checked',false);
         $("#m"+id).attr('disabled','disabled');
@@ -102,7 +193,7 @@
     }
     function modalEditMission(data) {
         $id = data.id;
-        $("#name_edit").val(data.dataset.name);
+        $("#name_edit").val($("#mission_name-"+$id).html());
 
         $.ajaxSetup({
             headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') } });
@@ -116,16 +207,17 @@
                 $("#id_edit").val(result.id);
                 $("#name_edit").focus();
                 $(`.status_mission`).val(result.is_active);
-                $('.status_mission').formSelect();
-
+                // $('.status_mission').formSelect();
+                console.log('cliquei aqui!');
                 $(`.repeat_mission`).val(result.repeat_mission ?? 0);
+                $(`#id-edit`).val($id);
 
                 if(result.is_active == 1){
                     $(".repeat_mission").attr('disabled',false);
-                    $('.repeat_mission').formSelect();
+                    // $('.repeat_mission').formSelect();
                 }else{
                     $(".repeat_mission").attr('disabled',true);
-                    $('.repeat_mission').formSelect();
+                    // $('.repeat_mission').formSelect();
                 }
             },
             error: function (res) {
@@ -185,9 +277,11 @@
     function modalRemoveMission(data) {
         var id = $(data).data("id");
 
-        var action = 'mission/delete/'+id;
+        // var action = 'mission/delete/'+id;
 
-        $('#form-delete').attr('action', action);
+        // $('#form-delete').attr('action', action);
+        $('#btn-del').attr('disabled',false);
+        $('#id_delete').val(id);
     }
 </script>
 @endsection

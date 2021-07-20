@@ -25,14 +25,14 @@ class UpdateUser
         if($user->github_last_update === null || !$last_update->isToday()) {
             $commitsLastMonth = RequisicaoController::getCommitsLastMonth($user->name);
 
-            foreach($commitsLastMonth as $commit) {
-                $created_at = Carbon::create($commit['created_at'])->subHours(3);
+            // foreach($commitsLastMonth as $commit) {
+            //     $created_at = Carbon::create($commit['created_at'])->subHours(3);
 
-                Commit::updateOrCreate([
-                    'user_id' => $user->id,
-                    'created_at' => $created_at
-                ]);
-            }
+            //     Commit::updateOrCreate([
+            //         'user_id' => $user->id,
+            //         'created_at' => $created_at
+            //     ]);
+            // }
 
             $day = Carbon::now()->format('Y-m-d');
             $commitsFromUser = $user->commits()->orderBy('created_at', 'DESC')->get();

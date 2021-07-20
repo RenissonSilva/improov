@@ -7,6 +7,13 @@
     height: 550px!important;
     min-height: 550px!important;
 }
+.modal-delete{
+    color:#8B64EC;
+    border-top: 6px solid #8B64EC;
+    border-radius: 10px!important;
+    width:700px!important;
+    min-width:700px!important;
+}
 
 .modal-confirm{
     max-height:23%!important;

@@ -1,5 +1,5 @@
 <div id="modal-create-mission" class="modal modal-fixed-footer modal-missions">
-    <form action="{{ route('mission.store') }}" method="POST">
+    <form id="criar-missao" method="POST">
         @csrf
         <div class="modal-content modal-padding">
             <div class="row reset-margin">
@@ -35,7 +35,7 @@
   </div>
 
   <div id="modal-edit-mission" class="modal modal-fixed-footer modal-missions">
-    <form action="{{ route('mission.update') }}" method="POST">
+    <form action="{{ route('mission.update') }}" id="editar-missao" method="POST">
         @csrf
         @method('PATCH')
         <div class="modal-content modal-padding">
@@ -66,7 +66,7 @@
                 </div>
             </div>
         </div>
-        
+        <input type="hidden" id="id-edit" name="id_edit">
         <div class="modal-footer">
             <a class="modal-close waves-effect waves-green btn-flat black_simple_link grey-text text-darken-2">Cancelar</a>
             <button class="waves-effect waves-green btn btn-mission">SALVAR</button>
@@ -74,7 +74,7 @@
     </form>
   </div>
 
-  <div id="modal-delete-mission" class="modal modal-login modal-confirm">
+  <div id="modal-delete-mission" class="modal modal-delete modal-confirm">
     <div class="modal-content modal-padding modal-content-confirm">
       <h4>Confirmação</h4>
       <p class="confirm-text grey-text text-darken-2">Tem certeza que deseja excluir essa missão?</p>
@@ -83,7 +83,8 @@
           <form id="form-delete" style="display:inline;" method="post">
               @csrf
               @method('DELETE')
-              <button type="submit" class="btn red modal-trigger btn-remove">Excluir</button>
+              <input type="hidden" id="id_delete" name="id_delete">
+              <button type="submit" class="btn red modal-trigger btn-remove"  id="btn-del">Excluir</button>
           </form>
       </div>
     </div>
