@@ -119,16 +119,24 @@ class HomeController extends Controller
 
         $my_missions = DB::table('missions AS m')
                         ->leftJoin('mission_user AS mu','mu.mission_id','m.id')
-                        ->where('m.criador', Auth::id())
-                        ->where('m.is_active', 1)
+                        ->where([
+                            ['mu.completed', 0],
+                            ['mu.user_id', Auth::id()],
+                            ['m.is_active', 1]
+                        ])
+                        ->orWhere([
+                            ['m.level_mission', Auth::user()->level],
+                            ['mu.user_id', Auth::id()]
+                        ])
+                        ->orWhere([
+                            ['m.criador', Auth::id()],
+                            ['m.is_active', 1]
+                        ])
                         ->select('m.id','m.name','m.is_active','m.level_mission','m.points','m.criador',
                                  'm.created_at','m.updated_at','mu.id AS idMissionUser','mu.user_id',
                                  'mu.mission_user_points','mu.completed'
                         )
                         ->get();
-        // $following = Http::get('https://api.github.com/users/'.$user->name.'/following');
-        // $following = $following->json();
-        // dd($following);
 
         $favorites_repositories = Repository::where('user_id', Auth::id())->where('favorite', 1)->get();
 

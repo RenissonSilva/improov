@@ -13,6 +13,7 @@ use App\Mission_user;
 use App\Repository;
 use Carbon\Carbon;
 use DateTime;
+use Exception;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 
@@ -46,7 +47,8 @@ class MissionController extends Controller
                         ->leftJoin('mission_user AS mu','mu.mission_id','m.id')
                         ->where([
                             ['m.level_mission', Auth::user()->level],
-                            ['mu.completed', 0]
+                            ['mu.completed', 0],
+                            ['mu.user_id', Auth::id()]
                         ])
                         ->orwhere('m.criador', Auth::id())
                         ->select('m.id','m.name','m.is_active','m.level_mission','m.points','m.criador',
@@ -54,7 +56,7 @@ class MissionController extends Controller
                                  'mu.mission_user_points','mu.completed'
                         )
                         ->get();
-                        // dd($my_missions);
+
         return view('mission.index', compact('my_missions'));
     }
 
@@ -102,25 +104,28 @@ class MissionController extends Controller
 
     public function store(Request $request){
         $id = Auth::id();
+        try{
+            $addMission = Mission::create(
+                ['name' => $request->name, 'criador' => $id,'is_active'=>1]
+            );
+            $missaoCriada = DB::table('missions')->where('criador',$id)->orderBy('id','desc')->first();
 
-        $addMission = Mission::create(
-            ['name' => $request->name, 'criador' => $id,'is_active'=>1]
-        );
-        $missaoCriada = DB::table('missions')->where('criador',$id)->orderBy('id','desc')->first();
-
-        $mission_user1 = new Mission_user();
-        $mission_user1->user_id = (int) Auth::id();
-        $mission_user1->mission_id = $missaoCriada->id;
-        $mission_user1->completed = 0;
-        $mission_user1->mission_user_points=0;
-        $mission_user1->save();
-
+            $mission_user1 = new Mission_user();
+            $mission_user1->user_id = (int) Auth::id();
+            $mission_user1->mission_id = $missaoCriada->id;
+            $mission_user1->completed = 0;
+            $mission_user1->mission_user_points=0;
+            $mission_user1->save();
+        }catch(Exception $e){
+            return false;
+        }
+        return $missaoCriada->id;
         // $addUserMission = Mission_user::create(
         //     ['user_id' => $id, 'mission_id' => $missaoCriada->id,'mission_user_points'=>0,'completed'=>0]
         // );
         // $addMission->repeat_mission = $request->repeat_mission ?? 0;
         // $addMission->save();
-        return redirect('user/mission')->with('success','Missão adicionada com Sucesso!');
+        // return redirect('user/mission')->with('success','Missão adicionada com Sucesso!');
     }
 
 
@@ -133,16 +138,21 @@ class MissionController extends Controller
 
     public function update(Request $request){
         $id = Auth::id();
+        try{
+            DB::table('missions')
+                ->where('id',$request->id_edit)
+                ->update([
+                    'name' => $request->name_edit,
+                    'repeat_mission' => $request->repeat_mission ?? 0,
+                    'updated_at' => date('Y-m-d H:i:s')
+                ]);
+        }catch(Exception $e){
+            return false;
+        }
+        return true;
 
-        $updateMission = DB::table('missions')
-                        ->where('id',$request->id_edit)
-                        ->update([
-                            'name' => $request->name_edit,
-                            'repeat_mission' => $request->repeat_mission ?? 0,
-                            'updated_at' => date('Y-m-d H:i:s')
-                        ]);
 
-        return redirect('user/mission')->with('success','Missão atualizada com Sucesso!');
+        // return redirect('user/mission')->with('success','Missão atualizada com Sucesso!');
     }
 
     public function delete($id)
@@ -155,10 +165,15 @@ class MissionController extends Controller
         // if($mission->criador != null){
         //     Mission::where('id', $muFirst->mission_id)->delete();
         // }
-        $mission_user = Mission_user::where('mission_id', $id)->delete();
-        $mission = Mission::where('id', $id)->delete();
+        try{
+            $mission_user = Mission_user::where('mission_id', $id)->delete();
+            $mission = Mission::where('id', $id)->delete();
+        }catch(Exception $e){
+            return false;
+        }
+        return true;
 
-        return redirect('user/mission')->with('success','Missão deletada com Sucesso!');
+        // return redirect('user/mission')->with('success','Missão deletada com Sucesso!');
     }
 
     public function changeStatusMission(Request $request)

@@ -17,7 +17,7 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name', 'nickname', 'email', 'github_id', 'image', 'level','dateUpLevel','totalRepos',
-        'experiencia','totalCommits', 'bio','ultimaAtualizacao'
+        'experiencia','totalCommits', 'bio','ultimaAtualizacao', 'github_last_update'
     ];
 
     /**
