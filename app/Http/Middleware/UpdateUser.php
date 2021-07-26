@@ -22,7 +22,8 @@ class UpdateUser
         $user = Auth::user();
         $lastCommit = $user->commits()->latest('created_at')->first();
         $focus = 0;
-        if(!$lastCommit->created_at->isToday()) {
+        // dd($lastCommit);
+        if(!$lastCommit->created_at->isToday() && $lastCommit == null) {
             $commitsLastMonth = RequisicaoController::getCommitsLastMonth($user->name);
 
             foreach($commitsLastMonth as $commit) {
