@@ -41,6 +41,7 @@
                     <div style="width: -webkit-fill-available; height: auto;">
                         <div class="d-flex justify-content-center">
                             <canvas id="chartCommits"></canvas>
+                            <span id="spanChartCommits" class="hide spanChart">Sem dados suficientes para gerar o gráfico</span>
                         </div>
                         <p class="text-center value-chart">Frequência de commits</p>
                     </div>
@@ -54,6 +55,7 @@
                     <div style="width: -webkit-fill-available; height: auto;">
                         <div class="d-flex justify-content-center">
                             <canvas id="chartProjectsTech"></canvas>
+                            <span id="spanChartProjectsTech" class="hide spanChart">Sem dados suficientes para gerar o gráfico</span>
                         </div>
                         <p class="text-center value-chart">Linguagem dos projetos</p>
                     </div>
@@ -225,6 +227,17 @@ $(".btn-performance-range").click(function () {
             let labels = main_languages.map((x) => x.main_language);
             let count_of_projects = main_languages.map((x) => x.count);
 
+            if(count_of_commits.length === 0) {
+                $("#spanChartCommits").removeClass("hide");
+            } else {
+                $("#spanChartCommits").addClass("hide");
+            }
+
+            if(count_of_projects.length === 0) {
+                $("#spanChartProjectsTech").removeClass("hide");
+            } else {
+                $("#spanChartProjectsTech").addClass("hide");
+            }
             chartCommits.data.datasets.data = count_of_commits;
             chartCommits.data.labels = labels_commit;
             chartCommits.update();

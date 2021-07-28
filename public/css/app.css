@@ -11182,3 +11182,9 @@ a.text-dark:focus {
 .card-green {
   border-left: 6px solid #46C86B
 }
+
+.spanChart {
+  position: absolute;
+  align-self: center;
+  color: #5d5d5d;
+}
