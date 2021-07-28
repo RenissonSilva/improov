@@ -266,8 +266,12 @@ $(".btn-performance-range").click(function () {
             chartProjectsTech.update();
         },
     });
-    $("#range-menu").removeClass('disable-menu');
-    $("#loading-circle").addClass('hide');
-})
+    setTimeout(
+        function() 
+        {
+            $("#range-menu").removeClass('disable-menu');
+            $("#loading-circle").addClass('hide');
+        }, 1000);
+    })
 </script>
 @endsection
