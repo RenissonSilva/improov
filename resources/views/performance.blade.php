@@ -9,16 +9,32 @@
             <h3 class="col-12 menu-title"><i class="fas fa-chart-line icon-title"></i>Análise de desempenho</h3>
         </div>
 
-        <div class="row range-date-tab d-flex align-items-center justify-content-center">
+        <div class="row range-date-tab d-flex align-items-center justify-content-center" id="range-menu">
             <span class="d-flex align-items-center justify-content-center btn-performance-range" data-value="1">Diário</span>
             <span class="d-flex align-items-center justify-content-center btn-performance-range" data-value="7">Semanal</span>
             <span class="d-flex align-items-center justify-content-center btn-performance-range" data-value="30">Mensal</span>
             <span class="d-flex align-items-center justify-content-center btn-performance-range focus-button" data-value="36500">Todos</span>
         </div>
 
-        <div class="row pl-3 valign-wrapper">
-            <div class="legend-square green"></div><span class="green-text fw-500 legend-style">Ideal</span>
-            <div class="legend-square red"></div><span class="red-text fw-500 legend-style">Abaixo do ideal</span>
+        <div class="row ">
+            <div class="row pl-3 valign-wrapper" style="margin-left: initial;">
+                <div class="legend-square green"></div><span class="green-text fw-500 legend-style">Ideal</span>
+                <div class="legend-square red"></div><span class="red-text fw-500 legend-style">Abaixo do ideal</span>
+            </div>
+    
+            <div id="loading-circle" class="hide" style="margin-right: 15px;">
+                <div class="preloader-wrapper small active">
+                    <div class="spinner-layer spinner-green-only">
+                    <div class="circle-clipper left">
+                        <div class="circle"></div>
+                    </div><div class="gap-patch">
+                        <div class="circle"></div>
+                    </div><div class="circle-clipper right">
+                        <div class="circle"></div>
+                    </div>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <div class="row">
@@ -41,6 +57,8 @@
                     <div style="width: -webkit-fill-available; height: auto;">
                         <div class="d-flex justify-content-center">
                             <canvas id="chartCommits"></canvas>
+                            <progress id="animationProgress" max="1" value="0" style="width: 100%"></progress>
+                            <span id="spanChartCommits" class="hide spanChart">Sem dados suficientes para gerar o gráfico</span>
                         </div>
                         <p class="text-center value-chart">Frequência de commits</p>
                     </div>
@@ -54,6 +72,7 @@
                     <div style="width: -webkit-fill-available; height: auto;">
                         <div class="d-flex justify-content-center">
                             <canvas id="chartProjectsTech"></canvas>
+                            <span id="spanChartProjectsTech" class="hide spanChart">Sem dados suficientes para gerar o gráfico</span>
                         </div>
                         <p class="text-center value-chart">Linguagem dos projetos</p>
                     </div>
@@ -206,6 +225,8 @@ let chartProjectsTech = new Chart(ctx, {
 });
 
 $(".btn-performance-range").click(function () {
+    $("#loading-circle").removeClass('hide');
+    $("#range-menu").addClass('disable-menu');
     $('.focus-button').removeClass('focus-button');
     $(this).addClass('focus-button');
     period = this.dataset.value
@@ -225,6 +246,17 @@ $(".btn-performance-range").click(function () {
             let labels = main_languages.map((x) => x.main_language);
             let count_of_projects = main_languages.map((x) => x.count);
 
+            if(count_of_commits.length === 0) {
+                $("#spanChartCommits").removeClass("hide");
+            } else {
+                $("#spanChartCommits").addClass("hide");
+            }
+
+            if(count_of_projects.length === 0) {
+                $("#spanChartProjectsTech").removeClass("hide");
+            } else {
+                $("#spanChartProjectsTech").addClass("hide");
+            }
             chartCommits.data.datasets.data = count_of_commits;
             chartCommits.data.labels = labels_commit;
             chartCommits.update();
@@ -234,6 +266,8 @@ $(".btn-performance-range").click(function () {
             chartProjectsTech.update();
         },
     });
+    $("#range-menu").removeClass('disable-menu');
+    $("#loading-circle").addClass('hide');
 })
 </script>
 @endsection
