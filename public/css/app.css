@@ -11188,3 +11188,11 @@ a.text-dark:focus {
   align-self: center;
   color: #5d5d5d;
 }
+
+.spinner-green, .spinner-green-only {
+  border-color: #5333a5!important;
+}
+
+.disable-menu:hover, .disable-menu > span:hover {
+  cursor: not-allowed;
+}
