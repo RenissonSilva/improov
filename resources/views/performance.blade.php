@@ -10,10 +10,10 @@
         </div>
 
         <div class="row range-date-tab d-flex align-items-center justify-content-center" id="range-menu">
-            <span class="d-flex align-items-center justify-content-center btn-performance-range" data-value="1">Diário</span>
-            <span class="d-flex align-items-center justify-content-center btn-performance-range" data-value="7">Semanal</span>
-            <span class="d-flex align-items-center justify-content-center btn-performance-range" data-value="30">Mensal</span>
-            <span class="d-flex align-items-center justify-content-center btn-performance-range focus-button" data-value="36500">Todos</span>
+            <span class="item-range-menu d-flex align-items-center justify-content-center btn-performance-range" data-value="1">Diário</span>
+            <span class="item-range-menu d-flex align-items-center justify-content-center btn-performance-range" data-value="7">Semanal</span>
+            <span class="item-range-menu d-flex align-items-center justify-content-center btn-performance-range" data-value="30">Mensal</span>
+            <span class="item-range-menu d-flex align-items-center justify-content-center btn-performance-range focus-button" data-value="36500">Todos</span>
         </div>
 
         <div class="row ">
@@ -227,6 +227,7 @@ let chartProjectsTech = new Chart(ctx, {
 $(".btn-performance-range").click(function () {
     $("#loading-circle").removeClass('hide');
     $("#range-menu").addClass('disable-menu');
+    $(".item-range-menu").css("pointer-events", "none");
     $('.focus-button').removeClass('focus-button');
     $(this).addClass('focus-button');
     period = this.dataset.value
@@ -271,6 +272,7 @@ $(".btn-performance-range").click(function () {
         {
             $("#range-menu").removeClass('disable-menu');
             $("#loading-circle").addClass('hide');
+            $(".item-range-menu").css("pointer-events", "auto");
         }, 1000);
     })
 </script>
