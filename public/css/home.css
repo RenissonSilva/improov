@@ -583,7 +583,7 @@ border-radius: 112.5px;
 }
 
 .circle-performance{
-    border: 5px solid #46C86B;
+    /* border: 5px solid #46C86B; */
     box-shadow: inset 0px 0px 10px #8d8d8d;
     min-width:80px;
 }

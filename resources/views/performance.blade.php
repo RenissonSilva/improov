@@ -9,25 +9,41 @@
             <h3 class="col-12 menu-title"><i class="fas fa-chart-line icon-title"></i>Análise de desempenho</h3>
         </div>
 
-        <div class="row range-date-tab d-flex align-items-center justify-content-center">
-            <span class="d-flex align-items-center justify-content-center btn-performance-range" data-value="1">Diário</span>
-            <span class="d-flex align-items-center justify-content-center btn-performance-range" data-value="7">Semanal</span>
-            <span class="d-flex align-items-center justify-content-center btn-performance-range" data-value="30">Mensal</span>
-            <span class="d-flex align-items-center justify-content-center btn-performance-range focus-button" data-value="36500">Todos</span>
+        <div class="row range-date-tab d-flex align-items-center justify-content-center" id="range-menu">
+            <span class="item-range-menu d-flex align-items-center justify-content-center btn-performance-range" data-value="1">Diário</span>
+            <span class="item-range-menu d-flex align-items-center justify-content-center btn-performance-range" data-value="7">Semanal</span>
+            <span class="item-range-menu d-flex align-items-center justify-content-center btn-performance-range" data-value="30">Mensal</span>
+            <span class="item-range-menu d-flex align-items-center justify-content-center btn-performance-range focus-button" data-value="36500">Todos</span>
         </div>
 
-        <div class="row pl-3 valign-wrapper">
-            <div class="legend-square green"></div><span class="green-text fw-500 legend-style">Ideal</span>
-            <div class="legend-square red"></div><span class="red-text fw-500 legend-style">Abaixo do ideal</span>
+        <div class="row ">
+            <div class="row pl-3 valign-wrapper" style="margin-left: initial;">
+                <div class="legend-square green"></div><span class="green-text fw-500 legend-style">Ideal</span>
+                <div class="legend-square red"></div><span class="red-text fw-500 legend-style">Abaixo do ideal</span>
+            </div>
+    
+            <div id="loading-circle" class="hide" style="margin-right: 15px;">
+                <div class="preloader-wrapper small active">
+                    <div class="spinner-layer spinner-green-only">
+                    <div class="circle-clipper left">
+                        <div class="circle"></div>
+                    </div><div class="gap-patch">
+                        <div class="circle"></div>
+                    </div><div class="circle-clipper right">
+                        <div class="circle"></div>
+                    </div>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <div class="row">
             <div class="col-md-4">
-                <div class="card-panel grey lighten-5 z-depth-1 card-margin-default card-performance d-flex align-items-center justify-content-center">
+                <div class="card-panel grey lighten-5 z-depth-1 card-margin-default card-{{ $color_focus }} d-flex align-items-center justify-content-center">
                     <div>
                         <div class="d-flex justify-content-center">
-                            <div class="circle responsive-img repo-language circle-performance justify-content-center valign-wrapper">
-                                <i class="fas fa-fire icon-performance" style="color: #46C86B;"></i>
+                            <div class="circle responsive-img repo-language circle-{{ $color_focus }} justify-content-center valign-wrapper icon-{{ $color_focus }}">
+                                <i class="fas fa-fire icon-performance icon-{{ $color_focus }}"></i>
                             </div>
                         </div>
                         <p class="text-center mb-0 mt-2 name-chart">{{ Auth::user()->focus_days }}</p>
@@ -37,10 +53,12 @@
             </div>
 
             <div class="col-md-8">
-                <div class="card-panel grey lighten-5 z-depth-1 card-margin-default card-performance d-flex align-items-center justify-content-center">
+                <div class="card-panel grey lighten-5 z-depth-1 card-margin-default card-{{ $color_commits }} d-flex align-items-center justify-content-center">
                     <div style="width: -webkit-fill-available; height: auto;">
                         <div class="d-flex justify-content-center">
                             <canvas id="chartCommits"></canvas>
+                            <progress id="animationProgress" max="1" value="0" style="width: 100%"></progress>
+                            <span id="spanChartCommits" class="hide spanChart">Sem dados suficientes para gerar o gráfico</span>
                         </div>
                         <p class="text-center value-chart">Frequência de commits</p>
                     </div>
@@ -50,10 +68,11 @@
 
         <div class="row">
             <div class="col-md-8">
-                <div class="card-panel grey lighten-5 z-depth-1 card-margin-default card-performance d-flex align-items-center justify-content-center">
+                <div class="card-panel grey lighten-5 z-depth-1 card-margin-default card-{{ $color_mainLanguages }} d-flex align-items-center justify-content-center">
                     <div style="width: -webkit-fill-available; height: auto;">
                         <div class="d-flex justify-content-center">
                             <canvas id="chartProjectsTech"></canvas>
+                            <span id="spanChartProjectsTech" class="hide spanChart">Sem dados suficientes para gerar o gráfico</span>
                         </div>
                         <p class="text-center value-chart">Linguagem dos projetos</p>
                     </div>
@@ -61,11 +80,11 @@
             </div>
 
             <div class="col-md-4">
-                <div class="card-panel grey lighten-5 z-depth-1 card-margin-default card-performance d-flex align-items-center justify-content-center">
+                <div class="card-panel grey lighten-5 z-depth-1 card-margin-default card-{{ $color_countOfRepo }} d-flex align-items-center justify-content-center">
                     <div>
                         <div class="d-flex justify-content-center">
-                            <div class="circle responsive-img repo-language circle-performance justify-content-center valign-wrapper" style="min-width:80px;border: 5px solid #46C86B;">
-                                <i class="far fa-folder icon-performance" style="color: #46C86B;"></i>
+                            <div class="circle responsive-img repo-language circle-{{ $color_countOfRepo }} justify-content-center valign-wrapper">
+                                <i class="far fa-folder icon-performance icon-{{ $color_countOfRepo }}" ></i>
                             </div>
                         </div>
                         <p class="text-center mb-0 mt-2 name-chart" id="countOfRepo">{{ $countOfRepo }}</p>
@@ -88,11 +107,11 @@
             </div> -->
 
             <div class="col-md-4">
-                <div class="card-panel grey lighten-5 z-depth-1 card-margin-default card-performance d-flex align-items-center justify-content-center" style="border-left: 6px solid #FF4242">
+                <div class="card-panel grey lighten-5 z-depth-1 card-margin-default card-{{ $color_completedMissions }} d-flex align-items-center justify-content-center card-{{ $color_completedMissions }}">
                     <div>
                         <div class="d-flex justify-content-center">
-                            <div class="circle responsive-img repo-language circle-performance justify-content-center valign-wrapper" style="border: 5px solid #FF4242;">
-                                <i class="fas fa-check icon-performance" style="color: #FF4242;"></i>
+                            <div class="circle responsive-img repo-language circle-{{ $color_completedMissions }} justify-content-center valign-wrapper">
+                                <i class="fas fa-check icon-performance icon-{{ $color_completedMissions }}"></i>
                             </div>
                         </div>
                         <p class="text-center mb-0 mt-2 name-chart" id="completedMissions">{{ $completedMissions }}</p>
@@ -206,6 +225,9 @@ let chartProjectsTech = new Chart(ctx, {
 });
 
 $(".btn-performance-range").click(function () {
+    $("#loading-circle").removeClass('hide');
+    $("#range-menu").addClass('disable-menu');
+    $(".item-range-menu").css("pointer-events", "none");
     $('.focus-button').removeClass('focus-button');
     $(this).addClass('focus-button');
     period = this.dataset.value
@@ -225,6 +247,17 @@ $(".btn-performance-range").click(function () {
             let labels = main_languages.map((x) => x.main_language);
             let count_of_projects = main_languages.map((x) => x.count);
 
+            if(count_of_commits.length === 0) {
+                $("#spanChartCommits").removeClass("hide");
+            } else {
+                $("#spanChartCommits").addClass("hide");
+            }
+
+            if(count_of_projects.length === 0) {
+                $("#spanChartProjectsTech").removeClass("hide");
+            } else {
+                $("#spanChartProjectsTech").addClass("hide");
+            }
             chartCommits.data.datasets.data = count_of_commits;
             chartCommits.data.labels = labels_commit;
             chartCommits.update();
@@ -234,6 +267,13 @@ $(".btn-performance-range").click(function () {
             chartProjectsTech.update();
         },
     });
-})
+    setTimeout(
+        function() 
+        {
+            $("#range-menu").removeClass('disable-menu');
+            $("#loading-circle").addClass('hide');
+            $(".item-range-menu").css("pointer-events", "auto");
+        }, 1000);
+    })
 </script>
 @endsection

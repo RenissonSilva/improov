@@ -73,8 +73,47 @@ class UserController extends Controller
                 'main_languages' => $main_languages,
                 'commits' => $commits,
             ]);
-        }                
-        return view('performance', compact('countOfRepo', 'completedMissions', 'main_languages', 'commits'));
+        }
+        
+        //  Verificando se dados estão dentro da meta para colocar a cor do card verde ou vermelha no front
+        $color_focus = "";
+        $color_commits = "";
+        $color_mainLanguages = "";
+        $color_countOfRepo = "";
+        $color_completedMissions = "";
+
+        if($user->focus_days >= 7){
+            $color_focus = "green";
+        } else {
+            $color_focus = "red";
+        }
+
+        if($commits->count() >= 10) {
+            $color_commits = "green";
+        } else {
+            $color_commits = "red";
+        }
+
+        if($main_languages) {
+            $color_mainLanguages = "green";
+        } else {
+            $color_mainLanguages = "red";
+        }
+
+        if($countOfRepo >= 5) {
+            $color_countOfRepo = "green";
+        } else {
+            $color_countOfRepo = "red";
+        }
+
+        if($completedMissions >= 5) {
+            $color_completedMissions = "green";
+        } else {
+            $color_completedMissions = "red";
+        }
+
+        return view('performance', compact('countOfRepo', 'completedMissions', 'main_languages',
+        'commits', 'color_focus', 'color_commits', 'color_mainLanguages', 'color_countOfRepo', 'color_completedMissions'));
     }
 
     public static function adicionAtualizaRepositoriosUsuario(){
