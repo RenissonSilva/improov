@@ -47,7 +47,8 @@
                             <ul id='dropdown-logged' class='dropdown-content'>
                             <li><a href="{{ route('home') }}"> Início </a></li>
                             <li><a href="{{ route('repos') }}">Meus Projetos </a></li>
-                            <li><a href="{{ route('mission') }}">Minhas missões </a></li>
+                            <li><a href="{{ route('mission') }}">Minhas missões pendentes</a></li>
+                            <li><a href="{{ route('mission.concluidas') }}">Minhas missões concluídas</a></li>
                             <li><a href="{{ route('performance') }}">Desempenho </a></li>
                             <li>
                                 <a href="{{ route('logout') }}"
@@ -65,7 +66,7 @@
             </nav>
             <div class="navbar navbar-expand-md default-padding w-100">
                 <div class="btn-floating waves-effect waves-light btn-home tooltipped" data-position="top" data-html="true" data-tooltip="Nível do usuário"><i class="fas fa-crown"></i></div><h4 class="white-text stats-user">{{ Auth::user()->level }}</h4>
-                <div class="btn-floating waves-effect waves-light btn-home tooltipped" data-position="top" data-html="true" data-tooltip="Dias em foco"><i class="fas fa-fire"></i></div><h4 class="white-text stats-user">{{ Auth::user()->focus_days }}</h4>        
+                <div class="btn-floating waves-effect waves-light btn-home tooltipped" data-position="top" data-html="true" data-tooltip="Dias em foco"><i class="fas fa-fire"></i></div><h4 class="white-text stats-user">{{ Auth::user()->focus_days }}</h4>
             </div>
 
 
