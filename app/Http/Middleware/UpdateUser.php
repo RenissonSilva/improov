@@ -55,6 +55,7 @@ class UpdateUser
         //     $user->save();
         // }
 
+
         return $next($request);
     }
 }
