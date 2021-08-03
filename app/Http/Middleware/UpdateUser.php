@@ -20,7 +20,7 @@ class UpdateUser
     public function handle($request, Closure $next)
     {
         $user = Auth::user();
-        $lastCommit =         $focus = 0;
+        $focus = 0;
         $last_update = Carbon::createFromDate($user->github_last_update);
         if($user->github_last_update === null || !$last_update->isToday()) {
             $commitsLastMonth = RequisicaoController::getCommitsLastMonth($user->name);
@@ -52,3 +52,9 @@ class UpdateUser
                 $user->max_days_in_focus = $focus;
             }
             $user->github_last_update = Carbon::now();
+            $user->save();
+        }
+
+        return $next($request);
+    }
+}
