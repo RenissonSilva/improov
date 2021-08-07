@@ -29,10 +29,12 @@
                                             </label>
                                         </div>
                                         <span id="mission_name-{{$mission->id}}" class="mission_name">{{ $mission->name }}</span>
+                                        <input type="hidden" id="repeat_mission-{{$mission->id}}" value="{{ $mission->repeat_mission ?? null }}">
                                     </th>
                                     <th class="right-align">
                                         @if($mission->points == null)
                                             {{-- @if($mission->completed == 0) --}}
+                                            <input type="hidden" id="enable_repeat_mission" value="{{ ($mission->completed != 0  && $mission->is_active != 1) ? 'disabled':''}}">
                                             <button class="btn-floating btn mr-2 newpgreen tooltipped" data-position="top"
                                                     data-html="true" data-tooltip="Concluída" onclick="missaoConcluida({{ $mission->id }})"
                                                     id="m{{ $mission->id }}" {{ ($mission->completed != 0  && $mission->is_active != 1) ? 'disabled':''}} ><i class="material-icons">check</i>
@@ -99,6 +101,7 @@
     $('#criar-missao').submit(function(e) {
         e.preventDefault();
         const nome = $('input[name="name"]').val();
+        const repeat_mission = $('.repeat_mission').val();
 
         $.ajaxSetup({
             headers: {
@@ -109,7 +112,7 @@
         $.ajax({
             url: "{{ route('mission.store') }}", // caminho para o script que vai processar os dados
             type: 'POST',
-            data: {name: nome},
+            data: {name: nome, repeat_mission: repeat_mission},
             success: function(id) {
                 $('#mission_name-'+id).html(nome);
                 $('#name').val('');
@@ -194,6 +197,7 @@
     function modalEditMission(data) {
         $id = data.id;
         $("#name_edit").val($("#mission_name-"+$id).html());
+        $(".repeat_mission").val($("#repeat_mission-"+$id).val());
 
         $.ajaxSetup({
             headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') } });
@@ -207,18 +211,9 @@
                 $("#id_edit").val(result.id);
                 $("#name_edit").focus();
                 $(`.status_mission`).val(result.is_active);
-                // $('.status_mission').formSelect();
-                console.log('cliquei aqui!');
                 $(`.repeat_mission`).val(result.repeat_mission ?? 0);
+                $('.repeat_mission').formSelect();
                 $(`#id-edit`).val($id);
-
-                if(result.is_active == 1){
-                    $(".repeat_mission").attr('disabled',false);
-                    // $('.repeat_mission').formSelect();
-                }else{
-                    $(".repeat_mission").attr('disabled',true);
-                    // $('.repeat_mission').formSelect();
-                }
             },
             error: function (res) {
                 console.log(res);
@@ -270,7 +265,6 @@
     $('#btn-create-mission').on('click', function (e) {
         $(`.status_mission`).val('0');
         $(".repeat_mission").val('0');
-        $(".repeat_mission").attr('disabled',true);
         $('.repeat_mission').formSelect();
     });
 
