@@ -9,11 +9,13 @@ class Kernel extends ConsoleKernel
 {
     protected $commands = [
         Commands\ChangeMissionStatusCron::class,
+        Commands\RepeatMission::class,
     ];
 
     protected function schedule(Schedule $schedule)
     {
         $schedule->command('changestatus')->daily();
+        $schedule->command('mission:repeat')->everyMinute();
     }
 
     protected function commands()

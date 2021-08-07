@@ -106,7 +106,7 @@ class MissionController extends Controller
         $id = Auth::id();
         try{
             $addMission = Mission::create(
-                ['name' => $request->name, 'criador' => $id,'is_active'=>1]
+                ['name' => $request->name, 'repeat_mission' => $request->repeat_mission,'criador' => $id, 'is_active'=>1]
             );
             $missaoCriada = DB::table('missions')->where('criador',$id)->orderBy('id','desc')->first();
 
@@ -213,6 +213,26 @@ class MissionController extends Controller
     public function teste(Request $request){
         $this->subirLevel(Auth::id(), Auth::user()->level);
     }
+
+    public function concluidas(){
+
+        $my_missions = DB::table('missions AS m')
+                        ->leftJoin('mission_user AS mu','mu.mission_id','m.id')
+                        ->where([
+                            ['m.level_mission', Auth::user()->level],
+                            ['mu.completed', 1],
+                            ['mu.user_id', Auth::id()]
+                        ])
+                        ->orwhere('m.criador', Auth::id())
+                        ->select('m.id','m.name','m.is_active','m.level_mission','m.points','m.criador',
+                                 'm.created_at','m.updated_at','mu.id AS idMissionUser','mu.user_id',
+                                 'mu.mission_user_points','mu.completed'
+                        )
+                        ->paginate(6);
+
+        return view('mission.concluidas', compact('my_missions'));
+    }
+
 
 
 

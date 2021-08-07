@@ -31,6 +31,7 @@ Route::prefix('user')->middleware('auth','throttle:500,1', 'update.user')->group
     Route::post('addrepo', 'UserController@addFavoriteRepository')->name('addRepo');
     Route::prefix('mission')->middleware('auth')->group(function () {
         Route::get('/', 'MissionController@index')->name('mission');
+        Route::get('/concluidas', 'MissionController@concluidas')->name('mission.concluidas');
         Route::post('store', 'MissionController@store')->name('mission.store');
         Route::post('change', 'MissionController@changeStatusMission')->name('mission.changeStatusMission');
         Route::post('edit', 'MissionController@modalEditMission');

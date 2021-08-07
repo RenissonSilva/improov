@@ -29,10 +29,12 @@
                                             </label>
                                         </div>
                                         <span id="mission_name-{{$mission->id}}" class="mission_name">{{ $mission->name }}</span>
+                                        <input type="hidden" id="repeat_mission-{{$mission->id}}" value="{{ $mission->repeat_mission ?? null }}">
                                     </th>
                                     <th class="right-align">
                                         @if($mission->points == null)
                                             {{-- @if($mission->completed == 0) --}}
+                                            <input type="hidden" id="enable_repeat_mission" value="{{ ($mission->completed != 0  && $mission->is_active != 1) ? 'disabled':''}}">
                                             <button class="btn-floating btn mr-2 newpgreen tooltipped" data-position="top"
                                                     data-html="true" data-tooltip="Concluída" onclick="missaoConcluida({{ $mission->id }})"
                                                     id="m{{ $mission->id }}" {{ ($mission->completed != 0  && $mission->is_active != 1) ? 'disabled':''}} ><i class="material-icons">check</i>
@@ -43,7 +45,7 @@
                                                 href="#modal-edit-mission" id="{{ $mission->id }}" data-name="{{ $mission->name }}"><i class="material-icons">edit</i>
                                             </button>
                                             <button class="btn-floating btn newred modal-trigger tooltipped" data-position="top"
-                                                    data-html="true" data-tooltip="Excluir" data-id="{{ $mission->id }}" 
+                                                    data-html="true" data-tooltip="Excluir" data-id="{{ $mission->id }}"
                                                     onclick="modalRemoveMission(this)" href="#modal-delete-mission"
                                                     id="{{ $mission->idMissionUser }}">
                                                         <i class="material-icons">delete</i>
@@ -95,10 +97,11 @@
             }
         });
     });
-    
+
     $('#criar-missao').submit(function(e) {
         e.preventDefault();
         const nome = $('input[name="name"]').val();
+        const repeat_mission = $('.repeat_mission').val();
 
         $.ajaxSetup({
             headers: {
@@ -109,13 +112,13 @@
         $.ajax({
             url: "{{ route('mission.store') }}", // caminho para o script que vai processar os dados
             type: 'POST',
-            data: {name: nome},
+            data: {name: nome, repeat_mission: repeat_mission},
             success: function(id) {
                 $('#mission_name-'+id).html(nome);
-                $('#name').val();
+                $('#name').val('');
                 $('tbody').append("<tr id='tr-"+id+"'><th class='row nm th-switch valign-wrapper'><div class='switch'><label><input id='"+id+"' class='toggle-mission' type='checkbox' checked=''><span class='lever'></span></label></div><span id='mission_name-"+id+"' class='mission_name'>"+nome+"</span></th> <th class='right-align'><button class='btn-floating btn mr-2 newpgreen tooltipped' data-position='top' data-html='true' data-tooltip='Concluída' onclick='missaoConcluida("+id+")' id='m"+id+"'><i class='material-icons'>check</i></button><button class='btn-floating btn modal-trigger mr-2 newpurple tooltipped' data-position='top' data-html='true' data-tooltip='Editar' onclick='modalEditMission(this)' href='#modal-edit-mission' id='"+id+"' data-name='testasdf'><i class='material-icons'>edit</i></button><button class='btn-floating btn newred modal-trigger tooltipped' data-position='top' data-html='true' data-tooltip='Excluir' data-id='"+id+"' onclick='modalRemoveMission(this)' href='#modal-delete-mission' id='30'><i class='material-icons'>delete</i></button></th>");
                 $('.modal').modal('close');
-                disableBtnDel = $('#btn-del').attr('disabled',false);            
+                disableBtnDel = $('#btn-del').attr('disabled',false);
             },
             error: function(xhr, status, error) {
                 console.log(xhr.responseText);
@@ -194,6 +197,7 @@
     function modalEditMission(data) {
         $id = data.id;
         $("#name_edit").val($("#mission_name-"+$id).html());
+        $(".repeat_mission").val($("#repeat_mission-"+$id).val());
 
         $.ajaxSetup({
             headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') } });
@@ -207,18 +211,9 @@
                 $("#id_edit").val(result.id);
                 $("#name_edit").focus();
                 $(`.status_mission`).val(result.is_active);
-                // $('.status_mission').formSelect();
-                console.log('cliquei aqui!');
                 $(`.repeat_mission`).val(result.repeat_mission ?? 0);
+                $('.repeat_mission').formSelect();
                 $(`#id-edit`).val($id);
-
-                if(result.is_active == 1){
-                    $(".repeat_mission").attr('disabled',false);
-                    // $('.repeat_mission').formSelect();
-                }else{
-                    $(".repeat_mission").attr('disabled',true);
-                    // $('.repeat_mission').formSelect();
-                }
             },
             error: function (res) {
                 console.log(res);
@@ -270,7 +265,6 @@
     $('#btn-create-mission').on('click', function (e) {
         $(`.status_mission`).val('0');
         $(".repeat_mission").val('0');
-        $(".repeat_mission").attr('disabled',true);
         $('.repeat_mission').formSelect();
     });
 
@@ -283,5 +277,6 @@
         $('#btn-del').attr('disabled',false);
         $('#id_delete').val(id);
     }
+    $('.lever').click(console.log);
 </script>
 @endsection
