@@ -129,7 +129,7 @@
     $('#editar-missao').submit(function(e) {
         e.preventDefault();
         const nome = $('input[name="name_edit"]').val();
-        const repetir = $('input[name="repeat_mission"]').val();
+        const repeat_mission = $('#repeat_mission_edit').val();
         const id = $('input[name="id_edit"]').val();
 
         $.ajaxSetup({
@@ -141,9 +141,8 @@
         $.ajax({
             url: "{{ route('mission.update') }}", // caminho para o script que vai processar os dados
             type: 'PUT',
-            data: {name_edit: nome, repeat_mission: repetir,id_edit: id},
+            data: {name_edit: nome, repeat_mission: repeat_mission, id_edit: id},
             success: function(response) {
-                console.log("funcionou");
                 $('#mission_name-'+id).html(nome);
                 $('.modal').modal('close');
                 disableBtnDel = $('#btn-del').attr('disabled',false);
