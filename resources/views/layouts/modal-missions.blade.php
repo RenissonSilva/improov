@@ -55,7 +55,7 @@
                 
                 <div class="row">
                     <div class="input-field col s12">
-                        <select name="repeat_mission" class="repeat_mission">
+                        <select name="repeat_mission" class="repeat_mission" id="repeat_mission_edit">
                             <option value="0" selected>Desabilitado</option>
                             <option value="1">Repetir Diariamente</option>
                             <!-- <option value="2">Repetir Semanalmente</option> -->
