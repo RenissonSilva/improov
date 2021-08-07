@@ -198,7 +198,6 @@
         $id = data.id;
         $("#name_edit").val($("#mission_name-"+$id).html());
         $(".repeat_mission").val($("#repeat_mission-"+$id).val());
-
         $.ajaxSetup({
             headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') } });
 

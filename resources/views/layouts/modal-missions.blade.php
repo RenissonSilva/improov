@@ -60,7 +60,7 @@
                             <option value="1">Repetir Diariamente</option>
                             <!-- <option value="2">Repetir Semanalmente</option> -->
                         </select>
-                        <label>Repetir * <i class="fas fa-info-circle right tooltipped" data-position="bottom" data-tooltip="Para agendar a repetição você precisa primeiramente ativar a missão" style="font-size:18px;"></i></label>
+                        <!-- <label>Repetir * <i class="fas fa-info-circle right tooltipped" data-position="bottom" data-tooltip="Para agendar a repetição você precisa primeiramente ativar a missão" style="font-size:18px;"></i></label> -->
                         
                     </div>
                 </div>
