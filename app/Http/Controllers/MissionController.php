@@ -30,7 +30,7 @@ class MissionController extends Controller
                         ])
                         // -> where('m.criador', null)
                         // ->orwhere('m.criador', Auth::id())
-                        ->select('m.id','m.name','m.is_active','m.level_mission','m.points','m.criador',
+                        ->select('m.id','m.name','mu.is_active','m.level_mission','m.points','m.criador',
                                 'm.created_at','mu.updated_at','mu.id AS idMissionUser','mu.user_id',
                                 'mu.mission_user_points','mu.completed'
                         )
@@ -39,14 +39,15 @@ class MissionController extends Controller
         $my_missions = DB::table('missions AS m')
                         ->leftJoin('mission_user AS mu','mu.mission_id','m.id')
                         ->orwhere([
-                            ['m.level_mission', Auth::user()->level],
-                            ['m.ativo', "S"],
+                            // ['m.level_mission', Auth::user()->level],
+                            // ['mu.is_active', "S"],
                             ['m.criador', null],
+                            ['mu.user_id', Auth::id()],
                             ['mu.completed', 0]
                         ])
                         ->orwhere([
                             ['m.level_mission', null],
-                            ['m.ativo', "S"],
+                            // ['m.ativo', "S"],
                             ['m.criador', Auth::id()],
                             ['mu.completed', 0],
                         ])
@@ -182,14 +183,25 @@ class MissionController extends Controller
 
     public function changeStatusMission(Request $request)
     {
-        $mission = Mission_user::where('id', $request->id)->orderBy('id','desc')->first();
+        $mission_user = Mission_user::where('id', $request->id)->orderBy('id','desc')->first();
+        $mission = Mission::where('id', $mission_user->mission_id)->orderBy('id','desc')->first();
 
-        if($request->is_active == "true"){
-            $mission->is_active = 1;
-            $mission->save();
+        if($mission->criador == null ){
+            if($request->is_active == "true"){
+                $mission_user->is_active = 1;
+                $mission_user->save();
+            }else{
+                $mission_user->is_active = 0;
+                $mission_user->save();
+            }
         }else{
-            $mission->is_active = 0;
-            $mission->save();
+            if($request->is_active == "true"){
+                $mission->is_active = 1;
+                $mission->save();
+            }else{
+                $mission->is_active = 0;
+                $mission->save();
+            }
         }
 
         return response()->json('Missão atualizada com Sucesso');
@@ -260,7 +272,7 @@ class MissionController extends Controller
                                 ])
                                 // -> where('m.criador', null)
                                 // ->orwhere('m.criador', Auth::id())
-                                ->select('m.id','m.name','m.is_active','m.level_mission','m.points','m.criador',
+                                ->select('m.id','m.name','mu.is_active','m.level_mission','m.points','m.criador',
                                         'm.created_at','mu.updated_at','mu.id AS idMissionUser','mu.user_id',
                                         'mu.mission_user_points','mu.completed'
                                 )

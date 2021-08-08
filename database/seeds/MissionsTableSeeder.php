@@ -23,7 +23,7 @@ class MissionsTableSeeder extends Seeder
                 "name" => "Crie uma missão",
                 "level_mission" => 1,
                 "points" => 2,
-                "is_active" => true
+                "ativo" => null,
             ]);
 
             DB::table('missions')->insert([
@@ -31,7 +31,7 @@ class MissionsTableSeeder extends Seeder
                 "name" => "Modifique a bio do seu github",
                 "level_mission" => 1,
                 "points" => 5,
-                "is_active" => true
+                "ativo" => null,
             ]);
             // nivel 2
             DB::table('missions')->insert([
@@ -39,21 +39,21 @@ class MissionsTableSeeder extends Seeder
                 "name" => "Concluir missão criada",
                 "level_mission" => 2,
                 "points" => 2,
-                "is_active" => true
+                "ativo" => null,
             ]);
             DB::table('missions')->insert([
                 "id" => 4,
                 "name" => "Crie um repositorio",
                 "level_mission" => 2,
                 "points" => 5,
-                "is_active" => true
+                "ativo" => null,
             ]);
             DB::table('missions')->insert([
                 "id" => 5,
                 "name" => "Realize um commit em um repósitorio criado por você",
                 "level_mission" => 2,
                 "points" => 3,
-                "is_active" => true
+                "ativo" => null,
             ]);
             // nivel 3
             DB::table('missions')->insert([
@@ -61,21 +61,21 @@ class MissionsTableSeeder extends Seeder
                 "name" => "Crie uma issue",
                 "level_mission" => 3,
                 "points" => 5,
-                "is_active" => true
+                "ativo" => null,
             ]);
             DB::table('missions')->insert([
                 "id" => 8,
                 "name" => "Realize 5 commit em um repósitorio criado por você",
                 "level_mission" => 3,
                 "points" => 5,
-                "is_active" => true
+                "ativo" => null,
             ]);
             // DB::table('missions')->insert([
             //     "id" => 6,
             //     "name" => "Adicione amigo",
             //     "level_mission" => 3,
             //     "points" => 5,
-            //     "is_active" => true
+            //     "ativo" => null,
             // ]);
 
         // ];

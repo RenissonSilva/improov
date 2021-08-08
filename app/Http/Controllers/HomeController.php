@@ -135,13 +135,15 @@ class HomeController extends Controller
                         ->orwhere([
                             ['m.criador', null],
                             ['mu.user_id', Auth::id()],
+                            ['mu.is_active', "S"],
                             ['mu.completed', 0]
-                        ])
+                            ])
                         ->orwhere([
                             ['m.criador', Auth::id()],
+                            ['m.ativo', "S"],
                             ['mu.completed', 0]
                         ])
-                        ->select('m.id','m.name','m.is_active','m.level_mission','m.points','m.criador',
+                        ->select('m.id','m.name','mu.is_active','m.level_mission','m.points','m.criador',
                                  'm.created_at','m.updated_at','mu.id AS idMissionUser','mu.user_id',
                                  'mu.mission_user_points','mu.completed'
                         )

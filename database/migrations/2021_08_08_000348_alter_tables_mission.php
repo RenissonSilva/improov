@@ -14,10 +14,11 @@ class AlterTablesMission extends Migration
     public function up()
     {
         Schema::table('missions', function (Blueprint $table) {
-            $table->char('ativo')->default("S");
+            $table->char('ativo')->default("S")->nullable();
             $table->dropColumn('is_active');
         });
         Schema::table('mission_user', function (Blueprint $table) {
+            $table->char('ativo')->nullable();
             $table->char('is_active')->default("S");
         });
        }
