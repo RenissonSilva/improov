@@ -6,21 +6,15 @@
         @if ($mission->level_mission == null || $mission->level_mission == Auth::user()->level)
             <tr id="tr-{{ $mission->id }}">
                 <th class="row nm th-switch valign-wrapper">
+                    @if($mission->criador != null)
                     <div class="switch">
                         <label>
-                            <input id="{{ $mission->id }}" class="toggle-mission"
-                                    @if($mission->criador == null)
-                                        data-tipo="sistema"
-                                        {{ $mission->is_activeMissionUser == "S"? 'checked' : '' }}
-                                    @else
-                                        data-tipo="criada"
-                                        {{ $mission->is_activeMission == "S" ? 'checked' : '' }}
-                                    @endif
-                                type="checkbox">
-
+                            <input id="{{ $mission->id }}" class="toggle-mission" data-tipo="criada"
+                                    {{ $mission->is_activeMission == "S" ? 'checked' : '' }} type="checkbox">
                             <span class="lever"></span>
                         </label>
                     </div>
+                    @endif
                     <span id="mission_name-{{ $mission->id }}"
                         class="mission_name">{{ $mission->name }}</span>
                     <input type="hidden" id="repeat_mission-{{ $mission->id }}"
