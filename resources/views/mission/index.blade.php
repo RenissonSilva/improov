@@ -148,6 +148,7 @@
                     id_edit: id
                 },
                 success: function(response) {
+                    toastr.success('Missão editada com sucesso!')
                     $('#mission_name-' + id).html(nome);
                     $('.modal').modal('close');
                     disableBtnDel = $('#btn-del').attr('disabled', false);
@@ -192,7 +193,7 @@
                         },
                         success: function(result) {
                             quantidadeTr = $('#tbody-mission-concluida tr').length;
-                            if(quantidadeTr < 3){
+                            if(quantidadeTr < 10){
                                 mensagem = result.criador == null ? 'Missão do sistema' : 'Missão criada pelo usuário';
 
                                 data = new Date(result.updated_at).toLocaleDateString('pt-BR', {

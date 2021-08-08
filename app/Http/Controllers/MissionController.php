@@ -34,7 +34,7 @@ class MissionController extends Controller
                                 'm.created_at','mu.updated_at','mu.id AS idMissionUser','mu.user_id',
                                 'mu.mission_user_points','mu.completed'
                         )
-                        ->paginate(3);
+                        ->paginate(10);
                         // dd($missoesConcluidas->lastPage());
         $my_missions = DB::table('missions AS m')
                         ->leftJoin('mission_user AS mu','mu.mission_id','m.id')
@@ -56,7 +56,7 @@ class MissionController extends Controller
                                  'm.created_at','m.updated_at','mu.id AS idMissionUser','mu.user_id',
                                  'mu.mission_user_points','mu.completed'
                         )
-                        ->paginate(3);
+                        ->paginate(10);
 
         return view('mission.index', compact('my_missions','missoesConcluidas'));
     }
@@ -260,7 +260,7 @@ class MissionController extends Controller
                                 'm.created_at','m.updated_at','mu.id AS idMissionUser','mu.user_id',
                                 'mu.mission_user_points','mu.completed'
                         )
-                        ->paginate(3);
+                        ->paginate(10);
 
         return view('component-missionPendente',compact('my_missions'));
     }
@@ -278,7 +278,7 @@ class MissionController extends Controller
                                         'm.created_at','mu.updated_at','mu.id AS idMissionUser','mu.user_id',
                                         'mu.mission_user_points','mu.completed'
                                 )
-                                ->paginate(3);
+                                ->paginate(10);
         return view('component-missionConcluida',compact('missoesConcluidas'));
     }
 
