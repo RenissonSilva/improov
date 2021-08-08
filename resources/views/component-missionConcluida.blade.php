@@ -1,6 +1,6 @@
-<tbody>
+<tbody id="tbody-mission-concluida">
     @if ($missoesConcluidas->isEmpty())
-        <b class="text-center my-5 grey-text h4">Nenhuma missão criada</b>
+        <b class="text-center my-5 grey-text h4" id="nenhuma-mission-criada">Nenhuma missão concluída</b>
     @endif
     @foreach ($missoesConcluidas as $missaoConcluida)
         @if ($missaoConcluida->level_mission == null || $missaoConcluida->level_mission == Auth::user()->level)

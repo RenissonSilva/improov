@@ -52,7 +52,7 @@ class MissionController extends Controller
                             ['mu.completed', 0],
                         ])
                         // ->orwhere('m.criador', Auth::id())
-                        ->select('m.id','m.name','mu.is_active','m.level_mission','m.points','m.criador',
+                        ->select('m.id','m.name','m.ativo AS is_activeMission','mu.is_active AS is_activeMissionUser','m.level_mission','m.points','m.criador',
                                  'm.created_at','m.updated_at','mu.id AS idMissionUser','mu.user_id',
                                  'mu.mission_user_points','mu.completed'
                         )
@@ -183,28 +183,28 @@ class MissionController extends Controller
 
     public function changeStatusMission(Request $request)
     {
-        $mission_user = Mission_user::where('id', $request->id)->orderBy('id','desc')->first();
-        $mission = Mission::where('id', $mission_user->mission_id)->orderBy('id','desc')->first();
 
-        if($mission->criador == null ){
+        if($request->tipo == "sistema" ){
+            $mission_user = Mission_user::where('id', $request->id)->orderBy('id','desc')->first();
             if($request->is_active == "true"){
-                $mission_user->is_active = 1;
+                $mission_user->is_active = "S";
                 $mission_user->save();
             }else{
-                $mission_user->is_active = 0;
+                $mission_user->is_active = "N";
                 $mission_user->save();
             }
         }else{
+            $mission = Mission::where('id', $request->id)->orderBy('id','desc')->first();
             if($request->is_active == "true"){
-                $mission->is_active = 1;
+                $mission->ativo = "S";
                 $mission->save();
             }else{
-                $mission->is_active = 0;
+                $mission->ativo = "N";
                 $mission->save();
             }
+            return response()->json(["criador"=>$mission->criador,'name'=>$mission->name,'updated_at'=>$mission->updated_at]);
         }
 
-        return response()->json('Missão atualizada com Sucesso');
     }
 
     public function modifiedCompletedMission(Request $request){
@@ -243,23 +243,25 @@ class MissionController extends Controller
         $my_missions = DB::table('missions AS m')
                         ->leftJoin('mission_user AS mu','mu.mission_id','m.id')
                         ->orwhere([
-                            ['m.level_mission', Auth::user()->level],
-                            ['m.ativo', "S"],
+                            // ['m.level_mission', Auth::user()->level],
+                            // ['mu.is_active', "S"],
                             ['m.criador', null],
+                            ['mu.user_id', Auth::id()],
                             ['mu.completed', 0]
                         ])
                         ->orwhere([
                             ['m.level_mission', null],
-                            ['m.ativo', "S"],
+                            // ['m.ativo', "S"],
                             ['m.criador', Auth::id()],
                             ['mu.completed', 0],
                         ])
                         // ->orwhere('m.criador', Auth::id())
-                        ->select('m.id','m.name','mu.is_active','m.level_mission','m.points','m.criador',
-                                 'm.created_at','m.updated_at','mu.id AS idMissionUser','mu.user_id',
-                                 'mu.mission_user_points','mu.completed'
+                        ->select('m.id','m.name','m.ativo AS is_activeMission','mu.is_active AS is_activeMissionUser','m.level_mission','m.points','m.criador',
+                                'm.created_at','m.updated_at','mu.id AS idMissionUser','mu.user_id',
+                                'mu.mission_user_points','mu.completed'
                         )
                         ->paginate(3);
+
         return view('component-missionPendente',compact('my_missions'));
     }
     public function ajaxPaginateConcluida(Request $r){

@@ -1,4 +1,4 @@
-<tbody>
+<tbody id="tbody-mission-pendente">
     @if ($my_missions->isEmpty())
         <b class="text-center my-5 grey-text h4">Nenhuma missão criada</b>
     @endif
@@ -8,14 +8,21 @@
                 <th class="row nm th-switch valign-wrapper">
                     <div class="switch">
                         <label>
-                            <input id="{{ $mission->id }}" class="toggle-mission" type="checkbox"
-                                {{ $mission->is_active == 1 ? 'checked' : '' }}>
+                            <input id="{{ $mission->id }}" class="toggle-mission"
+                                    @if($mission->criador == null)
+                                        data-tipo="sistema"
+                                        {{ $mission->is_activeMissionUser == "S"? 'checked' : '' }}
+                                    @else
+                                        data-tipo="criada"
+                                        {{ $mission->is_activeMission == "S" ? 'checked' : '' }}
+                                    @endif
+                                type="checkbox">
+
                             <span class="lever"></span>
                         </label>
                     </div>
                     <span id="mission_name-{{ $mission->id }}"
-                        class="mission_name">
-                        {{ $mission->name }}</span>
+                        class="mission_name">{{ $mission->name }}</span>
                     <input type="hidden" id="repeat_mission-{{ $mission->id }}"
                         value="{{ $mission->repeat_mission ?? null }}">
                 </th>
@@ -23,13 +30,15 @@
                     @if ($mission->points == null)
                         {{-- @if ($mission->completed == 0) --}}
                         <input type="hidden" id="enable_repeat_mission"
-                            value="{{ $mission->completed != 0 && $mission->is_active != 1 ? 'disabled' : '' }}">
+                        value="{{ $mission->is_activeMission != "S" ? 'disabled' : '' }}"
+
+
+                            >
                         <button class="btn-floating btn mr-2 newpgreen tooltipped"
                             data-position="top" data-html="true" data-tooltip="Concluída"
                             onclick="missaoConcluida({{ $mission->id }})"
                             id="m{{ $mission->id }}"
-                            {{ $mission->is_active != 1 ? 'disabled' : '' }}><i
-                                class="material-icons">check</i>
+                                {{ $mission->is_activeMission != "S" ? 'disabled' : '' }}><i class="material-icons">check</i>
                         </button>
                         {{-- @endif --}}
                         <button class="btn-floating btn modal-trigger mr-2 newpurple tooltipped"

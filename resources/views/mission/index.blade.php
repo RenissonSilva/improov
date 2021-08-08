@@ -17,59 +17,32 @@
                 href="#modal-create-mission">Criar missão</a>
         </div>
         <div class="row">
-            {{-- <form method="post" action="{{route('teste')}}">
-                @csrf
-                <input type="submit" value="enviar">
-            </form> --}}
             <div class="col s12 np">
                 <div class="card darken-1">
                     <table id="paginate-missao-pendente" class="highlight centered missions_list">
                        @include('component-missionPendente',$my_missions)
                     </table>
                 </div>
-                @if ($my_missions->lastPage() > 1)
-                    <ul class="pagination" style="display:flex;justify-content:flex-end">
-                        <li class="paginatePendente {{ $my_missions->currentPage() == 1 ? ' disabled' : '' }}">
-                            <a class="linkPaginatePendente" href="{{ $my_missions->url(1) }}">Anterior</a>
-                        </li>
-                        @for ($i = 1; $i <= $my_missions->lastPage(); $i++)
-                            <li class="paginatePendente {{ $my_missions->currentPage() == $i ? ' active' : '' }}">
-                                <a class="linkPaginatePendente" href="{{ $my_missions->url($i) }}">{{ $i }}</a>
-                            </li>
-                        @endfor
-                        <li class="paginatePendente {{ $my_missions->currentPage() == $my_missions->lastPage() ? ' disabled' : '' }}">
-                            <a class="linkPaginatePendente" href="{{ $my_missions->url($my_missions->currentPage() + 1) }}">Próximo</a>
-                        </li>
-                    </ul>
-                @endif
+                @component('component.paginate',['variavel'=>$my_missions,
+                                                 'classLi' => 'paginatePendente','classA' => 'linkPaginatePendente'])
+                @endcomponent
             </div>
         </div>
-         {{-- Missões Concluídas --}}
+
+        {{-- Missões Concluídas --}}
          <div class="row">
             <h3 class="col-9 menu-title"><i class="fas fa-check-circle icon-title"></i>Missões concluídas</h3>
         </div>
         <div class="row">
-            <div class="col s12 np">
+            <div class="col s12 np" id="miss-conclu">
                 <div class="card darken-1">
                     <table id="paginate-missao-concluida" class="highlight centered missions_list">
                         @include('component-missionConcluida',$missoesConcluidas)
                     </table>
                 </div>
-                @if ($missoesConcluidas->lastPage() > 1)
-                    <ul class="pagination" style="display:flex;justify-content:flex-end">
-                        <li class="paginateConcluida {{ $missoesConcluidas->currentPage() == 1 ? ' disabled' : '' }}">
-                            <a class="linkPaginateConcluida" href="{{ $missoesConcluidas->url(1) }}">Anterior</a>
-                        </li>
-                        @for ($i = 1; $i <= $missoesConcluidas->lastPage(); $i++)
-                            <li class="paginateConcluida {{ $missoesConcluidas->currentPage() == $i ? ' active' : '' }}">
-                                <a class="linkPaginateConcluida" href="{{ $missoesConcluidas->url($i) }}">{{ $i }}</a>
-                            </li>
-                        @endfor
-                        <li class="paginateConcluida {{ $missoesConcluidas->currentPage() == $missoesConcluidas->lastPage() ? ' disabled' : '' }}">
-                            <a class="linkPaginateConcluida" href="{{ $missoesConcluidas->url($missoesConcluidas->currentPage() + 1) }}">Próximo</a>
-                        </li>
-                    </ul>
-                @endif
+                @component('component.paginate',['variavel'=>$missoesConcluidas, 'idPagination'=>'pagi-conclu',
+                                                 'classLi' => 'paginateConcluida','classA' => 'linkPaginateConcluida'])
+                @endcomponent
             </div>
         </div>
     </div>
@@ -78,6 +51,7 @@
 @endsection
 
 @section('scripts')
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment-with-locales.min.js" integrity="sha512-LGXaggshOkD/at6PFNcp2V2unf9LzFq6LE+sChH7ceMTDP0g2kn6Vxwgg7wkPP7AAtX+lmPqPdxB47A0Nz0cMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script>
         function criarMissao() {
             action = "{{ route('mission.store') }}"
@@ -131,7 +105,7 @@
                 success: function(id) {
                     $('#mission_name-' + id).html(nome);
                     $('#name').val('');
-                    $('tbody').append("<tr id='tr-" + id +
+                    $('#tbody-mission-pendente').append("<tr id='tr-" + id +
                         "'><th class='row nm th-switch valign-wrapper'><div class='switch'><label><input id='" +
                         id +
                         "' class='toggle-mission' type='checkbox' checked=''><span class='lever'></span></label></div><span id='mission_name-" +
@@ -202,7 +176,6 @@
                 url: 'mission/modifiedCompletedMission/' + id,
                 dataType: 'json',
                 success: function(r) {
-
                     is_active = false;
                     $.ajaxSetup({
                         headers: {
@@ -218,7 +191,44 @@
                             'is_active': is_active
                         },
                         success: function(result) {
+                            quantidadeTr = $('#tbody-mission-concluida tr').length;
+                            if(quantidadeTr < 3){
+                                mensagem = result.criador == null ? 'Missão do sistema' : 'Missão criada pelo usuário';
 
+                                data = new Date(result.updated_at).toLocaleDateString('pt-BR', {
+                                    year: 'numeric',
+                                    month: '2-digit',
+                                    day: '2-digit',
+                                    hour: '2-digit',
+                                    minute:'2-digit',
+                                });
+
+                                $('#nenhuma-mission-criada').remove();
+
+                                inicioTr = "<tr id='tr-"+id+"'>";
+                                inicioTh = "<th style='padding:9px 20px !important'>";
+                                inicioSpan = "<span id='mission_name-"+id+"'class='mission_name'>";
+                                inicioDiv = "<div data-tooltip='"+mensagem+"' data-position='top' data-html='true' class='waves-effect waves-light tooltipped'>"
+                                icone = result.criador == null ? "<i class='fa fa-cog fa-xs tooltiped' style='margin-right:8px'></i>" : "<i class='fa fa-user-circle fa-xs tooltiped' style='margin-right:8px'></i>";
+                                inicioFechamento = "</div>"+result.name+"</span></th>";
+                                fimFechamento = "<th class='right-align' style='font-size: 14px;color:#565656'>Data de conclusão: "+data+"</th></tr>";
+                                $('#tbody-mission-concluida').append(inicioTr+inicioTh+inicioSpan+inicioDiv+icone+inicioFechamento+fimFechamento);
+                            }else{
+
+                                isNotPaginacao = $('#pagi-conclu').length > 0 ? false : true;
+                                console.log(isNotPaginacao);
+                                if(isNotPaginacao){
+                                    urlPaginate = document.URL+"/ajaxconcluida";
+                                    inicioUl = "<ul class='pagination' id='pagi-conclu' style='display:flex;justify-content:flex-end'>";
+                                    anterior = "<li class='paginateConcluida disabled'><a class='linkPaginateConcluida' href='"+urlPaginate+"?page=1'>Anterior</a></li>";
+                                    numberUm = "<li class='paginateConcluida active'><a class='linkPaginateConcluida' href='"+urlPaginate+"?page=1'>1</a></li>";
+                                    numberdois = "<li class='paginateConcluida'><a class='linkPaginateConcluida' href='"+urlPaginate+"?page=2'>2</a></li>";
+                                    proximo = "<li class='paginateConcluida'><a class='linkPaginateConcluida' href='"+urlPaginate+"?page=2'>Próximo</a></li>";
+                                    fimUl = "</ul>";
+
+                                    $('#miss-conclu').append(inicioUl+anterior+numberUm+numberdois+proximo+fimUl);
+                                }
+                            }
                         }
                     });
 
@@ -270,6 +280,7 @@
         $('.toggle-mission').on('change', function(e) {
             var id = this.id;
             var is_active = this.checked;
+            var tipo = $(this).attr('data-tipo');
             if (is_active == true) {
                 toastr.success('Missão ativada com sucesso!')
                 $("#m" + id).attr('disabled', false);
@@ -291,7 +302,8 @@
                 dataType: 'json',
                 data: {
                     'id': id,
-                    'is_active': is_active
+                    'is_active': is_active,
+                    'tipo': tipo
                 },
                 success: function(result) {},
                 error: function(res) {
@@ -341,7 +353,7 @@
             missaoPendente = $('#paginate-missao-pendente').html();
 
             $.get(url, null, function(data){
-
+                console.lo
                 $('#paginate-missao-pendente').html(data);
             });
         });
