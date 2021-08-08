@@ -21,43 +21,43 @@ class MissionController extends Controller
 {
     public function index(){
 
-        // $following = Http::get('https://api.github.com/users/'.Auth::user()->nickname.'/repos');
-        // $following = $following->json();
-        // $quantRepos = 0;
-        // foreach($following as $f){
-        //     // dd($f['full_name']);
-        //     $e = explode('/', $f['full_name']);
-        //     // dd($e[0]);
-
-        //     $languages[] = $f['language'];
-        //     $languages = array_unique($languages);
-
-        //     if($e[0] == Auth::user()->nickname){
-        //         $quantRepos++;
-        //     }
-        //     // $d[] = $f->full_name;
-        // }
-        // $linguagensFaltam = $this->LanguagesQueFaltam($languages);
-        // DD($linguagensFaltam,$languages);
-
-                   // Adicionando missões aos usuários
-
-
-        $my_missions = DB::table('missions AS m')
+        $missoesConcluidas = DB::table('missions AS m')
                         ->leftJoin('mission_user AS mu','mu.mission_id','m.id')
                         ->where([
-                            ['m.level_mission', Auth::user()->level],
-                            ['mu.completed', 0],
+                            // ['m.level_mission', Auth::user()->level],
+                            ['mu.completed', 1],
                             ['mu.user_id', Auth::id()]
                         ])
-                        ->orwhere('m.criador', Auth::id())
+                        // -> where('m.criador', null)
+                        // ->orwhere('m.criador', Auth::id())
                         ->select('m.id','m.name','m.is_active','m.level_mission','m.points','m.criador',
+                                'm.created_at','mu.updated_at','mu.id AS idMissionUser','mu.user_id',
+                                'mu.mission_user_points','mu.completed'
+                        )
+                        ->paginate(3);
+                        // dd($missoesConcluidas->lastPage());
+        $my_missions = DB::table('missions AS m')
+                        ->leftJoin('mission_user AS mu','mu.mission_id','m.id')
+                        ->orwhere([
+                            ['m.level_mission', Auth::user()->level],
+                            ['m.ativo', "S"],
+                            ['m.criador', null],
+                            ['mu.completed', 0]
+                        ])
+                        ->orwhere([
+                            ['m.level_mission', null],
+                            ['m.ativo', "S"],
+                            ['m.criador', Auth::id()],
+                            ['mu.completed', 0],
+                        ])
+                        // ->orwhere('m.criador', Auth::id())
+                        ->select('m.id','m.name','mu.is_active','m.level_mission','m.points','m.criador',
                                  'm.created_at','m.updated_at','mu.id AS idMissionUser','mu.user_id',
                                  'mu.mission_user_points','mu.completed'
                         )
-                        ->get();
+                        ->paginate(3);
 
-        return view('mission.index', compact('my_missions'));
+        return view('mission.index', compact('my_missions','missoesConcluidas'));
     }
 
     // Método de uma função que será implementada futuramente
@@ -166,8 +166,12 @@ class MissionController extends Controller
         //     Mission::where('id', $muFirst->mission_id)->delete();
         // }
         try{
-            $mission_user = Mission_user::where('mission_id', $id)->delete();
-            $mission = Mission::where('id', $id)->delete();
+            $mission = Mission::where('id', $id)->first();
+            $mission->ativo = "N";
+            $mission->save();
+
+            // $mission_user = Mission_user::where('mission_id', $id)->delete();
+            // $mission = Mission::where('id', $id)->delete();
         }catch(Exception $e){
             return false;
         }
@@ -178,7 +182,7 @@ class MissionController extends Controller
 
     public function changeStatusMission(Request $request)
     {
-        $mission = Mission::where('id', $request->id)->first();
+        $mission = Mission_user::where('id', $request->id)->orderBy('id','desc')->first();
 
         if($request->is_active == "true"){
             $mission->is_active = 1;
@@ -194,8 +198,8 @@ class MissionController extends Controller
     public function modifiedCompletedMission(Request $request){
         $id = $request->id;
 
-        $mission_user = Mission_user::where('mission_id',(int) $id)->first();
-        // return response()->json($mission_user);
+        $mission_user = Mission_user::where('mission_id',(int) $id)->orderby("id",'desc')->first();
+
         if($mission_user->completed == 0){
             $mission_user->completed=1;
             $mission_user->updated_at = date('Y-m-d H:i:s');
@@ -206,6 +210,15 @@ class MissionController extends Controller
             $mission_user->save();
         }
 
+        // adicionando missão
+        $mission = new Mission_user();
+        $mission->user_id = $mission_user->user_id;
+        $mission->mission_id = $mission_user->mission_id;
+        $mission->completed = 0;
+        $mission->mission_user_points=0;
+        $mission->save();
+
+
         // return response()->json($mission_user);
         return response()->json($mission_user->mission_id);
     }
@@ -214,36 +227,45 @@ class MissionController extends Controller
         $this->subirLevel(Auth::id(), Auth::user()->level);
     }
 
-    public function concluidas(){
-
+    public function ajaxPaginatePendente(Request $r){
         $my_missions = DB::table('missions AS m')
                         ->leftJoin('mission_user AS mu','mu.mission_id','m.id')
-                        ->where([
+                        ->orwhere([
                             ['m.level_mission', Auth::user()->level],
-                            ['mu.completed', 1],
-                            ['mu.user_id', Auth::id()]
+                            ['m.ativo', "S"],
+                            ['m.criador', null],
+                            ['mu.completed', 0]
                         ])
-                        ->orwhere('m.criador', Auth::id())
-                        ->select('m.id','m.name','m.is_active','m.level_mission','m.points','m.criador',
+                        ->orwhere([
+                            ['m.level_mission', null],
+                            ['m.ativo', "S"],
+                            ['m.criador', Auth::id()],
+                            ['mu.completed', 0],
+                        ])
+                        // ->orwhere('m.criador', Auth::id())
+                        ->select('m.id','m.name','mu.is_active','m.level_mission','m.points','m.criador',
                                  'm.created_at','m.updated_at','mu.id AS idMissionUser','mu.user_id',
                                  'mu.mission_user_points','mu.completed'
                         )
-                        ->paginate(6);
-
-        return view('mission.concluidas', compact('my_missions'));
+                        ->paginate(3);
+        return view('component-missionPendente',compact('my_missions'));
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
+    public function ajaxPaginateConcluida(Request $r){
+        $missoesConcluidas = DB::table('missions AS m')
+                                ->leftJoin('mission_user AS mu','mu.mission_id','m.id')
+                                ->where([
+                                    // ['m.level_mission', Auth::user()->level],
+                                    ['mu.completed', 1],
+                                    ['mu.user_id', Auth::id()]
+                                ])
+                                // -> where('m.criador', null)
+                                // ->orwhere('m.criador', Auth::id())
+                                ->select('m.id','m.name','m.is_active','m.level_mission','m.points','m.criador',
+                                        'm.created_at','mu.updated_at','mu.id AS idMissionUser','mu.user_id',
+                                        'mu.mission_user_points','mu.completed'
+                                )
+                                ->paginate(3);
+        return view('component-missionConcluida',compact('missoesConcluidas'));
+    }
 
 }

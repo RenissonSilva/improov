@@ -23,7 +23,18 @@
             @endif
             @foreach($my_missions as $mission)
             <tr class="row">
-                <td class="col-8 mission-text">{{$mission->name}}</td>
+
+                <td class="col-8 mission-text" style="padding-left:13px !important">
+                    <div data-tooltip="{{ $mission->criador == null ? "Missão do sistema" : "Missão criada pelo usuário" }}"
+                        data-position="top" data-html="true" class="waves-effect waves-light tooltipped">
+                        @if($mission->criador == null)
+                            <i class="fa fa-cog fa-xs tooltiped" style="margin-right:8px"></i>
+                        @else
+                            <i class="fa fa-user-circle fa-xs tooltiped" style="margin-right:8px"></i>
+                        @endif
+                    </div>
+                    {{$mission->name}}
+                </td>
                 <td class="col valign-wrapper">
                     <div class="progress">
                         @if ($loop->first)
@@ -88,7 +99,7 @@
         </div>
 
     </div>
-    
+
 </div>
 @endsection
 
