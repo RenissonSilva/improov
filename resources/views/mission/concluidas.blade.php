@@ -16,7 +16,7 @@
                     <table class="highlight centered missions_list">
                         <tbody>
                             @if ($my_missions->isEmpty())
-                                <b class="text-center my-5 grey-text h4">Nenhuma missão criada</b>
+                                <b class="text-center my-5 grey-text h4">Nenhuma missão sfsfds</b>
                             @endif
                             @foreach ($my_missions as $mission)
                                 @if ($mission->level_mission == null || $mission->level_mission == Auth::user()->level)

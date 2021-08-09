@@ -119,23 +119,35 @@ class HomeController extends Controller
 
         $my_missions = DB::table('missions AS m')
                         ->leftJoin('mission_user AS mu','mu.mission_id','m.id')
-                        ->where([
-                            ['mu.completed', 0],
+                        // ->where([
+                        //     ['mu.completed', 0],
+                        //     ['mu.user_id', Auth::id()],
+                        //     ['m.is_active', 1]
+                        // ])
+                        // ->orWhere([
+                        //     ['m.level_mission', Auth::user()->level],
+                        //     ['mu.user_id', Auth::id()]
+                        // ])
+                        // ->orWhere([
+                        //     ['m.criador', Auth::id()],
+                        //     ['m.is_active', 1]
+                        // ])
+                        ->orwhere([
+                            ['m.criador', null],
                             ['mu.user_id', Auth::id()],
-                            ['m.is_active', 1]
-                        ])
-                        ->orWhere([
-                            ['m.level_mission', Auth::user()->level],
-                            ['mu.user_id', Auth::id()]
-                        ])
-                        ->orWhere([
+                            ['mu.is_active', "S"],
+                            ['mu.completed', 0]
+                            ])
+                        ->orwhere([
                             ['m.criador', Auth::id()],
-                            ['m.is_active', 1]
+                            ['m.ativo', "S"],
+                            ['mu.completed', 0]
                         ])
-                        ->select('m.id','m.name','m.is_active','m.level_mission','m.points','m.criador',
+                        ->select('m.id','m.name','mu.is_active','m.level_mission','m.points','m.criador',
                                  'm.created_at','m.updated_at','mu.id AS idMissionUser','mu.user_id',
                                  'mu.mission_user_points','mu.completed'
                         )
+                        ->orderBy('id','asc')
                         ->get();
 
         $favorites_repositories = Repository::where('user_id', Auth::id())->where('favorite', 1)->get();

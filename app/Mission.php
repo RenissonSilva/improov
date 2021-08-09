@@ -7,6 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 class Mission extends Model
 {
     protected $fillable = [
-        'name', 'criador', 'is_active', 'repeat_mission'
+        'name', 'criador', 'ativo', 'repeat_mission'
     ];
 }

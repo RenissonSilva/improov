@@ -13,6 +13,7 @@ class Mission_user extends Model
         'mission_user_points',
         'user_id',
         'mission_id',
+        'is_active',
         'created_at',
     ];
 }
