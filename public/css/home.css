@@ -126,19 +126,16 @@ main {
     margin:0!important;
     border:.5px solid white;
     border-radius: 10px!important;
-    background-color: #558148!important;
+    background-color: #ccc!important;
 }
 
 .progress .determinate {
-    background-color: #A3FFA1!important;
+    background-color: #a9d49c!important;
 }
 
-table.striped>tbody>tr:nth-child(odd) {
-    background-color: #8C63F2!important;
-}
-
-table.striped>tbody>tr:nth-child(even) {
-    background-color: #271359!important;
+table.striped>tbody>tr {
+    background-color: #fff!important;
+    border: 1px solid rgba(0,0,0,0.12);
 }
 
 tr.row {
@@ -146,9 +143,9 @@ tr.row {
 }
 
 .mission-text {
-    color: #fff;
+    color: #565656;
     font-size: 20px;
-    font-weight: bold;
+    font-weight: 500;
 }
 
 td, th {

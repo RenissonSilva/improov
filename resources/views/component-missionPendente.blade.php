@@ -29,7 +29,7 @@
 
                             >
                         <button class="btn-floating btn mr-2 newpgreen tooltipped"
-                            data-position="top" data-html="true" data-tooltip="Concluída"
+                            data-position="top" data-html="true" data-tooltip="Concluir missão"
                             onclick="missaoConcluida({{ $mission->id }})"
                             id="m{{ $mission->id }}"
                                 {{ $mission->is_activeMission != "S" ? 'disabled' : '' }}><i class="material-icons">check</i>
