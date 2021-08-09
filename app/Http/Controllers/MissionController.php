@@ -167,9 +167,8 @@ class MissionController extends Controller
         //     Mission::where('id', $muFirst->mission_id)->delete();
         // }
         try{
-            $mission = Mission::where('id', $id)->first();
-            $mission->ativo = "N";
-            $mission->save();
+            Mission_user::where('mission_id', $id)->delete();
+            Mission::find($id)->delete();
 
             // $mission_user = Mission_user::where('mission_id', $id)->delete();
             // $mission = Mission::where('id', $id)->delete();
