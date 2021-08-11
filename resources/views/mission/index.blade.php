@@ -278,7 +278,7 @@
             return false;
         }
 
-        $('.toggle-mission').on('change', function(e) {
+        $("#tbody-mission-pendente").on('change','.toggle-mission' ,function(e) {
             var id = this.id;
             var is_active = this.checked;
             var tipo = $(this).attr('data-tipo');
