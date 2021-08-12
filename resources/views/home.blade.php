@@ -2,7 +2,48 @@
 
 @section('content')
 <style>
-
+    @media screen and (max-width:1200px){
+        /* .dropdown-home-layout{
+            width:200px;
+            height::auto;
+        } */
+        .avatar{
+            width: 127px;
+            border-radius: 100%;
+        }
+        .navbar{
+            justify-content: end;
+        }
+        .card-panel{
+            width: 100%;
+        }
+        .name-star{
+            height: 0px;
+        }
+        .row > .menu-title{
+            margin-top:40px;
+            margin-bottom:0px;
+        }
+        .mission-title{
+            font-size:24px;
+        }
+        .mission-text{
+            font-size:16px;
+        }
+        .btn-github{
+            font-size:14px !important;
+        }
+        .repo-language{
+            width: 8% !important;
+            height: 70%!important;
+        }
+        .repo-title{
+            font-size:17px;
+        }
+        .card-repo{
+            height:80%;;
+        }
+    }
 </style>
 <div class="container-default">
     <div class="row">

@@ -148,6 +148,7 @@ class HomeController extends Controller
                                  'mu.mission_user_points','mu.completed'
                         )
                         ->orderBy('id','asc')
+                        ->take(10)
                         ->get();
 
         $favorites_repositories = Repository::where('user_id', Auth::id())->where('favorite', 1)->get();

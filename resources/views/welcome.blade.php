@@ -26,7 +26,7 @@
             </div>
 
             <ul class="right h-100">
-                <a class="waves-effect waves-light btn-large modal-trigger btn-default btn-login" href="#modal-login"><i class="material-icons left icon-code">code</i>Comece a programar</a>
+                <a class="waves-effect waves-light btn-large modal-trigger btn-default btn-login" href="#modal-login"><i class="material-icons left icon-code"></i>Comece a programar</a>
                 @include('layouts.modal-login')
             </ul>
         </nav>
@@ -88,13 +88,13 @@
                     <p class="small-text">Estimular desenvolvedores para que melhorem seus conhecimentos e não percam seu foco</p>
                 </div>
             </div>
-            
+
             <div class="row div-links-footer">
                 <div class="col s4 m4 l4 valign-wrapper h-52">
                     <img src="{{ url('images/logo.png') }}" class="logo-footer">
                     <span class="center-align medium-text improov-footer"><b>Improov</b></span>
                 </div>
-                
+
                 <div class="col s8 m8 l8 links-footer valign-wrapper h-52 right-align">
                     <a href="#" class="medium-text">Fale conosco</a>
                     <a href="#" class="medium-text">Termos de privacidade</a>
@@ -103,7 +103,7 @@
             </div>
         </div>
     </footer>
-    
+
   <!--  Scripts-->
   <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>

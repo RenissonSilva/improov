@@ -5,7 +5,6 @@
         .pagination li.active {
             background-color: #8B64EC;
         }
-
     </style>
 
     <div class="container-default">
@@ -86,6 +85,7 @@
 
         $('#criar-missao').submit(function(e) {
             e.preventDefault();
+            $('#criar-missao-btn-salvar').attr('disabled', true);
             const nome = $('input[name="name"]').val();
             const repeat_mission = $('.repeat_mission').val();
 
@@ -103,23 +103,29 @@
                     repeat_mission: repeat_mission
                 },
                 success: function(id) {
-                    $('#mission_name-' + id).html(nome);
-                    $('#name').val('');
-                    $('#tbody-mission-pendente').append("<tr id='tr-" + id +
-                        "'><th class='row nm th-switch valign-wrapper'><div class='switch'><label><input id='" +
-                        id +
-                        "' class='toggle-mission' type='checkbox' checked=''><span class='lever'></span></label></div><span id='mission_name-" +
-                        id + "' class='mission_name'>" + nome +
-                        "</span></th> <th class='right-align'><button class='btn-floating btn mr-2 newpgreen tooltipped' data-position='top' data-html='true' data-tooltip='Concluída' onclick='missaoConcluida(" +
-                        id + ")' id='m" + id +
-                        "'><i class='material-icons'>check</i></button><button class='btn-floating btn modal-trigger mr-2 newpurple tooltipped' data-position='top' data-html='true' data-tooltip='Editar' onclick='modalEditMission(this)' href='#modal-edit-mission' id='" +
-                        id +
-                        "' data-name='testasdf'><i class='material-icons'>edit</i></button><button class='btn-floating btn newred modal-trigger tooltipped' data-position='top' data-html='true' data-tooltip='Excluir' data-id='" +
-                        id +
-                        "' onclick='modalRemoveMission(this)' href='#modal-delete-mission' id='30'><i class='material-icons'>delete</i></button></th>"
-                        );
+                    toastr.success('Missão criada')
+                    quantidadeTr = $('#tbody-mission-pendente tr').length;
+                    if(quantidadeTr <= 10){
+                        $('#mission_name-' + id).html(nome);
+                        $('#name').val('');
+                        $('#tbody-mission-pendente').append("<tr id='tr-" + id +
+                            "'><th class='row nm th-switch valign-wrapper'><div class='switch'><label><input id='" +
+                            id +
+                            "' class='toggle-mission' type='checkbox' checked=''><span class='lever'></span></label></div><span id='mission_name-" +
+                            id + "' class='mission_name'>" + nome +
+                            "</span></th> <th class='right-align'><button class='btn-floating btn mr-2 newpgreen tooltipped' data-position='top' data-html='true' data-tooltip='Concluída' onclick='missaoConcluida(" +
+                            id + ")' id='m" + id +
+                            "'><i class='material-icons'>check</i></button><button class='btn-floating btn modal-trigger mr-2 newpurple tooltipped' data-position='top' data-html='true' data-tooltip='Editar' onclick='modalEditMission(this)' href='#modal-edit-mission' id='" +
+                            id +
+                            "' data-name='testasdf'><i class='material-icons'>edit</i></button><button class='btn-floating btn newred modal-trigger tooltipped' data-position='top' data-html='true' data-tooltip='Excluir' data-id='" +
+                            id +
+                            "' onclick='modalRemoveMission(this)' href='#modal-delete-mission' id='30'><i class='material-icons'>delete</i></button></th>"
+                            );
+                    }
                     $('.modal').modal('close');
                     disableBtnDel = $('#btn-del').attr('disabled', false);
+                    $('#criar-missao-btn-salvar').attr('disabled', false);
+
                 },
                 error: function(xhr, status, error) {
                     console.log(xhr.responseText);
@@ -148,7 +154,7 @@
                     id_edit: id
                 },
                 success: function(response) {
-                    toastr.success('Missão editada com sucesso!')
+                    toastr.success('Missão editada')
                     $('#mission_name-' + id).html(nome);
                     $('.modal').modal('close');
                     disableBtnDel = $('#btn-del').attr('disabled', false);
@@ -164,7 +170,7 @@
         function missaoConcluida(id) {
             $('#' + id).prop('checked', false);
             $("#m" + id).attr('disabled', 'disabled');
-            toastr.success('Missão concluída com sucesso!')
+            toastr.success('Missão concluída')
 
 
             $.ajaxSetup({
@@ -283,10 +289,10 @@
             var is_active = this.checked;
             var tipo = $(this).attr('data-tipo');
             if (is_active == true) {
-                toastr.success('Missão ativada com sucesso!')
+                toastr.success('Missão ativada')
                 $("#m" + id).attr('disabled', false);
             } else {
-                toastr.success('Missão desativada com sucesso!')
+                toastr.success('Missão desativada')
                 $("#m" + id).attr('disabled', true);
                 $('.repeat_mission').formSelect();
             }
@@ -309,10 +315,10 @@
                 success: function(result) {},
                 error: function(res) {
                     if (is_active == false) {
-                        toastr.success('Missão ativada com sucesso!')
+                        toastr.success('Missão ativada')
                         $("#m" + id).attr('disabled', false);
                     } else {
-                        toastr.success('Missão desativada com sucesso!')
+                        toastr.success('Missão desativada')
                         $("#m" + id).attr('disabled', true);
                         $('.repeat_mission').formSelect();
                     }
