@@ -82,7 +82,7 @@
                         data-position="top" data-html="true" class="waves-effect waves-light tooltipped">
                         @if($mission->criador == null)
                             {{-- <i class="fa fa-cog fa-xs tooltiped" style="margin-right:8px"></i> --}}
-                            <span class="badge" style="background-color:#8B64EC; color:white; margin-right:3px" > Level {{ $mission->level_mission }}</span>
+                            <span class="badge" style="background-color:#8B64EC; color:white; margin-right:3px" > Nível {{ $mission->level_mission }}</span>
 
                         @else
                             <i class="fa fa-user-circle fa-xs tooltiped" style="margin-right:8px"></i>
