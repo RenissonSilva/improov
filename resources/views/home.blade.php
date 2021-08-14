@@ -7,6 +7,18 @@
             width:200px;
             height::auto;
         } */
+        .simple_link{
+            display: none;
+        }
+        #navbarSupportedContent{
+            display:block;
+            z-index:1;
+            width:10px;
+        }
+        .dropdown-home-layout{
+            font-size:10px;
+        }
+
         .avatar{
             width: 127px;
             border-radius: 100%;
@@ -47,7 +59,7 @@
 </style>
 <div class="container-default">
     <div class="row">
-        <h3 class="col-9 menu-title"><i class="fas fa-check icon-title"></i>Missões diárias</h3>
+        <h3 class="col-12 menu-title"><i class="fas fa-check icon-title"></i>Missões diárias</h3>
     </div>
     <table class="striped">
         <tbody>
@@ -69,7 +81,9 @@
                     <div data-tooltip="{{ $mission->criador == null ? "Missão do sistema" : "Missão criada pelo usuário" }}"
                         data-position="top" data-html="true" class="waves-effect waves-light tooltipped">
                         @if($mission->criador == null)
-                            <i class="fa fa-cog fa-xs tooltiped" style="margin-right:8px"></i>
+                            {{-- <i class="fa fa-cog fa-xs tooltiped" style="margin-right:8px"></i> --}}
+                            <span class="badge" style="background-color:#8B64EC; color:white; margin-right:3px" > Level {{ $mission->level_mission }}</span>
+
                         @else
                             <i class="fa fa-user-circle fa-xs tooltiped" style="margin-right:8px"></i>
                         @endif
