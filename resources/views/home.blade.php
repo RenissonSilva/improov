@@ -2,11 +2,64 @@
 
 @section('content')
 <style>
+    @media screen and (max-width:1200px){
+        /* .dropdown-home-layout{
+            width:200px;
+            height::auto;
+        } */
+        .simple_link{
+            display: none;
+        }
+        #navbarSupportedContent{
+            display:block;
+            z-index:1;
+            width:10px;
+        }
+        .dropdown-home-layout{
+            font-size:10px;
+        }
 
+        .avatar{
+            width: 127px;
+            border-radius: 100%;
+        }
+        .navbar{
+            justify-content: end;
+        }
+        .card-panel{
+            width: 100%;
+        }
+        .name-star{
+            height: 0px;
+        }
+        .row > .menu-title{
+            margin-top:40px;
+            margin-bottom:0px;
+        }
+        .mission-title{
+            font-size:24px;
+        }
+        .mission-text{
+            font-size:16px;
+        }
+        .btn-github{
+            font-size:14px !important;
+        }
+        .repo-language{
+            width: 8% !important;
+            height: 70%!important;
+        }
+        .repo-title{
+            font-size:17px;
+        }
+        .card-repo{
+            height:80%;;
+        }
+    }
 </style>
 <div class="container-default">
     <div class="row">
-        <h3 class="col-9 menu-title"><i class="fas fa-check icon-title"></i>Missões diárias</h3>
+        <h3 class="col-12 menu-title"><i class="fas fa-check icon-title"></i>Missões diárias</h3>
     </div>
     <table class="striped">
         <tbody>
@@ -28,7 +81,9 @@
                     <div data-tooltip="{{ $mission->criador == null ? "Missão do sistema" : "Missão criada pelo usuário" }}"
                         data-position="top" data-html="true" class="waves-effect waves-light tooltipped">
                         @if($mission->criador == null)
-                            <i class="fa fa-cog fa-xs tooltiped" style="margin-right:8px"></i>
+                            {{-- <i class="fa fa-cog fa-xs tooltiped" style="margin-right:8px"></i> --}}
+                            <span class="badge" style="background-color:#8B64EC; color:white; margin-right:3px" > Level {{ $mission->level_mission }}</span>
+
                         @else
                             <i class="fa fa-user-circle fa-xs tooltiped" style="margin-right:8px"></i>
                         @endif

@@ -6,15 +6,17 @@
         @if ($mission->level_mission == null || $mission->level_mission == Auth::user()->level)
             <tr id="tr-{{ $mission->id }}">
                 <th class="row nm th-switch valign-wrapper">
-                    @if($mission->criador != null)
                     <div class="switch">
+                        @if($mission->criador != null)
                         <label>
                             <input id="{{ $mission->id }}" class="toggle-mission" data-tipo="criada"
                                     {{ $mission->is_activeMission == "S" ? 'checked' : '' }} type="checkbox">
                             <span class="lever"></span>
                         </label>
+                        @else
+                            <span class="badge" style="background-color:#8B64EC; color:white; margin-right:3px" > Nível {{ $mission->level_mission }}</span>
+                        @endif
                     </div>
-                    @endif
                     <span id="mission_name-{{ $mission->id }}"
                         class="mission_name">{{ $mission->name }}</span>
                     <input type="hidden" id="repeat_mission-{{ $mission->id }}"
@@ -29,7 +31,7 @@
 
                             >
                         <button class="btn-floating btn mr-2 newpgreen tooltipped"
-                            data-position="top" data-html="true" data-tooltip="Concluída"
+                            data-position="top" data-html="true" data-tooltip="Concluir missão"
                             onclick="missaoConcluida({{ $mission->id }})"
                             id="m{{ $mission->id }}"
                                 {{ $mission->is_activeMission != "S" ? 'disabled' : '' }}><i class="material-icons">check</i>

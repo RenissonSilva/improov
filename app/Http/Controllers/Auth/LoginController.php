@@ -375,7 +375,7 @@ class LoginController extends Controller
                 ]);
             }
         }
-        
+
         foreach ($items as $repo) {
             Repository::updateOrCreate(['link' => $repo['link']], $repo);
         }

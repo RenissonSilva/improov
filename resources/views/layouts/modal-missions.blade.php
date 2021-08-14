@@ -26,10 +26,10 @@
                 </div>
             </div>
         </div>
-        
+
         <div class="modal-footer">
             <a class="modal-close waves-effect waves-green btn-flat black_simple_link grey-text text-darken-2">Cancelar</a>
-            <button class="waves-effect waves-green btn btn-mission">SALVAR</button>
+            <button class="waves-effect waves-green btn btn-mission" id="criar-missao-btn-salvar">SALVAR</button>
         </div>
     </form>
   </div>
@@ -52,7 +52,7 @@
 
                     </div>
                 </div>
-                
+
                 <div class="row">
                     <div class="input-field col s12">
                         <select name="repeat_mission" class="repeat_mission" id="repeat_mission_edit">
@@ -60,8 +60,8 @@
                             <option value="1">Repetir Diariamente</option>
                             <!-- <option value="2">Repetir Semanalmente</option> -->
                         </select>
-                        <!-- <label>Repetir * <i class="fas fa-info-circle right tooltipped" data-position="bottom" data-tooltip="Para agendar a repetição você precisa primeiramente ativar a missão" style="font-size:18px;"></i></label> -->
-                        
+                        <label>Repetir * <i class="fas fa-info-circle right tooltipped" data-position="bottom" data-tooltip="Para agendar a repetição você precisa primeiramente ativar a missão" style="font-size:18px;"></i></label>
+
                     </div>
                 </div>
             </div>
