@@ -47,3 +47,5 @@ Arquivo de configuração que permite automatizar parte da preparação para exe
 Renisson Silva - renissonx@gmail.com
 
 Erickson Nascimento - erickson.ferreira@outlook.com.br
+
+Morgana Albuquerque - morganaf.albuquerque@gmail.com
