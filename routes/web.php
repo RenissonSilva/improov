@@ -40,6 +40,18 @@ Route::prefix('user')->middleware('auth','throttle:500,1', 'update.user')->group
         Route::delete('delete/{id}', 'MissionController@delete')->name('mission.delete');
         Route::any('modifiedCompletedMission/{id}', 'MissionController@modifiedCompletedMission')->name('mission.modifiedCompletedMission');
     });
+    Route::prefix('friends')->middleware('auth')->group(function () {
+        Route::get('/', 'FriendController@index')->name('friends');
+        Route::get('/adicionaamigo', 'FriendController@adicionaAmigo')->name('friends.adicionaAmigo');
+        Route::get('/ajaxpendente', 'FriendController@ajaxPaginatePendente')->name('ajaxPaginatePendente');
+        Route::get('/ajaxconcluida', 'FriendController@ajaxPaginateConcluida')->name('ajaxPaginateConcluida');
+        Route::post('store', 'FriendController@store')->name('friends.store');
+        Route::post('change', 'FriendController@changeStatusFriend')->name('friends.changeStatusFriend');
+        Route::post('edit', 'FriendController@modalEditFriend');
+        Route::any('update', 'FriendController@update')->name('friends.update');
+        Route::delete('delete/{id}', 'FriendController@delete')->name('friends.delete');
+        Route::any('modifiedCompletedFriend/{id}', 'FriendController@modifiedCompletedFriend')->name('friends.modifiedCompletedMission');
+    });
 });
 
 Route::get('login/github', 'Auth\LoginController@redirectToProvider');

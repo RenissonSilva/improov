@@ -32,6 +32,7 @@ class RequisicaoController extends Controller
             }
             return $socialite;
         } catch (Exception $e) {
+            dd($e);
             return redirect('/error');
         }
     }
@@ -53,6 +54,8 @@ class RequisicaoController extends Controller
 
             return $repos;
         } catch (Exception $e) {
+            dd(2);
+
             return redirect('/error');
         }
     }
@@ -78,6 +81,8 @@ class RequisicaoController extends Controller
             // dd('commits', $commits_month);
             return $commits_month;
         } catch (Exception $e) {
+            dd(3);
+
             return redirect('/error');
         }
     }
@@ -105,6 +110,8 @@ class RequisicaoController extends Controller
                 }
             }
         }catch (Exception $e) {
+            dd(5);
+
             return redirect('/error');
         }
     }
@@ -130,6 +137,8 @@ class RequisicaoController extends Controller
                 }
             }
         }catch (Exception $e) {
+            dd(6);
+
             return redirect('/error');
 
         }
@@ -140,6 +149,8 @@ class RequisicaoController extends Controller
                         'Authorization' => env('GITHUB_TOKEN'),
                     ])->get('https://api.github.com/users/'.$nickname)->json();
         }catch (Exception $e) {
+            dd(7);
+
             return redirect('/error');
 
         }
