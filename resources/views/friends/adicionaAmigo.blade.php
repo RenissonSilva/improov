@@ -8,11 +8,18 @@
     </style>
 
     <div class="container-default">
-    @foreach ($users as $user)
-    <a href="" id="{{ $user->id }}"> {{ $user->name }} </a>
-        
-    @endforeach
-    
+        <h4>Mande o convite:</h4>
+        <form action="{{ route('friends.store') }}" method="post">
+            @csrf
+            <select name="nome" id="nome">
+                @foreach ($users as $user)
+                <option value="{{ $user->id }}">{{ $user->name }}</option>
+
+            @endforeach
+        </select>
+        <button type="submit" class="btn btn-primary">Mandar solicitação</button>
+        </form>
+
     </div>
 @endsection
 

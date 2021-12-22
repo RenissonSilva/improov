@@ -8,11 +8,11 @@
     </style>
 
     <div class="container-default">
-    <a class="waves-effect waves-light btn modal-trigger btn-default btn-github" 
+    <a class="waves-effect waves-light btn modal-trigger btn-default btn-github"
         href="{{route('friends.adicionaAmigo')}}"
-        target="_blank"> Adicionar Amigo</a>
+        > Adicionar Amigo</a>
 
-    
+
     </div>
 @endsection
 

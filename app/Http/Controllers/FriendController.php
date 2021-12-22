@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class FriendController extends Controller
 {
@@ -34,8 +35,9 @@ class FriendController extends Controller
      */
     public function store(Request $request)
     {
-        //
-    }
+dd($request);
+return redirect()->route('friends.adicionaAmigo');
+  }
 
     /**
      * Display the specified resource.
@@ -90,6 +92,7 @@ class FriendController extends Controller
      */
     public function adicionaAmigo()
     {
-        return view('friends.adicionaAmigo');
+        $users = DB::table('users')->get();
+        return view('friends.adicionaAmigo',compact('users'));
     }
 }

@@ -42,10 +42,10 @@ Route::prefix('user')->middleware('auth','throttle:500,1', 'update.user')->group
     });
     Route::prefix('friends')->middleware('auth')->group(function () {
         Route::get('/', 'FriendController@index')->name('friends');
+        Route::post('/store', 'FriendController@store')->name('friends.store');
         Route::get('/adicionaamigo', 'FriendController@adicionaAmigo')->name('friends.adicionaAmigo');
         Route::get('/ajaxpendente', 'FriendController@ajaxPaginatePendente')->name('ajaxPaginatePendente');
         Route::get('/ajaxconcluida', 'FriendController@ajaxPaginateConcluida')->name('ajaxPaginateConcluida');
-        Route::post('store', 'FriendController@store')->name('friends.store');
         Route::post('change', 'FriendController@changeStatusFriend')->name('friends.changeStatusFriend');
         Route::post('edit', 'FriendController@modalEditFriend');
         Route::any('update', 'FriendController@update')->name('friends.update');
