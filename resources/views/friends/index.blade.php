@@ -11,6 +11,37 @@
     <a class="waves-effect waves-light btn modal-trigger btn-default btn-github"
         href="{{route('friends.adicionaAmigo')}}"
         > Adicionar Amigo</a>
+    <a class="waves-effect waves-light btn modal-trigger btn-default btn-github"
+        href="{{route('friends.solicitacoes')}}"
+        > Solicitações</a>
+        <div class="table-responsive">
+            <br>
+            <table class="table table-bordered table-hover table-striped">
+                {{-- component tabela --}}
+                @component('layouts.tabela', ['nomeColunas' => ['Level', 'Amigo', 'Ações'], 'tamanhoColunas' => ['100px', '',
+                    '200px']])
+                @endcomponent
+                @foreach ($amigos as $a)
+                    <tr>
+                        <td>{{ $a->usuario1 ==Auth::id() ? $a->levelUsuario2 : $a->levelUsuario1 }}</td>
+                        <td>{{ $a->usuario1 ==Auth::id() ? $a->nomeUsuario2 : $a->nomeUsuario1  }}</td>
+                        <td>
+                            {{-- <a id="s-{{ $a->id }}" href="{{ route('friends.aceitaConvite', $a->id) }}"
+                                class="btn-floating btn mr-2 newpgreen tooltipped" data-position="top" data-html="true"
+                                data-tooltip="Aceitar"><i class="material-icons">check</i></a> --}}
+
+                            <a id="s-{{ $a->id }}" href="{{ route('friends.removeAmigo', $a->id) }}"
+                                class="btn-floating btn newred modal-trigger tooltipped" data-position="top" data-html="true"
+                                data-tooltip="Remover amigo" style="margin-right: 3px;">
+                                <i class="material-icons">delete</i></a>
+                        </td>
+                    </tr>
+                @endforeach
+            </table>
+            <div class="pull-right">
+                {!! $amigos->links() !!}
+            </div>
+        </div>
 
 
     </div>

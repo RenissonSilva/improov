@@ -19,8 +19,7 @@ class CreateInvitationFriendsTable extends Migration
             $table->foreign('usuario1')->references('id')->on('users');
             $table->bigInteger('usuario2')->unsigned();
             $table->foreign('usuario2')->references('id')->on('users');
-            $table->boolean('ativo')->default(false);
-            $table->boolean('rejeitado')->nullable;
+            $table->char('status',1)->default('p'); //p -> pendente; a -> ativo; r -> recusado;
             $table->timestamps();
         });
     }

@@ -41,7 +41,7 @@ Route::prefix('user')->middleware('auth','throttle:500,1', 'update.user')->group
         Route::any('modifiedCompletedMission/{id}', 'MissionController@modifiedCompletedMission')->name('mission.modifiedCompletedMission');
     });
     Route::prefix('friends')->middleware('auth')->group(function () {
-        Route::get('/', 'FriendController@index')->name('friends');
+        Route::get('/', 'FriendController@index')->name('friends.index');
         Route::post('/store', 'FriendController@store')->name('friends.store');
         Route::get('/adicionaamigo', 'FriendController@adicionaAmigo')->name('friends.adicionaAmigo');
         Route::get('/ajaxpendente', 'FriendController@ajaxPaginatePendente')->name('ajaxPaginatePendente');
@@ -51,6 +51,15 @@ Route::prefix('user')->middleware('auth','throttle:500,1', 'update.user')->group
         Route::any('update', 'FriendController@update')->name('friends.update');
         Route::delete('delete/{id}', 'FriendController@delete')->name('friends.delete');
         Route::any('modifiedCompletedFriend/{id}', 'FriendController@modifiedCompletedFriend')->name('friends.modifiedCompletedMission');
+
+        Route::post('/', 'FriendController@mandaConvite')->name('friends.mandaConvite');
+        Route::get('/solicitacoes', 'FriendController@solicitacoes')->name('friends.solicitacoes');
+        Route::get('/aceita/{id}', 'FriendController@aceitaConvite')->name('friends.aceitaConvite');
+        Route::get('/recusa/{id}', 'FriendController@recusaConvite')->name('friends.recusaConvite');
+        Route::get('/removeamigo/{id}', 'FriendController@removeAmigo')->name('friends.removeAmigo');
+        Route::get('/bloqueiaamigo/{id}', 'FriendController@bloqueiaAmigo')->name('friends.bloqueiaAmigo');
+
+
     });
 });
 

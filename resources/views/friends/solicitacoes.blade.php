@@ -5,33 +5,51 @@
         .pagination li.active {
             background-color: #8B64EC;
         }
+
     </style>
 
     <div class="container-default">
         <a class="waves-effect waves-light btn modal-trigger btn-default btn-github"
+        href="{{route('friends.adicionaAmigo')}}"
+        > Adicionar Amigo</a>
+    <a class="waves-effect waves-light btn modal-trigger btn-default btn-github"
         href="{{route('friends.index')}}"
         > Lista de Amigos</a>
-        <a class="waves-effect waves-light btn modal-trigger btn-default btn-github"
-        href="{{route('friends.solicitacoes')}}"
-        > Solicitações</a>
-        <br>
-        <h4>Mande o convite:</h4>
-        <form action="{{ route('friends.mandaConvite') }}" method="post">
-            @csrf
-            <select name="usuario2" id="usuario2">
-                @foreach ($users as $user)
-                <option value="{{ $user->id }}">{{ $user->name }}</option>
+        <div class="table-responsive">
+            <br>
+            <table class="table table-bordered table-hover table-striped">
+                {{-- component tabela --}}
+                @component('layouts.tabela', ['nomeColunas' => ['#', 'Usuario', 'Ações'], 'tamanhoColunas' => ['100px', '',
+                    '200px']])
+                @endcomponent
+                @foreach ($solicitacoes as $s)
+                    <tr>
+                        <td>{{ $s->id }}</td>
+                        <td>{{ $s->usuario }}</td>
+                        <td>
+                            <a id="s-{{ $s->id }}" href="{{ route('friends.aceitaConvite', $s->id) }}"
+                                class="btn-floating btn mr-2 newpgreen tooltipped" data-position="top" data-html="true"
+                                data-tooltip="Aceitar"><i class="material-icons">check</i></a>
 
-            @endforeach
-        </select>
-        <button type="submit" class="btn btn-primary">Mandar solicitação</button>
-        </form>
-
+                            <a id="s-{{ $s->id }}" href="{{ route('friends.recusaConvite', $s->id) }}"
+                                class="btn-floating btn newred modal-trigger tooltipped" data-position="top" data-html="true"
+                                data-tooltip="Recusar" style="margin-right: 3px;">
+                                <i class="material-icons">delete</i></a>
+                        </td>
+                    </tr>
+                @endforeach
+            </table>
+            <div class="pull-right">
+                {!! $solicitacoes->links() !!}
+            </div>
+        </div>
     </div>
 @endsection
 
 @section('scripts')
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment-with-locales.min.js" integrity="sha512-LGXaggshOkD/at6PFNcp2V2unf9LzFq6LE+sChH7ceMTDP0g2kn6Vxwgg7wkPP7AAtX+lmPqPdxB47A0Nz0cMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment-with-locales.min.js"
+        integrity="sha512-LGXaggshOkD/at6PFNcp2V2unf9LzFq6LE+sChH7ceMTDP0g2kn6Vxwgg7wkPP7AAtX+lmPqPdxB47A0Nz0cMQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script>
         function criarMissao() {
             action = "{{ route('mission.store') }}"
@@ -86,7 +104,7 @@
                 success: function(id) {
                     toastr.success('Missão criada')
                     quantidadeTr = $('#tbody-mission-pendente tr').length;
-                    if(quantidadeTr <= 10){
+                    if (quantidadeTr <= 10) {
                         $('#mission_name-' + id).html(nome);
                         $('#name').val('');
                         $('#tbody-mission-pendente').append("<tr id='tr-" + id +
@@ -101,7 +119,7 @@
                             "' data-name='testasdf'><i class='material-icons'>edit</i></button><button class='btn-floating btn newred modal-trigger tooltipped' data-position='top' data-html='true' data-tooltip='Excluir' data-id='" +
                             id +
                             "' onclick='modalRemoveMission(this)' href='#modal-delete-mission' id='30'><i class='material-icons'>delete</i></button></th>"
-                            );
+                        );
                     }
                     $('.modal').modal('close');
                     disableBtnDel = $('#btn-del').attr('disabled', false);
@@ -180,41 +198,60 @@
                         },
                         success: function(result) {
                             quantidadeTr = $('#tbody-mission-concluida tr').length;
-                            if(quantidadeTr < 10){
-                                mensagem = result.criador == null ? 'Missão do sistema' : 'Missão criada pelo usuário';
+                            if (quantidadeTr < 10) {
+                                mensagem = result.criador == null ? 'Missão do sistema' :
+                                    'Missão criada pelo usuário';
 
                                 data = new Date(result.updated_at).toLocaleDateString('pt-BR', {
                                     year: 'numeric',
                                     month: '2-digit',
                                     day: '2-digit',
                                     hour: '2-digit',
-                                    minute:'2-digit',
+                                    minute: '2-digit',
                                 });
 
                                 $('#nenhuma-mission-criada').remove();
 
-                                inicioTr = "<tr id='tr-"+id+"'>";
+                                inicioTr = "<tr id='tr-" + id + "'>";
                                 inicioTh = "<th style='padding:9px 20px !important'>";
-                                inicioSpan = "<span id='mission_name-"+id+"'class='mission_name'>";
-                                inicioDiv = "<div data-tooltip='"+mensagem+"' data-position='top' data-html='true' class='waves-effect waves-light tooltipped'>"
-                                icone = result.criador == null ? "<i class='fa fa-cog fa-xs tooltiped' style='margin-right:8px'></i>" : "<i class='fa fa-user-circle fa-xs tooltiped' style='margin-right:8px'></i>";
-                                inicioFechamento = "</div>"+result.name+"</span></th>";
-                                fimFechamento = "<th class='right-align' style='font-size: 14px;color:#565656'>Data de conclusão: "+data+"</th></tr>";
-                                $('#tbody-mission-concluida').append(inicioTr+inicioTh+inicioSpan+inicioDiv+icone+inicioFechamento+fimFechamento);
-                            }else{
+                                inicioSpan = "<span id='mission_name-" + id +
+                                    "'class='mission_name'>";
+                                inicioDiv = "<div data-tooltip='" + mensagem +
+                                    "' data-position='top' data-html='true' class='waves-effect waves-light tooltipped'>"
+                                icone = result.criador == null ?
+                                    "<i class='fa fa-cog fa-xs tooltiped' style='margin-right:8px'></i>" :
+                                    "<i class='fa fa-user-circle fa-xs tooltiped' style='margin-right:8px'></i>";
+                                inicioFechamento = "</div>" + result.name + "</span></th>";
+                                fimFechamento =
+                                    "<th class='right-align' style='font-size: 14px;color:#565656'>Data de conclusão: " +
+                                    data + "</th></tr>";
+                                $('#tbody-mission-concluida').append(inicioTr + inicioTh +
+                                    inicioSpan + inicioDiv + icone + inicioFechamento +
+                                    fimFechamento);
+                            } else {
 
                                 isNotPaginacao = $('#pagi-conclu').length > 0 ? false : true;
                                 console.log(isNotPaginacao);
-                                if(isNotPaginacao){
-                                    urlPaginate = document.URL+"/ajaxconcluida";
-                                    inicioUl = "<ul class='pagination' id='pagi-conclu' style='display:flex;justify-content:flex-end'>";
-                                    anterior = "<li class='paginateConcluida disabled'><a class='linkPaginateConcluida' href='"+urlPaginate+"?page=1'>Anterior</a></li>";
-                                    numberUm = "<li class='paginateConcluida active'><a class='linkPaginateConcluida' href='"+urlPaginate+"?page=1'>1</a></li>";
-                                    numberdois = "<li class='paginateConcluida'><a class='linkPaginateConcluida' href='"+urlPaginate+"?page=2'>2</a></li>";
-                                    proximo = "<li class='paginateConcluida'><a class='linkPaginateConcluida' href='"+urlPaginate+"?page=2'>Próximo</a></li>";
+                                if (isNotPaginacao) {
+                                    urlPaginate = document.URL + "/ajaxconcluida";
+                                    inicioUl =
+                                        "<ul class='pagination' id='pagi-conclu' style='display:flex;justify-content:flex-end'>";
+                                    anterior =
+                                        "<li class='paginateConcluida disabled'><a class='linkPaginateConcluida' href='" +
+                                        urlPaginate + "?page=1'>Anterior</a></li>";
+                                    numberUm =
+                                        "<li class='paginateConcluida active'><a class='linkPaginateConcluida' href='" +
+                                        urlPaginate + "?page=1'>1</a></li>";
+                                    numberdois =
+                                        "<li class='paginateConcluida'><a class='linkPaginateConcluida' href='" +
+                                        urlPaginate + "?page=2'>2</a></li>";
+                                    proximo =
+                                        "<li class='paginateConcluida'><a class='linkPaginateConcluida' href='" +
+                                        urlPaginate + "?page=2'>Próximo</a></li>";
                                     fimUl = "</ul>";
 
-                                    $('#miss-conclu').append(inicioUl+anterior+numberUm+numberdois+proximo+fimUl);
+                                    $('#miss-conclu').append(inicioUl + anterior + numberUm +
+                                        numberdois + proximo + fimUl);
                                 }
                             }
                         }
@@ -265,7 +302,7 @@
             return false;
         }
 
-        $("#tbody-mission-pendente").on('change','.toggle-mission' ,function(e) {
+        $("#tbody-mission-pendente").on('change', '.toggle-mission', function(e) {
             var id = this.id;
             var is_active = this.checked;
             var tipo = $(this).attr('data-tipo');
@@ -325,12 +362,12 @@
             $('#id_delete').val(id);
         }
         // $('.lever').click(console.log);
-        $('.linkPaginatePendente').on('click', function(e){
+        $('.linkPaginatePendente').on('click', function(e) {
             e.preventDefault();
             var url = $(this).attr('href');
             complementoUrl = url.split("?");
-            complementoUrl[0] = complementoUrl[0]+"/ajaxpendente?";
-            url = complementoUrl[0]+complementoUrl[1];
+            complementoUrl[0] = complementoUrl[0] + "/ajaxpendente?";
+            url = complementoUrl[0] + complementoUrl[1];
 
             $('.paginatePendente').removeClass('active');
             $(this).parent().addClass('active');
@@ -340,29 +377,28 @@
 
             missaoPendente = $('#paginate-missao-pendente').html();
 
-            $.get(url, null, function(data){
+            $.get(url, null, function(data) {
                 console.lo
                 $('#paginate-missao-pendente').html(data);
             });
         });
 
-        $('.linkPaginateConcluida').on('click', function(e){
+        $('.linkPaginateConcluida').on('click', function(e) {
             e.preventDefault();
             var url = $(this).attr('href');
             complementoUrl = url.split("?");
-            complementoUrl[0] = complementoUrl[0]+"/ajaxconcluida?";
-            url = complementoUrl[0]+complementoUrl[1];
+            complementoUrl[0] = complementoUrl[0] + "/ajaxconcluida?";
+            url = complementoUrl[0] + complementoUrl[1];
 
             $('.paginateConcluida').removeClass('active');
             $(this).parent().addClass('active');
 
             valor = complementoUrl[1].split('=');
             valor[1];
-            $.get(url, null, function(data){
+            $.get(url, null, function(data) {
 
                 $('#paginate-missao-concluida').html(data);
             });
         });
-
     </script>
 @endsection

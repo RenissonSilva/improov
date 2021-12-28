@@ -49,7 +49,7 @@
                             <li><a href="{{ route('repos') }}">Meus Projetos </a></li>
                             <li><a href="{{ route('mission') }}">Minhas missões</a></li>
                             <li><a href="{{ route('performance') }}">Desempenho </a></li>
-                            <li><a href="{{ route('friends') }}">Amigos </a></li>
+                            <li><a href="{{ route('friends.index') }}">Amigos </a></li>
                             <li>
                                 <a href="{{ route('logout') }}"
                                     onclick="event.preventDefault();document.getElementById('logout-form').submit();">

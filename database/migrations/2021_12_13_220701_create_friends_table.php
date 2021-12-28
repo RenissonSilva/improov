@@ -19,8 +19,7 @@ class CreateFriendsTable extends Migration
             $table->foreign('usuario1')->references('id')->on('users');
             $table->bigInteger('usuario2')->unsigned();
             $table->foreign('usuario2')->references('id')->on('users');
-            // $table->bigInteger('melhorAmigo')->unsigned();
-            // $table->foreign('melhorAmigo')->references('id')->on('users');
+            $table->char('status',1)->default('a'); //b -> bloqueado; a -> ativo; r -> recusado;
             $table->timestamps();
         });
     }
