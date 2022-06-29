@@ -2,14 +2,18 @@
 
 namespace Tests\Feature;
 
+use App\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
+use Illuminate\Support\Facades\Auth;
+use Mockery;
 use Tests\TestCase;
 
 class MissionTest extends TestCase
 {
+    protected $symbolMock;
     /**
         @test
     */
@@ -23,7 +27,8 @@ class MissionTest extends TestCase
         @test
     */
     public function verifica_se_adiciona_missao(){
-        $this->withoutMiddleware();
+        $this->mockAuthUser();
+        //$this->withoutMiddleware();
         Session::start();
         $missao = [
             'name' => 'Tirar nota 10',
@@ -46,5 +51,13 @@ class MissionTest extends TestCase
             'name' => 'Tirar nota 10',
             'repeat_mission'=>0
         ]);
+    }
+
+    protected function mockAuthUser(){
+        $user = new User([
+            'name' => 'teste'
+        ]);
+
+        $this->be($user);
     }
 }
