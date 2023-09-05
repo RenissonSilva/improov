@@ -60,7 +60,7 @@ class LoginController extends Controller
     public function handleProviderCallback()
     {
         // dd();
-        try{
+        try {
             $user_github = RequisicaoController::getUser();
             // dd(session()->get('user.repos'));
             $name = $user_github->getName() ?? $user_github->getNickname();
@@ -70,13 +70,13 @@ class LoginController extends Controller
             $image = $user_github->getAvatar();
             $bio = $user_github->user['bio'];
             $user = User::where('email', $email)->first();
-        }catch (Exception $e    ){
+        } catch (Exception $e) {
             return redirect('/error');
         }
         $bio = $user_github->user['bio'];
         $search_user = User::where('email', $email)->first();
-        $usuarioJaFoiCadastrado = (count(DB::table('users')->where('nickname',$nickname)->get())) > 0? true : false;
-        if($usuarioJaFoiCadastrado){
+        $usuarioJaFoiCadastrado = (count(DB::table('users')->where('nickname', $nickname)->get())) > 0 ? true : false;
+        if ($usuarioJaFoiCadastrado) {
             // dd();
             Auth::loginUsingId($user->id);
 
@@ -86,8 +86,8 @@ class LoginController extends Controller
             $missions = $user->mission_user()->orderBy('updated_at', 'DESC')->get();
 
             return redirect()->route('home');
-        }else{
-            $this->cadastraUsuario($name,$nickname,$email,$github_id,$image,$bio);
+        } else {
+            $this->cadastraUsuario($name, $nickname, $email, $github_id, $image, $bio);
             return redirect()->route('home');
         }
 
@@ -276,24 +276,25 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
     }
 
-    private function cadastraUsuario($name,$nickname,$email,$github_id,$image,$bio){
-         // Verifica a quantidade de repositorios
-         $repos = RequisicaoController::getRepositorios($nickname);
+    private function cadastraUsuario($name, $nickname, $email, $github_id, $image, $bio)
+    {
+        // Verifica a quantidade de repositorios
+        $repos = RequisicaoController::getRepositorios($nickname);
 
-         // Quantidade de Issues, milestones e de commits feitos!
-         $quantIssuesCriadas = 0;
-         $quantCommitsFeitos = 0;
-         $quantRepos = 0;
+        // Quantidade de Issues, milestones e de commits feitos!
+        $quantIssuesCriadas = 0;
+        $quantCommitsFeitos = 0;
+        $quantRepos = 0;
 
-         // Filtrando pelos ultimos repositorios modificados
-         $jsonString = json_encode($repos);
-         $b = json_decode($jsonString);
-         $collection = collect($b);
-         $sorted = $collection->sortBy('updated_at');
+        // Filtrando pelos ultimos repositorios modificados
+        $jsonString = json_encode($repos);
+        $b = json_decode($jsonString);
+        $collection = collect($b);
+        $sorted = $collection->sortBy('updated_at');
 
-         $commitsLastMonth = RequisicaoController::getCommitsLastMonth($nickname);
+        $commitsLastMonth = RequisicaoController::getCommitsLastMonth($nickname);
 
-         //  Adiciona a quantidae commits feitos
+        //  Adiciona a quantidae commits feitos
         //  $quantCommitsFeitos = RequisicaoController::adicionaQuantCommitsFeitos($repos, $nickname,$quantCommitsFeitos);
         //  $info = RequisicaoController::acoesUser($nickname);
         //  $counter=0;
@@ -305,10 +306,10 @@ class LoginController extends Controller
         //     }
         // }
 
-         $data = [
+        $data = [
             'name' => $name,
             'nickname' => $nickname,
-            'email' => $email ,
+            'email' => $email,
             'github_id' => $github_id,
             'image' => $image,
             'experiencia' => 0,
@@ -319,13 +320,13 @@ class LoginController extends Controller
             'totalCommit' => $quantCommitsFeitos,
             // 'totalMilestone' => $quantMilestonesCriadas,
             // 'quantSeguidores' => $quantFollowers,
-            'bio' => $bio??""
+            'bio' => $bio ?? ""
         ];
 
 
         $user = User::create($data);
 
-        foreach($commitsLastMonth as $commit) {
+        foreach ($commitsLastMonth as $commit) {
             // dd($commitsLastMonth);
             Commit::create([
                 'user_id' => $user->id,
@@ -349,20 +350,21 @@ class LoginController extends Controller
         $mission_user1->user_id = (int) Auth::id();
         $mission_user1->mission_id = 1;
         $mission_user1->completed = 0;
-        $mission_user1->mission_user_points=0;
+        $mission_user1->mission_user_points = 0;
         $mission_user1->save();
 
         $mission_user2 = new Mission_user();
         $mission_user2->user_id = (int) Auth::id();
         $mission_user2->mission_id = 2;
         $mission_user2->completed = 0;
-        $mission_user2->mission_user_points=0;
+        $mission_user2->mission_user_points = 0;
         $mission_user2->save();
     }
 
-    public static function adicionaAtualizaRepositorios($repos){
+    public static function adicionaAtualizaRepositorios($repos)
+    {
         $items = [];
-        if(isset($repos)){
+        if (isset($repos)) {
             foreach ($repos as $repo) {
                 $createdAt = Carbon::parse($repo['created_at']);
 
